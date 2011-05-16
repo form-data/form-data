@@ -1,0 +1,45 @@
+# form-data
+
+A module to create readable `"application/x-www-form-urlencoded"` streams.  Can be used to submit forms and file uploads to other web applications.
+
+The API of this module is inspired by the
+[XMLHttpRequest-2 FormData Interface][xhr2-fd].
+
+[xhr2-fd]: http://dev.w3.org/2006/webapi/XMLHttpRequest-2/Overview.html#the-formdata-interface
+
+## Install
+
+Sorry, this isn't ready for you yet.
+
+## Usage
+
+In this example we are constructor a form with 3 fields that contain a string,
+a buffer and a file stream.
+
+    var FormData = require('form-data');
+    var fs = require('fs');
+
+    var form = new FormData();
+    form.append('my_field', 'my value');
+    form.append('my_buffer', new Buffer(10));
+    form.append('my_file', fs.createReadStream('/foo/bar.jpg'));
+
+In order to submit this form to a web application, you can use node's http
+client interface:
+
+    var http = require('http');
+
+    var request = http.request({
+      method: 'post',
+      host: 'example.org',
+      path: '/upload',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    });
+
+    form.pipe(request);
+
+    request.on('response, function(res) {
+      console.log(res.statusCode);
+    });
+
+[xhr2-fd]: http://dev.w3.org/2006/webapi/XMLHttpRequest-2/Overview.html#the-formdata-interface

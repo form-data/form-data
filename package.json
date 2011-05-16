@@ -1,0 +1,16 @@
+{
+  "author": "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)",
+  "name": "form-data",
+  "description": "A module to create readable `\"application/x-www-form-urlencoded\"` streams.  Can be used to submit forms and file uploads to other web applications.",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/felixge/form-data.git"
+  },
+  "main": "./lib/form_data",
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
