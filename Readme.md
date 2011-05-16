@@ -13,7 +13,7 @@ Sorry, this isn't ready for you yet.
 
 ## Usage
 
-In this example we are constructor a form with 3 fields that contain a string,
+In this example we are constructing a form with 3 fields that contain a string,
 a buffer and a file stream.
 
 ``` javascript
