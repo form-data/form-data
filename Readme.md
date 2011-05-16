@@ -1,6 +1,7 @@
 # form-data
 
-A module to create readable `"application/x-www-form-urlencoded"` streams.  Can be used to submit forms and file uploads to other web applications.
+A module to create readable `"multipart/form-data"` streams.  Can be used to
+submit forms and file uploads to other web applications.
 
 The API of this module is inspired by the
 [XMLHttpRequest-2 FormData Interface][xhr2-fd].
