@@ -46,4 +46,12 @@ request.on('response', function(res) {
 });
 ```
 
+Or if you would prefer the `'Content-Length'` header to be set for you:
+
+``` javascript
+form.submit('example.org/upload', function(err, res) {
+  console.log(res.statusCode);
+});
+```
+
 [xhr2-fd]: http://dev.w3.org/2006/webapi/XMLHttpRequest-2/Overview.html#the-formdata-interface
