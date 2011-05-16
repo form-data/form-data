@@ -37,7 +37,7 @@ var request = http.request({
   method: 'post',
   host: 'example.org',
   path: '/upload',
-  headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+  headers: {'Content-Type': 'multipart/form-data'}
 });
 
 form.pipe(request);
