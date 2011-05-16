@@ -41,7 +41,7 @@ var request = http.request({
 
 form.pipe(request);
 
-request.on('response, function(res) {
+request.on('response', function(res) {
   console.log(res.statusCode);
 });
 ```
