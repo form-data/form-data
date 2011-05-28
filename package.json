@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     'fake': '0.2.1',
+    'far': '0.0.1',
     'formidable': '1.0.2'
   }
 }
