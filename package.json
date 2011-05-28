@@ -11,6 +11,12 @@
   "engines": {
     "node": "*"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    'combined-stream' => '0.0.3',
+    'mime' => '1.2.2'
+  },
+  "devDependencies": {
+    'fake': '0.2.1',
+    'formidable': '1.0.2'
+  }
 }
