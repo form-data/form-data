@@ -41,16 +41,12 @@ server.listen(common.port, function() {
     form.append(field.name, field.value);
   });
 
-  var request = http.request({
-    method: 'post',
-    port: common.port,
-    path: '/upload',
-    headers: form.getHeaders()
-  });
+  form.submit('http://localhost:' + common.port + '/', function(err, res) {
+    if (err) {
+      throw err;
+    }
 
-  form.pipe(request);
-
-  request.on('response', function(res) {
+    assert.strictEqual(res.statusCode, 200);
     server.close();
   });
 });
