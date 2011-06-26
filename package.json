@@ -12,13 +12,13 @@
     "node": "*"
   },
   "dependencies": {
-    'combined-stream' => '0.0.3',
-    'mime' => '1.2.2',
-    'async' => '0.1.9'
+    "combined-stream": "0.0.3",
+    "mime": "1.2.2",
+    "async": "0.1.9"
   },
   "devDependencies": {
-    'fake': '0.2.1',
-    'far': '0.0.1',
-    'formidable': '1.0.2'
+    "fake": "0.2.1",
+    "far": "0.0.1",
+    "formidable": "1.0.2"
   }
 }
