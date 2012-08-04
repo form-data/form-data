@@ -15,8 +15,7 @@ var FIELDS;
 var server;
 
 var parsedUrl = parseUrl(remoteFile)
-  , options =
-    {
+  , options = {
       method: 'get',
       port: parsedUrl.port || 80,
       path: parsedUrl.pathname,
@@ -24,8 +23,7 @@ var parsedUrl = parseUrl(remoteFile)
     }
   ;
 
-http.request(options, function(res)
-{
+http.request(options, function(res) {
 
   FIELDS = [
     {name: 'my_field', value: 'my_value'},
@@ -83,12 +81,12 @@ server = http.createServer(function(req, res) {
   // temp workaround
   var data = '';
   req.setEncoding('utf8');
-  req.on('data', function(d)
-  {
+
+  req.on('data', function(d) {
     data += d;
   });
-  req.on('end', function()
-  {
+
+  req.on('end', function() {
 
     // check for the fields' traces
 

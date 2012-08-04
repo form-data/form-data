@@ -44,12 +44,12 @@ var server = http.createServer(function(req, res) {
   // temp workaround
   var data = '';
   req.setEncoding('utf8');
-  req.on('data', function(d)
-  {
+
+  req.on('data', function(d) {
     data += d;
   });
-  req.on('end', function()
-  {
+
+  req.on('end', function() {
     // check for the fields' traces
 
     // 1st field : my_field
