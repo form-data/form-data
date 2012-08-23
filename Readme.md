@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/felixge/node-form-data.png)](http://travis-ci.org/felixge/node-form-data)
 # form-data
 
 A module to create readable `"multipart/form-data"` streams.  Can be used to
