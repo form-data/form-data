@@ -83,4 +83,19 @@ form.submit('example.org/upload', function(err, res) {
 });
 ```
 
+The filename and Content-Type can be overridden
+
+``` javascript
+var FormData = require('form-data');
+var fs = require('fs');
+
+var form = new FormData();
+form.append('my_field', 'my value');
+form.append('my_buffer', new Buffer(10));
+form.append('my_file', fs.createReadStream('/foo/bar.jpg'), {
+  'filename': 'somefilename.csv.gz',
+  'content-type': 'application/x-gzip'
+});
+```
+
 [xhr2-fd]: http://dev.w3.org/2006/webapi/XMLHttpRequest-2/Overview.html#the-formdata-interface
