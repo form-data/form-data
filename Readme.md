@@ -83,4 +83,23 @@ form.submit('example.org/upload', function(err, res) {
 });
 ```
 
+To use custom headers and pre-known length in parts:
+
+``` javascript
+var CRLF = '\r\n';
+var form = new FormData();
+
+var options = {
+  header: CRLF + '--' + form.getBoundary() + CRLF + 'X-Custom-Header: 123' + CRLF + CRLF,
+  knownLength: 1
+};
+
+form.append('my_buffer', buffer, options);
+
+form.submit('http://example.com/', function(err, res) {
+  if (err) throw err;
+  console.log('Done');
+});
+```
+
 [xhr2-fd]: http://dev.w3.org/2006/webapi/XMLHttpRequest-2/Overview.html#the-formdata-interface
