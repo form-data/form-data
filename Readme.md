@@ -102,4 +102,17 @@ form.submit('http://example.com/', function(err, res) {
 });
 ```
 
+For edge cases, like POST request to URL with query string or to pass HTTP auth creadentials, object can be passed to `form.submit()` as first parameter:
+
+``` javascript
+form.submit({
+  host: 'example.com',
+  path: '/probably.php?extra=params',
+  auth: 'username:password'
+}, function(err, res) {
+  console.log(res.statusCode);
+});
+```
+
+
 [xhr2-fd]: http://dev.w3.org/2006/webapi/XMLHttpRequest-2/Overview.html#the-formdata-interface
