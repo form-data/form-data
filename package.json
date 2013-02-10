@@ -2,7 +2,7 @@
   "author": "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)",
   "name": "form-data",
   "description": "A module to create readable `\"multipart/form-data\"` streams.  Can be used to submit forms and file uploads to other web applications.",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "repository": {
     "type": "git",
     "url": "git://github.com/felixge/node-form-data.git"
@@ -12,7 +12,7 @@
     "node": "*"
   },
   "dependencies": {
-    "combined-stream": "0.0.3",
+    "combined-stream": "~0.0.4",
     "mime": "~1.2.2",
     "async": "~0.1.9"
   },
