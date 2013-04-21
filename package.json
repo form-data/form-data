@@ -12,7 +12,7 @@
     "test": "node test/run.js"
   },
   "engines": {
-    "node": "*"
+    "node": ">= 0.6"
   },
   "dependencies": {
     "combined-stream": "~0.0.4",
