@@ -18,8 +18,7 @@ var options = {
 
 var server = http.createServer(function(req, res) {
 
-  var form = new IncomingForm();
-  form.uploadDir = common.dir.tmp;
+  var form = new IncomingForm({uploadDir: common.dir.tmp});
 
   form.parse(req);
 
