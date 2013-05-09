@@ -18,23 +18,12 @@ var expectedLength;
 
 var server = http.createServer(function(req, res) {
   var data = '';
-  req.setEncoding('utf8');
 
-  req.on('data', function(d) {
-    data += d;
-  });
+  assert.ok( typeof req.headers['content-length'] !== 'undefined' );
+  assert.equal(req.headers['content-length'], expectedLength);
 
-  req.on('end', function() {
-    assert.ok( data.indexOf( testHeader ) != -1 );
-
-    // content-length would be 1000+ w/actual buffer size,
-    // but smaller w/overridden size.
-    assert.ok( typeof req.headers['content-length'] !== 'undefined' );
-    assert.equal(req.headers['content-length'], expectedLength);
-
-    res.writeHead(200);
-    res.end('done');
-  });
+  res.writeHead(200);
+  res.end('done');
 });
 
 
@@ -69,6 +58,10 @@ server.listen(common.port, function() {
     }
 
     assert.strictEqual(res.statusCode, 200);
+
+    // unstuck new streams
+    res.resume();
+
     server.close();
   });
 

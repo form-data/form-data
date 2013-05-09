@@ -64,6 +64,10 @@ server.listen(common.port, function() {
   form.pipe(request);
 
   request.on('response', function(res) {
+
+    // unstuck new streams
+    res.resume();
+
     server.close();
   });
 });
