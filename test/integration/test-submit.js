@@ -63,6 +63,10 @@ server.listen(common.port, function() {
     }
 
     assert.strictEqual(res.statusCode, 200);
+
+    // unstuck new streams
+    res.resume();
+
     server.close();
   });
 
