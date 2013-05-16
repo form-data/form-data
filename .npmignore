@@ -4,6 +4,7 @@
 /node_modules/
 /test/
 /.idea
+/.gitignore
 /.npmignore
 /.travis.yml
 /Makefile
