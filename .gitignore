@@ -1,4 +1,5 @@
 *.un~
+*.sublime-*
 /node_modules/*
 /test/tmp
 /.idea
