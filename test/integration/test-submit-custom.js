@@ -13,12 +13,13 @@ var remoteFile = 'http://nodejs.org/images/logo.png';
 // wrap non simple values into function
 // just to deal with ReadStream "autostart"
 // Can't wait for 0.10
-var FIELDS = [
-  {name: 'my_field', value: 'my_value'},
-  {name: 'my_buffer', value: function(){ return new Buffer([1, 2, 3])} },
-  {name: 'my_file', value: function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg')} },
-  {name: 'remote_file', value: function(){ return request(remoteFile)} }
-];
+var FIELDS = {
+  'my_field': 'my_value',
+  'my_buffer': function(){ return new Buffer([1, 2, 3]); },
+  'my_file': function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); },
+  'remote_file': function(){ return request(remoteFile); }
+};
+var fieldsPassed = 4;
 
 var server = http.createServer(function(req, res) {
 
@@ -28,14 +29,16 @@ var server = http.createServer(function(req, res) {
 
   form
     .on('field', function(name, value) {
-      var field = FIELDS.shift();
-      assert.strictEqual(name, field.name);
-      assert.strictEqual(value, field.value+'');
+      fieldsPassed--;
+      var field = FIELDS[name];
+      assert.ok(field);
+      assert.strictEqual(value, ''+field);
     })
     .on('file', function(name, file) {
-      var field = FIELDS.shift();
-      assert.strictEqual(name, field.name);
-      assert.strictEqual(file.name, path.basename(field.value.path));
+      fieldsPassed--;
+      var field = FIELDS[name];
+      assert.ok(field);
+      assert.strictEqual(file.name, path.basename(field.path));
       assert.strictEqual(file.type, mime.lookup(file.name));
     })
     .on('end', function() {
@@ -48,13 +51,17 @@ server.listen(common.port, function() {
 
   var form = new FormData();
 
-  FIELDS.forEach(function(field) {
+  for (var name in FIELDS)
+  {
+    if (!FIELDS.hasOwnProperty(name)) continue;
+
     // important to append ReadStreams within the same tick
-    if ((typeof field.value == 'function')) {
-      field.value = field.value();
+    if ((typeof FIELDS[name] == 'function')) {
+      FIELDS[name] = FIELDS[name]();
     }
-    form.append(field.name, field.value);
-  });
+
+    form.append(name, FIELDS[name]);
+  }
 
   // custom params object passed to submit
   form.submit({
@@ -77,5 +84,5 @@ server.listen(common.port, function() {
 });
 
 process.on('exit', function() {
-  assert.strictEqual(FIELDS.length, 0);
+  assert.strictEqual(fieldsPassed, 0);
 });
