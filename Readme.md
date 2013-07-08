@@ -137,7 +137,7 @@ form.submit({
 
 ## Notes
 
-- ```getLengthSync()``` method won't calculate length for streams, and in general be careful with *Sync* functions, probably in most cases there is better solution to your problem.
+- ```getLengthSync()``` method DOESN'T calculate length for streams, use ```knownLength``` options as workaround.
 
 ## TODO
 
