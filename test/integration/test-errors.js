@@ -12,8 +12,7 @@ var fs = require('fs');
   var callback = fake.callback(arguments.callee.name + '-onError-append');
   fake.expectAnytime(callback, ['Arrays are not supported.']);
 
-  form.on('error', function(err)
-  {
+  form.on('error', function(err) {
     // workaroud for expectAnytime handling objects
     callback(err.message);
   });
@@ -52,8 +51,7 @@ var fs = require('fs');
   var callback = fake.callback(arguments.callee.name + '-onError-getLengthSync');
   fake.expectAnytime(callback, ['Cannot calculate proper length in synchronous way.']);
 
-  form.on('error', function(err)
-  {
+  form.on('error', function(err) {
     // workaroud for expectAnytime handling objects
     callback(err.message);
   });

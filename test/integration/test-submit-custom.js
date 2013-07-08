@@ -51,8 +51,7 @@ server.listen(common.port, function() {
 
   var form = new FormData();
 
-  for (var name in FIELDS)
-  {
+  for (var name in FIELDS) {
     if (!FIELDS.hasOwnProperty(name)) continue;
 
     // important to append ReadStreams within the same tick
