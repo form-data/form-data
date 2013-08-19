@@ -19,6 +19,12 @@
     "mime": "~1.2.9",
     "async": "~0.2.9"
   },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://raw.github.com/felixge/node-form-data/master/License"
+    }
+  ],  
   "devDependencies": {
     "fake": "~0.2.2",
     "far": "~0.0.7",
