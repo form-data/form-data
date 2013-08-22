@@ -19,7 +19,9 @@ var FIELDS = {
   'my_file': function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); },
   'remote_file': function(){ return request(remoteFile); }
 };
-var fieldsPassed = 4;
+var posts = 10;
+var postsRemaining = posts;
+var fieldsPassed = 4*posts;
 
 var server = http.createServer(function(req, res) {
 
@@ -49,32 +51,36 @@ var server = http.createServer(function(req, res) {
 
 server.listen(common.port, function() {
 
-  var form = new FormData();
+  for (var i =0; i < posts; i++)
+  {
+    (function() {
 
-  for (var name in FIELDS) {
-    if (!FIELDS.hasOwnProperty(name)) continue;
+      var form = new FormData();
 
-    // important to append ReadStreams within the same tick
-    if ((typeof FIELDS[name] == 'function')) {
-      FIELDS[name] = FIELDS[name]();
-    }
+      for (var name in FIELDS) {
+        if (!FIELDS.hasOwnProperty(name)) continue;
 
-    form.append(name, FIELDS[name]);
+        // important to append ReadStreams within the same tick
+        if ((typeof FIELDS[name] == 'function')) {
+          FIELDS[name] = FIELDS[name]();
+        }
+
+        form.append(name, FIELDS[name]);
+      }
+
+      form.submit('http://localhost:' + common.port + '/', function(err, res) {
+
+        if (err) {
+          throw err;
+        }
+
+        assert.strictEqual(res.statusCode, 200);
+
+        postsRemaining--;
+        if (postsRemaining == 0) server.close();
+      });
+    })();
   }
-
-  form.submit('http://localhost:' + common.port + '/', function(err, res) {
-
-    if (err) {
-      throw err;
-    }
-
-    assert.strictEqual(res.statusCode, 200);
-
-    // unstuck new streams
-    res.resume();
-
-    server.close();
-  });
 
 });
 
