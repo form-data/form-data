@@ -3,6 +3,7 @@ var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
 var fake = require('fake').create();
 var fs = require('fs');
+var request = require('request');
 
 (function testEmptyForm() {
   var form = new FormData();
@@ -88,6 +89,31 @@ var fs = require('fs');
   var callback = fake.callback(arguments.callee.name + '-getLength');
   fake.expectAnytime(callback, [null, expectedLength]);
   form.getLength(callback);
+})();
+
+(function testRequest() {
+
+  var form = new FormData();
+  var count = 10;
+  var expectedLength = 0;
+  var file = "http://code.jquery.com/jquery-1.10.1.min.js";
+
+  request.get(file, function (err, res, body) {
+
+    var fileLength = +res.headers['content-length'];
+
+    for(var i=0; i<count; i++) {
+      form.append('file'+i, request.get(file));
+      expectedLength += fileLength;
+    }
+
+    expectedLength += form._overheadLength + form._valueLength + form._lastBoundary().length;
+
+    var callback = fake.callback(arguments.callee.name + '-getLength');
+    fake.expectAnytime(callback, [null, expectedLength]);
+    form.getLength(callback);
+  });
+
 })();
 
 
