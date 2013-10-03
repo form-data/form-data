@@ -19,7 +19,7 @@ var dataSize = 1000000;
 
 var server = http.createServer(function(req, res) {
   var data = '', uploaded = 0;
-console.log(['R', req.headers['content-length']]);
+
   assert.ok( typeof req.headers['content-length'] !== 'undefined' );
   assert.equal(req.headers['content-length'], expectedLength);
 
