@@ -3,7 +3,6 @@ var assert = common.assert;
 var http = require('http');
 var path = require('path');
 var mime = require('mime');
-var request = require('request');
 var parseUrl = require('url').parse;
 var fs = require('fs');
 var FormData = require(common.dir.lib + '/form_data');
