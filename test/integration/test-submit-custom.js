@@ -19,7 +19,7 @@ var FIELDS = {
   'my_file': function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); },
   'remote_file': function(){ return request(remoteFile); }
 };
-var fieldsPassed = 4;
+var fieldsPassed = Object.keys(FIELDS).length;
 
 var server = http.createServer(function(req, res) {
 

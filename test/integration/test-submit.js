@@ -12,14 +12,13 @@ var remoteFile = 'http://nodejs.org/images/logo.png';
 
 // wrap non simple values into function
 // just to deal with ReadStream "autostart"
-// Can't wait for 0.10
 var FIELDS = {
   'my_field': 'my_value',
   'my_buffer': function(){ return new Buffer([1, 2, 3]); },
   'my_file': function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); },
   'remote_file': function(){ return request(remoteFile); }
 };
-var fieldsPassed = 4;
+var fieldsPassed = Object.keys(FIELDS).length;
 
 var server = http.createServer(function(req, res) {
 
