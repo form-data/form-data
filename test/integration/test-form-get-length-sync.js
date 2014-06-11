@@ -3,6 +3,7 @@ var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
 var fake = require('fake').create();
 var fs = require('fs');
+var Readable = require('stream').Readable;
 
 (function testGetLengthSync() {
   var fields = [
@@ -73,4 +74,31 @@ var fs = require('fs');
   var calculatedLength = form.getLengthSync();
 
   assert.equal(expectedLength, calculatedLength);
+})();
+
+(function testReadableStreamData() {
+  var form = new FormData();
+  var expectedLength = 0;
+
+  var util = require('util');
+  util.inherits(CustomReadable, Readable);
+
+  function CustomReadable(opt) {
+    Readable.call(this, opt);
+    this._max = 2;
+    this._index = 1;
+  }
+
+  CustomReadable.prototype._read = function() {
+    var i = this._index++;
+    if (i > this._max)
+      this.push(null);
+    else {
+      this.push('' + i);
+    }
+  };
+  form.append('my_txt', new CustomReadable());
+
+  assert.throws(function() { form.getLengthSync(); }, /Cannot calculate proper length in synchronous way/);
+
 })();

@@ -2,6 +2,7 @@ var common = require('../common');
 var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
 var fake = require('fake').create();
+var Readable = require('stream').Readable;
 var fs = require('fs');
 
 (function testEmptyForm() {
@@ -90,4 +91,34 @@ var fs = require('fs');
   form.getLength(callback);
 })();
 
+(function testReadableStreamData() {
+  var form = new FormData();
+  var expectedLength = 0;
 
+  var util = require('util');
+  util.inherits(CustomReadable, Readable);
+
+  function CustomReadable(opt) {
+    Readable.call(this, opt);
+    this._max = 2;
+    this._index = 1;
+  }
+
+  CustomReadable.prototype._read = function() {
+    var i = this._index++;
+    if (i > this._max)
+      this.push(null);
+    else {
+      this.push('' + i);
+    }
+  };
+  form.append('my_txt', new CustomReadable());
+
+  expectedLength += form._overheadLength + form._lastBoundary().length;
+
+  // there is no way to determine the length of this readable stream.
+  var callback = fake.callback(arguments.callee.name + '-getLength');
+  fake.expectAnytime(callback, ['Unknown stream', undefined]);
+  form.getLength(function(err, len) { callback(err,len); });
+
+})();
