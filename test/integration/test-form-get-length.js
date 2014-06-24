@@ -66,7 +66,7 @@ var fs = require('fs');
     },
     {
       name: 'my_txt',
-      value: fs.createReadStream(common.dir.fixture + '/bacon.txt'),
+      value: fs.createReadStream(common.dir.fixture + '/veggies.txt'),
     },
   ];
 
@@ -89,5 +89,3 @@ var fs = require('fs');
   fake.expectAnytime(callback, [null, expectedLength]);
   form.getLength(callback);
 })();
-
-
