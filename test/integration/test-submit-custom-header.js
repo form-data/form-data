@@ -2,7 +2,7 @@ var common = require('../common');
 var assert = common.assert;
 var http = require('http');
 var path = require('path');
-var mime = require('mime');
+var mime = require('mime-types');
 var request = require('request');
 var fs = require('fs');
 var FormData = require(common.dir.lib + '/form_data');
@@ -68,9 +68,9 @@ server.listen(common.port, function() {
   form.submit({
     port: common.port,
     path: '/',
-	headers: {
-	  'x-test-header': 'test-header-value'
-	}
+  headers: {
+    'x-test-header': 'test-header-value'
+  }
   }, function(err, res) {
 
     if (err) {
