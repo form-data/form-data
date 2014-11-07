@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "combined-stream": "~0.0.4",
-    "mime": "~1.2.11",
-    "async": "~0.9.0"
+    "async": "~0.9.0",
+    "mime-types": "~2.0.2"
   },
   "licenses": [
     {
