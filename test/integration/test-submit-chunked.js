@@ -8,6 +8,8 @@ var fs           = require('fs');
 var path         = require('path');
 var mime         = require('mime-types');
 var http         = require('http');
+var stream       = require('stream');
+var crypto       = require('crypto');
 
 var FormData     = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
@@ -33,9 +35,24 @@ var remoteRequest = http.request(remoteRequestOptions, function(remoteRes) {
     var form = new FormData();
     var name, options;
 
-    // add test subjects to the form
+    // Add test subjects to the form and hash any streams for comparison
     FIELDS.forEach(function(field) {
       form.append(field.name, field.value, field.options);
+
+      // Buffer any streams out at this point for comparison later.
+      if(field.value instanceof stream.Readable) {
+        // Get a hash of this stream to compare at the end
+        var hash = crypto.createHash('sha1');
+        hash.setEncoding('hex');
+
+        field.value.on('end', function() {
+          hash.end();
+          field._hash = hash.read();
+        });
+
+        field.value.pipe(hash)
+
+      }
     });
 
     // TODO: Test setting a custom header for chunked encoding
@@ -67,11 +84,11 @@ remoteRequest.end()
 
 var server = http.createServer(function(req, res) {
 
-  # Check headers of the request.
+  // Check headers of the request.
   assert.strictEqual(req.headers['content-length'], undefined)
   assert.strictEqual(req.headers['transfer-encoding'], 'chunked')
 
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
+  var form = new IncomingForm({uploadDir: common.dir.tmp, hash: "sha1"});
 
   form.parse(req);
 
@@ -100,7 +117,7 @@ var server = http.createServer(function(req, res) {
       else
         assert.strictEqual(file.type, mime.lookup(file.name));
 
-      // TODO: compare data streamed from original source to result data.
+      assert.strictEqual(file.hash, field._hash);
     })
     .on('end', function() {
       res.writeHead(200);
