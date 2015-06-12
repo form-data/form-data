@@ -1,6 +1,7 @@
 var common = require('../common');
 var assert = common.assert;
 var http = require('http');
+var https = require('https');
 var path = require('path');
 var mime = require('mime-types');
 var parseUrl = require('url').parse;
@@ -8,7 +9,7 @@ var fs = require('fs');
 var FormData = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
 
-var remoteFile = 'http://nodejs.org/images/logo.png';
+var remoteFile = 'https://nodejs.org/images/logo.png';
 
 var FIELDS;
 var server;
@@ -16,13 +17,13 @@ var server;
 var parsedUrl = parseUrl(remoteFile)
   , options = {
       method: 'get',
-      port: parsedUrl.port || 80,
+      port: parsedUrl.port || 443,
       path: parsedUrl.pathname,
       host: parsedUrl.hostname
     }
   ;
 
-http.request(options, function(res) {
+https.request(options, function(res) {
 
   FIELDS = [
     {name: 'my_field', value: 'my_value'},
