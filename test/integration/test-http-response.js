@@ -8,7 +8,8 @@ var fs = require('fs');
 var FormData = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
 
-var remoteFile = 'http://nodejs.org/images/logo.png';
+// static server prepared for all tests
+var remoteFile = 'http://localhost:'+common.staticPort+'/unicycle.jpg';
 
 var FIELDS;
 var server;
@@ -22,6 +23,7 @@ var parsedUrl = parseUrl(remoteFile)
     }
   ;
 
+// request static file
 http.request(options, function(res) {
 
   FIELDS = [
@@ -55,6 +57,7 @@ http.request(options, function(res) {
 
 }).end();
 
+// prepare form-receiving http server
 server = http.createServer(function(req, res) {
 
   var form = new IncomingForm({uploadDir: common.dir.tmp});

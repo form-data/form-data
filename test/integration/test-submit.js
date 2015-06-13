@@ -8,7 +8,7 @@ var fs = require('fs');
 var FormData = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
 
-var remoteFile = 'http://nodejs.org/images/logo.png';
+var remoteFile = 'http://localhost:'+common.staticPort+'/unicycle.jpg';
 
 // wrap non simple values into function
 // just to deal with ReadStream "autostart"

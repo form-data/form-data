@@ -1,45 +1,54 @@
+var https = require('https');
 var common = require('../common');
 var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
-var correctSocket = 'npmjs.org:443';
+var server;
 
-// testing default https port
+function submitForm() {
 
-// check params as string
-testRequest('https://npmjs.org/');
+  var form = new FormData();
 
-// check params as object
-testRequest({protocol: 'https:', hostname: 'npmjs.org', pathname: '/'});
+  form.append('field', 'value');
 
-// --- Santa's little helpers
+  form.submit({
+    protocol: 'https:',
+    hostname: 'localhost',
+    port: common.httpsPort,
+    pathname: '/',
+    // for self-signed certs on localhost
+    secureOptions: require('constants').SSL_OP_NO_TLSv1_2,
+    ca: common.httpsServerCert
+  }, function(err, res) {
 
-function testRequest(params)
-{
-  var form;
-  var request;
-  var sockets;
+    if (err) {
+      throw err;
+    }
 
-  form = new FormData();
+    assert.strictEqual(res.statusCode, 200);
+    assert.strictEqual(res.headers['x-success'], 'OK');
 
-  // break getLength – prevent submit() from actually submitting
-  form.getLength = function(){};
+    // unstuck new streams
+    res.resume();
 
-  request = form.submit(params);
-
-  sockets = Object.keys(request.agent.sockets);
-
-  assert.equal(sockets.length, 1);
-
-  // in 0.10 it's "nodomain:443"
-  // in 0.11 it's "nodomain:443::::::::"
-  assert.equal(correctSocket, sockets[0].substr(0, correctSocket.length));
-
-  // stop here
-  request.abort();
-
-  request.on('error', function(err){
-    assert.equal(err.code, 'ECONNRESET');
+    server.close();
   });
-
-  return request;
 }
+
+// create https server
+server = https.createServer({
+  key: common.httpsServerKey,
+  cert: common.httpsServerCert
+}, function(req, res) {
+
+  // old and simple
+  req.on('data', function(){});
+
+  req.on('end', function()
+  {
+    res.writeHead(200, {'x-success': 'OK'});
+    res.end('Great Success');
+  });
+});
+
+// when https server ready submit form
+server.listen(common.httpsPort, submitForm);
