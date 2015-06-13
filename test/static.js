@@ -1,6 +1,5 @@
 // serves static files
 var http = require('http');
-var https = require('https');
 var fs = require('fs');
 var path = require('path');
 var mime = require('mime-types');
@@ -11,11 +10,6 @@ if (!fs.existsSync(common.dir.tmp))
 {
   fs.mkdirSync(common.dir.tmp);
 }
-
-var httpsOptions = {
-  key: common.httpsServerKey,
-  cert: common.httpsServerCert
-};
 
 module.exports = function(callback) {
 
@@ -33,12 +27,5 @@ module.exports = function(callback) {
     fs.createReadStream(target).pipe(res);
   });
 
-  // create https server
-  var httpsServer = https.createServer(httpsOptions, function(req, res) {
-    res.writeHead(200, {'x-success': 'OK'});
-    res.end('Great Success');
-  });
-
-  // dirty&simple
-  httpServer.listen(common.staticPort, httpsServer.listen.bind(httpsServer, common.httpsPort, callback.bind(undefined, httpServer, httpsServer)));
+  httpServer.listen(common.staticPort, callback.bind(undefined, httpServer));
 };
