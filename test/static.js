@@ -12,12 +12,9 @@ if (!fs.existsSync(common.dir.tmp))
   fs.mkdirSync(common.dir.tmp);
 }
 
-// make it work with self-signed
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
-
 var httpsOptions = {
-  key: fs.readFileSync(path.join(__dirname, './fixture/key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, './fixture/cert.pem'))
+  key: common.httpsServerKey,
+  cert: common.httpsServerCert
 };
 
 module.exports = function(callback) {

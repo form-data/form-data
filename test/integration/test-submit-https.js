@@ -2,33 +2,23 @@ var common = require('../common');
 var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
 
-// testing default https port
+var form = new FormData();
 
-// check params as string
-testRequest('https://localhost:'+common.httpsPort+'/');
+form.submit({
+  protocol: 'https:',
+  hostname: 'localhost',
+  port: common.httpsPort,
+  pathname: '/',
+  ca: common.httpsServerCert
+}, function(err, res) {
 
-// check params as object
-testRequest({protocol: 'https:', hostname: 'localhost', port: common.httpsPort, pathname: '/'});
+  if (err) {
+    throw err;
+  }
 
-// --- Santa's little helpers
+  assert.strictEqual(res.statusCode, 200);
+  assert.strictEqual(res.headers['x-success'], 'OK');
 
-function testRequest(params)
-{
-  var form;
-
-  form = new FormData();
-
-  form.submit(params, function(err, res)
-  {
-    if (err) {
-      throw err;
-    }
-
-    assert.strictEqual(res.statusCode, 200);
-    assert.strictEqual(res.headers['x-success'], 'OK');
-
-    // unstuck new streams
-    res.resume();
-  });
-
-}
+  // unstuck new streams
+  res.resume();
+});
