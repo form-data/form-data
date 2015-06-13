@@ -11,7 +11,7 @@ far.add(__dirname);
 far.include(/test-.*\.js$/);
 
 // start static server for all tests
-static(function(staticServer)
+static(function()
 {
   far.execute();
 });

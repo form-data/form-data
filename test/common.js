@@ -14,3 +14,4 @@ common.fake = require('fake');
 common.port = 8432;
 
 common.staticPort = 9432;
+common.httpsPort = 9443;
