@@ -12,3 +12,5 @@ common.assert = require('assert');
 common.fake = require('fake');
 
 common.port = 8432;
+
+common.staticPort = 9432;

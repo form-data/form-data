@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+var static = require('./static');
 var far = require('far').create();
 
 if (process.env.verbose)
@@ -9,4 +10,8 @@ if (process.env.verbose)
 far.add(__dirname);
 far.include(/test-.*\.js$/);
 
-far.execute();
+// start static server for all tests
+static(function(staticServer)
+{
+  far.execute();
+});
