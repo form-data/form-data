@@ -19,12 +19,7 @@
     "combined-stream": "^1.0.3",
     "mime-types": "^2.1.1"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://raw.github.com/felixge/node-form-data/master/License"
-    }
-  ],
+  "license": "MIT",
   "devDependencies": {
     "fake": "^0.2.2",
     "far": "^0.0.7",
