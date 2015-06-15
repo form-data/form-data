@@ -8,8 +8,14 @@ var correctSocket = 'npmjs.org:443';
 // check params as string
 testRequest('https://npmjs.org/');
 
+testRequest('https://npmjs.org:443/');
+
 // check params as object
 testRequest({protocol: 'https:', hostname: 'npmjs.org', pathname: '/'});
+
+testRequest({port: 443, hostname: 'npmjs.org', pathname: '/'});
+
+testRequest({port: 443, protocol: 'https:', hostname: 'npmjs.org', pathname: '/'});
 
 // --- Santa's little helpers
 
