@@ -8,6 +8,7 @@
     "url": "git://github.com/felixge/node-form-data.git"
   },
   "main": "./lib/form_data",
+  "browser": "./lib/browser",
   "scripts": {
     "test": "node test/run.js"
   },
