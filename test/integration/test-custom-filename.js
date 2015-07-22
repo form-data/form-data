@@ -5,6 +5,7 @@ re: https://github.com/felixge/node-form-data/issues/29
 
 var common       = require('../common');
 var assert       = common.assert;
+var mime         = require('mime-types');
 var http         = require('http');
 var fs           = require('fs');
 
@@ -20,25 +21,28 @@ var server = http.createServer(function(req, res) {
 
   var form = new IncomingForm({uploadDir: common.dir.tmp});
 
-  form.parse(req);
+  form.parse(req, function (err, fields, files) {
+      assert(!err);
+    
+      assert('my_file1' in files);
+      assert.strictEqual(files['my_file1'].name, options.filename);
+      assert.strictEqual(files['my_file1'].type, options.contentType);
 
-  form
-    .on('file', function(name, file) {
-      assert.strictEqual(name, 'my_file');
-      assert.strictEqual(file.name, options.filename);
-      assert.strictEqual(file.type, options.contentType);
-    })
-    .on('end', function() {
+      assert('my_file2' in files);
+      assert.strictEqual(files['my_file2'].name, options.filename);
+      assert.strictEqual(files['my_file2'].type, mime.lookup(options.filename));
+
       res.writeHead(200);
       res.end('done');
-    });
+  });
 });
 
 
 server.listen(common.port, function() {
   var form = new FormData();
 
-  form.append('my_file', fs.createReadStream(common.dir.fixture + '/unicycle.jpg'), options);
+  form.append('my_file1', fs.createReadStream(common.dir.fixture + '/unicycle.jpg'), options);
+  form.append('my_file2', fs.createReadStream(common.dir.fixture + '/unicycle.jpg'), options.filename);
 
   form.submit('http://localhost:' + common.port + '/', function(err, res) {
     if (err) {
