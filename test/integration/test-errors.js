@@ -3,6 +3,7 @@ var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
 var fake = require('fake').create();
 var fs = require('fs');
+var http = require('http');
 
 // https://github.com/felixge/node-form-data/issues/38
 (function testAppendArray() {
@@ -60,4 +61,26 @@ var fs = require('fs');
 
   // getLengthSync DOESN'T calculate streams length
   assert.ok(expectedLength > calculatedLength);
+})();
+
+(function testStreamError() {
+  var req;
+  var form = new FormData();
+  var path = '/why/u/no/exists';
+  var src = fs.createReadStream(path);
+  var server = http.createServer();
+  var addr = 'http://localhost:' + common.port;
+
+  form.append('fake-stream', src);
+
+  form.on('error', function(err) {
+    assert.equal(err.code, 'ENOENT');
+    assert.equal(err.path, path);
+    req.on('error', function() {});
+    server.close();
+  });
+
+  server.listen(common.port, function() {
+    req = form.submit(addr);
+  });
 })();
