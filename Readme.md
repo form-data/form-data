@@ -161,6 +161,21 @@ form.submit({
 });
 ```
 
+You can also submit a form using [node-fetch](https://github.com/bitinn/node-fetch):
+
+``` javascript
+var form = new FormData();
+
+form.append('a', 1);
+
+fetch('http://example.com', { method: 'POST', body: form })
+    .then(function(res) {
+        return res.json();
+    }).then(function(json) {
+        console.log(json);
+    });
+```
+
 ## Notes
 
 - ```getLengthSync()``` method DOESN'T calculate length for streams, use ```knownLength``` options as workaround.
