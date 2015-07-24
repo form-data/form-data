@@ -13,12 +13,24 @@ var remoteFile = 'http://localhost:'+common.staticPort+'/unicycle.jpg';
 // wrap non simple values into function
 // just to deal with ReadStream "autostart"
 // Can't wait for 0.10
-var FIELDS = [
-  {name: 'my_field', value: 'my_value'},
-  {name: 'my_buffer', value: function(){ return new Buffer([1, 2, 3])} },
-  {name: 'my_file', value: function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg')} },
-  {name: 'remote_file', value: function(){ return request(remoteFile)} }
-];
+var FIELDS = {
+  'my_field': {
+    value: 'my_value'
+  },
+  'my_buffer': {
+    type: FormData.DEFAULT_CONTENT_TYPE,
+    value: function(){ return new Buffer([1, 2, 3]); }
+  },
+  'my_file': {
+    type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
+    value: function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
+  },
+  'remote_file': {
+    type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
+    value: function(){ return request(remoteFile); }
+  }
+};
+var fieldsPassed = Object.keys(FIELDS).length;
 
 var server = http.createServer(function(req, res) {
 
@@ -28,15 +40,17 @@ var server = http.createServer(function(req, res) {
 
   form
     .on('field', function(name, value) {
-      var field = FIELDS.shift();
-      assert.strictEqual(name, field.name);
+      fieldsPassed--;
+      assert.ok(name in FIELDS);
+      var field = FIELDS[name];
       assert.strictEqual(value, field.value+'');
     })
     .on('file', function(name, file) {
-      var field = FIELDS.shift();
-      assert.strictEqual(name, field.name);
+      fieldsPassed--;
+      assert.ok(name in FIELDS);
+      var field = FIELDS[name];
       assert.strictEqual(file.name, path.basename(field.value.path));
-      assert.strictEqual(file.type, mime.lookup(file.name));
+      assert.strictEqual(file.type, field.type);
     })
     .on('end', function() {
       res.writeHead(200);
@@ -45,14 +59,18 @@ var server = http.createServer(function(req, res) {
 });
 
 server.listen(common.port, function() {
+
   var form = new FormData();
-  FIELDS.forEach(function(field) {
+
+  var field;
+  for (var name in FIELDS) {
+    field = FIELDS[name];
     // important to append ReadStreams within the same tick
     if ((typeof field.value == 'function')) {
       field.value = field.value();
     }
-    form.append(field.name, field.value);
-  });
+    form.append(name, field.value);
+  }
 
   var request = http.request({
     method: 'post',
@@ -73,5 +91,5 @@ server.listen(common.port, function() {
 });
 
 process.on('exit', function() {
-  assert.strictEqual(FIELDS.length, 0);
+  assert.strictEqual(fieldsPassed, 0);
 });

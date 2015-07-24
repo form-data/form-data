@@ -14,10 +14,21 @@ var remoteFile = 'http://localhost:'+common.staticPort+'/unicycle.jpg';
 // just to deal with ReadStream "autostart"
 // Can't wait for 0.10
 var FIELDS = {
-  'my_field': 'my_value',
-  'my_buffer': function(){ return new Buffer([1, 2, 3]); },
-  'my_file': function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); },
-  'remote_file': function(){ return request(remoteFile); }
+  'my_field': {
+    value: 'my_value'
+  },
+  'my_buffer': {
+    type: FormData.DEFAULT_CONTENT_TYPE,
+    value: function(){ return new Buffer([1, 2, 3]); }
+  },
+  'my_file': {
+    type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
+    value: function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
+  },
+  'remote_file': {
+    type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
+    value: function(){ return request(remoteFile); }
+  }
 };
 var fieldsPassed = Object.keys(FIELDS).length;
 
@@ -30,16 +41,16 @@ var server = http.createServer(function(req, res) {
   form
     .on('field', function(name, value) {
       fieldsPassed--;
+      assert.ok(name in FIELDS);
       var field = FIELDS[name];
-      assert.ok(field);
-      assert.strictEqual(value, ''+field);
+      assert.strictEqual(value, field.value+'');
     })
     .on('file', function(name, file) {
       fieldsPassed--;
+      assert.ok(name in FIELDS);
       var field = FIELDS[name];
-      assert.ok(field);
-      assert.strictEqual(file.name, path.basename(field.path));
-      assert.strictEqual(file.type, mime.lookup(file.name));
+      assert.strictEqual(file.name, path.basename(field.value.path));
+      assert.strictEqual(file.type, field.type);
     })
     .on('end', function() {
       res.writeHead(200);
@@ -50,16 +61,15 @@ var server = http.createServer(function(req, res) {
 server.listen(common.port, function() {
 
   var form = new FormData();
-
+  
+  var field;
   for (var name in FIELDS) {
-    if (!FIELDS.hasOwnProperty(name)) continue;
-
+    field = FIELDS[name];
     // important to append ReadStreams within the same tick
-    if ((typeof FIELDS[name] == 'function')) {
-      FIELDS[name] = FIELDS[name]();
+    if ((typeof field.value == 'function')) {
+      field.value = field.value();
     }
-
-    form.append(name, FIELDS[name]);
+    form.append(name, field.value);
   }
 
   // custom params object passed to submit
