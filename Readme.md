@@ -1,5 +1,7 @@
 # Form-Data [![Build Status](https://travis-ci.org/felixge/node-form-data.png?branch=master)](https://travis-ci.org/felixge/node-form-data) [![Dependency Status](https://gemnasium.com/felixge/node-form-data.png)](https://gemnasium.com/felixge/node-form-data)
 
+[![Join the chat at https://gitter.im/felixge/node-form-data](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/felixge/node-form-data?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A module to create readable ```"multipart/form-data"``` streams. Can be used to submit forms and file uploads to other web applications.
 
 The API of this module is inspired by the [XMLHttpRequest-2 FormData Interface][xhr2-fd].
