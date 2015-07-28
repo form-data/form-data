@@ -14,20 +14,21 @@ var FIELDS = {
   },
   'custom_type': {
     value: 'my_value',
-    type: 'image/png',
+    expectedType: 'image/png',
     options: {
         contentType: 'image/png'
     }
   },
   'default_type': {
-    type: FormData.DEFAULT_CONTENT_TYPE,
+    expectedType: FormData.DEFAULT_CONTENT_TYPE,
     value: function(){ return new Buffer([1, 2, 3]); }
   },
   'implicit_type': {
-    type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
+    expectedType: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
     value: function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
   }
 };
+var fieldsPassed = false;
 
 var server = http.createServer(function(req, res) {
     var body = '';
@@ -44,15 +45,17 @@ var server = http.createServer(function(req, res) {
         assert.ok(fields[0].indexOf('Content-Type"') === -1);
         
         assert.ok(fields[1].indexOf('name="custom_type"') > -1);
-        assert.ok(fields[1].indexOf('Content-Type: ' + FIELDS.custom_type.type) > -1);
+        assert.ok(fields[1].indexOf('Content-Type: ' + FIELDS.custom_type.expectedType) > -1);
         
         assert.ok(fields[2].indexOf('name="default_type"') > -1);
-        assert.ok(fields[2].indexOf('Content-Type: ' + FIELDS.default_type.type) > -1);
+        assert.ok(fields[2].indexOf('Content-Type: ' + FIELDS.default_type.expectedType) > -1);
 
         assert.ok(fields[3].indexOf('name="implicit_type"') > -1);
-        assert.ok(fields[3].indexOf('Content-Type: ' + FIELDS.implicit_type.type) > -1);
+        assert.ok(fields[3].indexOf('Content-Type: ' + FIELDS.implicit_type.expectedType) > -1);
+    
+        fieldsPassed = true;
+        res.end();
     });
-    res.end();
 
 });
 
@@ -88,4 +91,8 @@ server.listen(common.port, function() {
     server.close();
   });
 
+});
+
+process.on('exit', function() {
+  assert.ok(fieldsPassed);
 });
