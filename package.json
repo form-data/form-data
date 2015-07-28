@@ -5,7 +5,7 @@
   "version": "1.0.0-rc2",
   "repository": {
     "type": "git",
-    "url": "git://github.com/felixge/node-form-data.git"
+    "url": "https://github.com/form-data/form-data"
   },
   "main": "./lib/form_data",
   "browser": "./lib/browser",
