@@ -41,21 +41,27 @@ var server = http.createServer(function(req, res) {
       requestBodyLength += data.length;
   });
 
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
+  req.on('end', function() {
+    // make sure total Content-Length is properly calculated
+    assert.equal(req.headers['content-length'], requestBodyLength);
+    // successfully accepted request and it's good
+    res.writeHead(200);
+  });
 
+  var form = new IncomingForm({uploadDir: common.dir.tmp});
   form.parse(req);
 
   form
     .on('file', function(name, file) {
-
-      // make sure total Content-Length is properly calculated
-      assert.equal(req.headers['content-length'], requestBodyLength);
       // make sure chunks are the same size
       assert.equal(file.size, testSubjects[name].readSize);
+      // clean up tested subject
+      delete testSubjects[name];
     })
-    .on('end', function() {
-      res.writeHead(200);
-      res.end('done');
+    .on('end', function()
+    {
+      // done here
+      res.end();
     });
 });
 
@@ -88,10 +94,16 @@ server.listen(common.port, function() {
 
     assert.strictEqual(res.statusCode, 200);
 
+    // wait for server to finish
+    res.on('end', function()
+    {
+      // check that all subjects were tested
+      assert.strictEqual(Object.keys(testSubjects).length, 0);
+      server.close();
+    });
+
     // unstuck new streams
     res.resume();
-
-    server.close();
   });
 
 });
