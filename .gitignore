@@ -1,6 +1,10 @@
-*.un~
-*.sublime-*
-/node_modules/*
-/test/tmp
-/.idea
 *.iml
+*.sublime-*
+*.un~
+
+.idea
+
+sftp-config.json
+
+node_modules/
+test/tmp/
