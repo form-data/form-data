@@ -33,12 +33,16 @@ var testSubjects = {
   }
 };
 
+function readSizeAccumulator(data) {
+  this.readSize += data.length;
+}
+
 var server = http.createServer(function(req, res) {
   var requestBodyLength = 0;
 
   // calculate actual length of the request body
   req.on('data', function(data) {
-      requestBodyLength += data.length;
+    requestBodyLength += data.length;
   });
 
   req.on('end', function() {
@@ -58,8 +62,7 @@ var server = http.createServer(function(req, res) {
       // clean up tested subject
       delete testSubjects[name];
     })
-    .on('end', function()
-    {
+    .on('end', function() {
       // done here
       res.end();
     });
@@ -72,19 +75,20 @@ server.listen(common.port, function() {
 
   // add test subjects to the form
   for (name in testSubjects) {
-    if (!testSubjects.hasOwnProperty(name)) continue;
+    if (!testSubjects.hasOwnProperty(name)) {
+      continue;
+    }
 
     options = {encoding: 'utf8'};
-    testSubjects[name].start && (options.start = testSubjects[name].start);
-    testSubjects[name].end && (options.end = testSubjects[name].end);
+
+    if (testSubjects[name].start) { options.start = testSubjects[name].start; }
+    if (testSubjects[name].end) { options.end = testSubjects[name].end; }
 
     form.append(name, testSubjects[name].fsStream = fs.createReadStream(common.dir.fixture + '/' + testSubjects[name].file, options));
 
     // calculate data size
     testSubjects[name].readSize = 0;
-    testSubjects[name].fsStream.on('data', function(data) {
-      this.readSize += data.length;
-    }.bind(testSubjects[name]));
+    testSubjects[name].fsStream.on('data', readSizeAccumulator.bind(testSubjects[name]));
   }
 
   form.submit('http://localhost:' + common.port + '/', function(err, res) {
@@ -95,8 +99,7 @@ server.listen(common.port, function() {
     assert.strictEqual(res.statusCode, 200);
 
     // wait for server to finish
-    res.on('end', function()
-    {
+    res.on('end', function() {
       // check that all subjects were tested
       assert.strictEqual(Object.keys(testSubjects).length, 0);
       server.close();

@@ -22,21 +22,21 @@ var server = http.createServer(function(req, res) {
   var form = new IncomingForm({uploadDir: common.dir.tmp});
 
   form.parse(req, function (err, fields, files) {
-      assert(!err);
-    
-      assert('my_file1' in files);
-      assert.strictEqual(files['my_file1'].name, options.filename);
-      assert.strictEqual(files['my_file1'].type, options.contentType);
+    assert(!err);
 
-      assert('my_file2' in files);
-      assert.strictEqual(files['my_file2'].name, options.filename);
-      assert.strictEqual(files['my_file2'].type, mime.lookup(options.filename));
+    assert('my_file1' in files);
+    assert.strictEqual(files['my_file1'].name, options.filename);
+    assert.strictEqual(files['my_file1'].type, options.contentType);
 
-      assert('my_file3' in files);
-      assert.strictEqual(files['my_file3'].type, FormData.DEFAULT_CONTENT_TYPE);
+    assert('my_file2' in files);
+    assert.strictEqual(files['my_file2'].name, options.filename);
+    assert.strictEqual(files['my_file2'].type, mime.lookup(options.filename));
 
-      res.writeHead(200);
-      res.end('done');
+    assert('my_file3' in files);
+    assert.strictEqual(files['my_file3'].type, FormData.DEFAULT_CONTENT_TYPE);
+
+    res.writeHead(200);
+    res.end('done');
   });
 });
 

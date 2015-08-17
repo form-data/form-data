@@ -8,7 +8,7 @@ var fs = require('fs');
 var FormData = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
 
-var remoteFile = 'http://localhost:'+common.staticPort+'/unicycle.jpg';
+var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';
 
 // wrap non simple values into function
 // just to deal with ReadStream "autostart"
@@ -43,7 +43,7 @@ var server = http.createServer(function(req, res) {
       fieldsPassed--;
       assert.ok(name in FIELDS);
       var field = FIELDS[name];
-      assert.strictEqual(value, field.value+'');
+      assert.strictEqual(value, field.value + '');
     })
     .on('file', function(name, file) {
       fieldsPassed--;
@@ -61,9 +61,11 @@ var server = http.createServer(function(req, res) {
 server.listen(common.port, function() {
 
   var form = new FormData();
-  
+
   var field;
   for (var name in FIELDS) {
+    if (!FIELDS.hasOwnProperty(name)) { continue; }
+
     field = FIELDS[name];
     // important to append ReadStreams within the same tick
     if ((typeof field.value == 'function')) {

@@ -17,8 +17,6 @@ var expectedLength;
 
 
 var server = http.createServer(function(req, res) {
-  var data = '';
-
   assert.ok( typeof req.headers['content-length'] !== 'undefined' );
   assert.equal(req.headers['content-length'], expectedLength);
 

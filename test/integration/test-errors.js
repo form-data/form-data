@@ -10,11 +10,11 @@ var http = require('http');
 
   var form = new FormData();
 
-  var callback = fake.callback(arguments.callee.name + '-onError-append');
+  var callback = fake.callback('testAppendArray-onError-append');
   fake.expectAnytime(callback, ['Arrays are not supported.']);
 
   form.on('error', function(err) {
-    // workaroud for expectAnytime handling objects
+    // workaround for expectAnytime handling objects
     callback(err.message);
   });
 
@@ -49,7 +49,7 @@ var http = require('http');
   expectedLength += form._overheadLength + form._lastBoundary().length;
 
 
-  var callback = fake.callback(arguments.callee.name + '-onError-getLengthSync');
+  var callback = fake.callback('testGetLengthSync-onError-getLengthSync');
   fake.expectAnytime(callback, ['Cannot calculate proper length in synchronous way.']);
 
   form.on('error', function(err) {

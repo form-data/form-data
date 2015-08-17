@@ -37,8 +37,7 @@ server = http.createServer(function(req, res) {
     body += data;
   });
 
-  req.on('end', function()
-  {
+  req.on('end', function() {
     // last character(s) sequence equals predefined line break
     assert.strictEqual(body.substr(-1 * FormData.LINE_BREAK.length), FormData.LINE_BREAK);
 

@@ -6,8 +6,7 @@ var mime = require('mime-types');
 var common = require('./common');
 
 // prepare tmp folder
-if (!fs.existsSync(common.dir.tmp))
-{
+if (!fs.existsSync(common.dir.tmp)) {
   fs.mkdirSync(common.dir.tmp);
 }
 

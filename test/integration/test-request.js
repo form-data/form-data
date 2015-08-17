@@ -9,7 +9,6 @@ var path = require('path');
 var mime = require('mime-types');
 var request = require('request');
 var fs = require('fs');
-var FormData = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
 
 var fileName = common.dir.fixture + '/unicycle.jpg';
@@ -36,36 +35,35 @@ var server = http.createServer(function(req, res) {
 
 server.listen(common.port, function() {
 
-  var uploadSize = uploaded = 0;
+  var uploadSize = 0;
+  var uploaded = 0;
 
   var r = request.post('http://localhost:' + common.port + '/', function(err, res) {
+    assert.ifError(err);
     assert.strictEqual(res.statusCode, 200);
     server.close();
   });
 
   var form = r.form();
 
-  for (var i=0; i<numItems; i++) {
-    form.append('file_'+i, myFile());
+  for (var i = 0; i < numItems; i++) {
+    form.append('file_' + i, myFile());
   }
 
   // get upload size
-  form.getLength(function(err, size)
-  {
+  form.getLength(function(err, size) {
     assert.equal(err, null);
     uploadSize = size;
     assert.ok(uploadSize > 0);
   });
 
   // calculate uploaded size chunk by chunk
-  form.on('data', function(data)
-  {
+  form.on('data', function(data) {
     uploaded += data.length;
   });
 
   // done uploading compare sizes
-  form.on('end', function()
-  {
+  form.on('end', function() {
     assert.equal(uploaded, uploadSize);
   });
 });
@@ -73,6 +71,3 @@ server.listen(common.port, function() {
 process.on('exit', function() {
   assert.strictEqual(numItems, 0);
 });
-
-
-

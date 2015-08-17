@@ -6,7 +6,7 @@ var fs = require('fs');
 
 (function testEmptyForm() {
   var form = new FormData();
-  var callback = fake.callback(arguments.callee.name + '-getLength');
+  var callback = fake.callback('testEmptyForm-getLength');
   var calls = fake.expectAnytime(callback, [null, 0]).calls;
 
   form.getLength(callback);
@@ -21,7 +21,7 @@ var fs = require('fs');
 
   var form = new FormData();
   form.append(FIELD, VALUE);
-  var callback = fake.callback(arguments.callee.name + '-getLength');
+  var callback = fake.callback('testUtf8String-getLength');
 
   var expectedLength =
     form._overheadLength +
@@ -38,7 +38,7 @@ var fs = require('fs');
 
   var form = new FormData();
   form.append(FIELD, VALUE);
-  var callback = fake.callback(arguments.callee.name + '-getLength');
+  var callback = fake.callback('testBuffer-getLength');
 
   var expectedLength =
     form._overheadLength +
@@ -54,20 +54,20 @@ var fs = require('fs');
   var fields = [
     {
       name: 'my_field',
-      value: 'Test 123',
+      value: 'Test 123'
     },
     {
       name: 'my_image',
-      value: fs.createReadStream(common.dir.fixture + '/unicycle.jpg'),
+      value: fs.createReadStream(common.dir.fixture + '/unicycle.jpg')
     },
     {
       name: 'my_buffer',
-      value: new Buffer('123'),
+      value: new Buffer('123')
     },
     {
       name: 'my_txt',
-      value: fs.createReadStream(common.dir.fixture + '/veggies.txt'),
-    },
+      value: fs.createReadStream(common.dir.fixture + '/veggies.txt')
+    }
   ];
 
   var form = new FormData();
@@ -85,7 +85,7 @@ var fs = require('fs');
 
   expectedLength += form._overheadLength + form._lastBoundary().length;
 
-  var callback = fake.callback(arguments.callee.name + '-getLength');
+  var callback = fake.callback('testStringFileBufferFile-getLength');
   fake.expectAnytime(callback, [null, expectedLength]);
   form.getLength(callback);
 })();

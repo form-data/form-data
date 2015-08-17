@@ -11,14 +11,12 @@ var http = require('http');
 
 var FormData = require(common.dir.lib + '/form_data');
 
-var CRLF = '\r\n';
-
 var expectedLength;
 
 var dataSize = 1000000;
 
 var server = http.createServer(function(req, res) {
-  var data = '', uploaded = 0;
+  var uploaded = 0;
 
   assert.ok( typeof req.headers['content-length'] !== 'undefined' );
   assert.equal(req.headers['content-length'], expectedLength);
@@ -27,8 +25,7 @@ var server = http.createServer(function(req, res) {
   req.on('data', function(data) {
     uploaded += data.length;
   });
-  req.on('end', function()
-  {
+  req.on('end', function() {
     // compare uploaded total to the expected length
     assert.equal(uploaded, expectedLength);
 
