@@ -10,9 +10,11 @@
   "main": "./lib/form_data",
   "browser": "./lib/browser",
   "scripts": {
-    "test": "./test/run.js"
+    "test": "./test/run.js",
+    "lint": "eslint -c .eslintrc {lib/*,test/**/*}.js"
   },
   "pre-commit": [
+    "lint",
     "test"
   ],
   "engines": {
@@ -25,6 +27,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^0.24.1",
     "fake": "^0.2.2",
     "far": "^0.0.7",
     "formidable": "^1.0.17",

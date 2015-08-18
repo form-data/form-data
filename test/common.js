@@ -7,7 +7,7 @@ var rootDir = path.join(__dirname, '..');
 common.dir = {
   lib: path.join(rootDir, '/lib'),
   fixture: path.join(rootDir, '/test/fixture'),
-  tmp: path.join(rootDir, '/test/tmp'),
+  tmp: path.join(rootDir, '/test/tmp')
 };
 
 common.assert = require('assert');

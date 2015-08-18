@@ -1,0 +1,33 @@
+{
+  "rules": {
+    "indent": [2, 2],
+    "quotes": [2, "single"],
+    "linebreak-style": [2, "unix"],
+    "semi": [2, "always"],
+    "curly": [2, "all"],
+    "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+    "handle-callback-err": [2, "^err"],
+    "valid-jsdoc": [2, {
+      "requireReturn": false,
+      "requireReturnDescription": false,
+      "prefer": {
+        "return": "returns"
+      }
+    }],
+    "key-spacing": 0,
+    "strict": 0,
+    "no-underscore-dangle": 0,
+    "no-use-before-define": 0,
+    "dot-notation": 0,
+    "eol-last": 0,
+    "no-new": 0,
+    "semi-spacing": 0,
+    "no-multi-spaces": 0,
+    "eqeqeq": 0,
+    "no-mixed-requires": 0
+  },
+  "env": {
+    "node": true,
+    "browser": true
+  }
+}

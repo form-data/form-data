@@ -4,12 +4,11 @@ var http = require('http');
 var path = require('path');
 var mime = require('mime-types');
 var parseUrl = require('url').parse;
-var fs = require('fs');
 var FormData = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
 
 // static server prepared for all tests
-var remoteFile = 'http://localhost:'+common.staticPort+'/unicycle.jpg';
+var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';
 
 var FIELDS;
 var server;
@@ -24,12 +23,12 @@ var parsedUrl = parseUrl(remoteFile)
   ;
 
 // request static file
-http.request(options, function(res) {
+http.request(options, function(response) {
 
   FIELDS = [
     {name: 'my_field', value: 'my_value'},
     {name: 'my_buffer', value: new Buffer([1, 2, 3])},
-    {name: 'remote_file', value: res }
+    {name: 'remote_file', value: response }
   ];
 
   var form = new FormData();
@@ -40,10 +39,7 @@ http.request(options, function(res) {
   server.listen(common.port, function() {
 
     form.submit('http://localhost:' + common.port + '/', function(err, res) {
-
-      if (err) {
-        throw err;
-      }
+      if (err) { throw err; }
 
       assert.strictEqual(res.statusCode, 200);
 
@@ -68,7 +64,7 @@ server = http.createServer(function(req, res) {
     .on('field', function(name, value) {
       var field = FIELDS.shift();
       assert.strictEqual(name, field.name);
-      assert.strictEqual(value, field.value+'');
+      assert.strictEqual(value, field.value + '');
     })
     .on('file', function(name, file) {
       var field = FIELDS.shift();

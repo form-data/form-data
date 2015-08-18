@@ -43,8 +43,7 @@ server = https.createServer({
   // old and simple
   req.on('data', function(){});
 
-  req.on('end', function()
-  {
+  req.on('end', function() {
     res.writeHead(200, {'x-success': 'OK'});
     res.end('Great Success');
   });

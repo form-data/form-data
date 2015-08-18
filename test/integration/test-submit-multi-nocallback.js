@@ -34,8 +34,7 @@ var server = http.createServer(function(req, res) {
 server.listen(common.port, function() {
   var i;
 
-  for (i=0; i < times; i++)
-  {
+  for (i = 0; i < times; i++) {
     var form = new FormData();
 
     form.append('my_field', 'my_value');

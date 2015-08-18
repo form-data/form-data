@@ -1,7 +1,6 @@
 var common = require('../common');
 var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
-var fake = require('fake').create();
 var fs = require('fs');
 
 (function testGetLengthSync() {
@@ -25,7 +24,7 @@ var fs = require('fs');
 
   fields.forEach(function(field) {
     form.append(field.name, field.value);
-    expectedLength += (''+field.value).length;
+    expectedLength += ('' + field.value).length;
   });
 
   expectedLength += form._overheadLength + form._lastBoundary().length;
@@ -65,7 +64,7 @@ var fs = require('fs');
       var stat = fs.statSync(field.value.path);
       expectedLength += stat.size;
     } else {
-      expectedLength += (''+field.value).length;
+      expectedLength += ('' + field.value).length;
     }
   });
   expectedLength += form._overheadLength + form._lastBoundary().length;

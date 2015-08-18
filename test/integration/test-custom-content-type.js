@@ -31,40 +31,41 @@ var FIELDS = {
 var fieldsPassed = false;
 
 var server = http.createServer(function(req, res) {
-    var body = '';
-    var boundry = req.headers['content-type'].split('boundary=').pop();
+  var body = '';
+  var boundry = req.headers['content-type'].split('boundary=').pop();
 
-    req.on('data', function (data) { body += data.toString('utf-8'); });
-    req.on('end', function () {
-        // Separate body into individual files/fields and remove leading and trailing content.
-        var fields = body.split(boundry).slice(1, -1);
+  req.on('data', function (data) { body += data.toString('utf-8'); });
+  req.on('end', function () {
+    // Separate body into individual files/fields and remove leading and trailing content.
+    var fields = body.split(boundry).slice(1, -1);
 
-        assert.ok(fields.length === 4);
-        
-        assert.ok(fields[0].indexOf('name="no_type"') > -1);
-        assert.ok(fields[0].indexOf('Content-Type"') === -1);
-        
-        assert.ok(fields[1].indexOf('name="custom_type"') > -1);
-        assert.ok(fields[1].indexOf('Content-Type: ' + FIELDS.custom_type.expectedType) > -1);
-        
-        assert.ok(fields[2].indexOf('name="default_type"') > -1);
-        assert.ok(fields[2].indexOf('Content-Type: ' + FIELDS.default_type.expectedType) > -1);
+    assert.ok(fields.length === 4);
 
-        assert.ok(fields[3].indexOf('name="implicit_type"') > -1);
-        assert.ok(fields[3].indexOf('Content-Type: ' + FIELDS.implicit_type.expectedType) > -1);
-    
-        fieldsPassed = true;
-        res.end();
-    });
+    assert.ok(fields[0].indexOf('name="no_type"') > -1);
+    assert.ok(fields[0].indexOf('Content-Type"') === -1);
 
+    assert.ok(fields[1].indexOf('name="custom_type"') > -1);
+    assert.ok(fields[1].indexOf('Content-Type: ' + FIELDS.custom_type.expectedType) > -1);
+
+    assert.ok(fields[2].indexOf('name="default_type"') > -1);
+    assert.ok(fields[2].indexOf('Content-Type: ' + FIELDS.default_type.expectedType) > -1);
+
+    assert.ok(fields[3].indexOf('name="implicit_type"') > -1);
+    assert.ok(fields[3].indexOf('Content-Type: ' + FIELDS.implicit_type.expectedType) > -1);
+
+    fieldsPassed = true;
+    res.end();
+  });
 });
 
 server.listen(common.port, function() {
 
   var form = new FormData();
-  
+
   var field;
   for (var name in FIELDS) {
+    if (!FIELDS.hasOwnProperty(name)) { continue; }
+
     field = FIELDS[name];
     // important to append ReadStreams within the same tick
     if ((typeof field.value == 'function')) {
