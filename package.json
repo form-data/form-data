@@ -11,7 +11,7 @@
   "browser": "./lib/browser",
   "scripts": {
     "test": "./test/run.js",
-    "lint": "eslint -c .eslintrc {lib/*,test/**/*}.js"
+    "lint": "eslint lib/*.js test/*.js test/**/*.js"
   },
   "pre-commit": [
     "lint",

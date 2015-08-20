@@ -12,6 +12,9 @@ var fs           = require('fs');
 var FormData     = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
 
+var knownFile = common.dir.fixture + '/unicycle.jpg';
+var unknownFile = common.dir.fixture + '/unknown_file_type';
+
 var options = {
   filename: 'test.png',
   contentType: 'image/gif'
@@ -24,16 +27,24 @@ var server = http.createServer(function(req, res) {
   form.parse(req, function (err, fields, files) {
     assert(!err);
 
-    assert('my_file1' in files);
-    assert.strictEqual(files['my_file1'].name, options.filename);
-    assert.strictEqual(files['my_file1'].type, options.contentType);
+    assert('custom_everything' in files);
+    assert.strictEqual(files['custom_everything'].name, options.filename, 'Expects custom filename');
+    assert.strictEqual(files['custom_everything'].type, options.contentType, 'Expects custom content-type');
 
-    assert('my_file2' in files);
-    assert.strictEqual(files['my_file2'].name, options.filename);
-    assert.strictEqual(files['my_file2'].type, mime.lookup(options.filename));
+    assert('custom_filename' in files);
+    assert.strictEqual(files['custom_filename'].name, options.filename, 'Expects custom filename');
+    assert.strictEqual(files['custom_filename'].type, mime.lookup(knownFile), 'Expects original content-type');
 
-    assert('my_file3' in files);
-    assert.strictEqual(files['my_file3'].type, FormData.DEFAULT_CONTENT_TYPE);
+    assert('unknown_with_filename' in files);
+    assert.strictEqual(files['unknown_with_filename'].name, options.filename, 'Expects custom filename');
+    assert.strictEqual(files['unknown_with_filename'].type, mime.lookup(options.filename), 'Expects filename-derived content-type');
+
+    assert('unknown_with_filename_as_object' in files);
+    assert.strictEqual(files['unknown_with_filename_as_object'].name, options.filename, 'Expects custom filename');
+    assert.strictEqual(files['unknown_with_filename_as_object'].type, mime.lookup(options.filename), 'Expects filename-derived content-type');
+
+    assert('unknown_everything' in files);
+    assert.strictEqual(files['unknown_everything'].type, FormData.DEFAULT_CONTENT_TYPE, 'Expects default content-type');
 
     res.writeHead(200);
     res.end('done');
@@ -45,11 +56,15 @@ server.listen(common.port, function() {
   var form = new FormData();
 
   // Explicit contentType and filename.
-  form.append('my_file1', fs.createReadStream(common.dir.fixture + '/unicycle.jpg'), options);
-  // Filename only.
-  form.append('my_file2', fs.createReadStream(common.dir.fixture + '/unicycle.jpg'), options.filename);
+  form.append('custom_everything', fs.createReadStream(knownFile), options);
+  // Filename only with real file
+  form.append('custom_filename', fs.createReadStream(knownFile), options.filename);
+  // Filename only with unknown file
+  form.append('unknown_with_filename', fs.createReadStream(unknownFile), options.filename);
+  // Filename only with unknown file
+  form.append('unknown_with_filename_as_object', fs.createReadStream(unknownFile), {filename: options.filename});
   // No options or implicit file type from extension.
-  form.append('my_file3', fs.createReadStream(common.dir.fixture + '/unknown_file_type'));
+  form.append('unknown_everything', fs.createReadStream(unknownFile));
 
   form.submit('http://localhost:' + common.port + '/', function(err, res) {
     if (err) {

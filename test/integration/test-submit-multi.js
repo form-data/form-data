@@ -3,8 +3,8 @@ var assert = common.assert;
 var http = require('http');
 var FormData = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
-
 var times = 10;
+var server;
 
 function submitForm() {
   var form = new FormData();
@@ -27,10 +27,9 @@ function submitForm() {
       server.close();
     }
   });
-
 }
 
-var server = http.createServer(function(req, res) {
+server = http.createServer(function(req, res) {
 
   // no need to have tmp dir here, since no files being uploaded
   // but formidable would fail in 0.6 otherwise
