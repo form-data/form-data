@@ -26,6 +26,13 @@ var FIELDS = {
   'implicit_type': {
     expectedType: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
     value: function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
+  },
+  'overridden_type': {
+    expectedType: 'image/png',
+    options: {
+        contentType: 'image/png'
+    },
+    value: function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
   }
 };
 var fieldsPassed = false;
@@ -38,20 +45,19 @@ var server = http.createServer(function(req, res) {
   req.on('end', function () {
     // Separate body into individual files/fields and remove leading and trailing content.
     var fields = body.split(boundry).slice(1, -1);
+    var fieldNames = Object.keys(FIELDS);
 
-    assert.ok(fields.length === 4);
+    assert.ok(fields.length === fieldNames.length);
 
-    assert.ok(fields[0].indexOf('name="no_type"') > -1);
-    assert.ok(fields[0].indexOf('Content-Type"') === -1);
+    for (var i = 0; i < fieldNames.length; i++) {
+      assert.ok(fields[i].indexOf('name="' + fieldNames[i] + '"') > -1);
 
-    assert.ok(fields[1].indexOf('name="custom_type"') > -1);
-    assert.ok(fields[1].indexOf('Content-Type: ' + FIELDS.custom_type.expectedType) > -1);
-
-    assert.ok(fields[2].indexOf('name="default_type"') > -1);
-    assert.ok(fields[2].indexOf('Content-Type: ' + FIELDS.default_type.expectedType) > -1);
-
-    assert.ok(fields[3].indexOf('name="implicit_type"') > -1);
-    assert.ok(fields[3].indexOf('Content-Type: ' + FIELDS.implicit_type.expectedType) > -1);
+      if (!FIELDS[fieldNames[i]].expectedType) {
+        assert.equal(fields[i].indexOf('Content-Type'), -1, 'Expecting ' + fieldNames[i] + ' not to have Content-Type');
+      } else {
+        assert.ok(fields[i].indexOf('Content-Type: ' + FIELDS[fieldNames[i]].expectedType) > -1, 'Expecting ' + fieldNames[i] + ' to have Content-Type ' + FIELDS[fieldNames[i]].expectedType);
+      }
+    }
 
     fieldsPassed = true;
     res.end();
