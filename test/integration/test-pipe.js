@@ -7,6 +7,7 @@ var request = require('request');
 var fs = require('fs');
 var FormData = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
+var isStream = require('is-stream');
 
 var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';
 
@@ -61,6 +62,8 @@ var server = http.createServer(function(req, res) {
 server.listen(common.port, function() {
 
   var form = new FormData();
+
+  assert.ok(isStream.readable(form));
 
   var field;
   for (var name in FIELDS) {
