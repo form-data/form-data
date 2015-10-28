@@ -31,6 +31,7 @@
     "fake": "^0.2.2",
     "far": "^0.0.7",
     "formidable": "^1.0.17",
+    "is-stream": "^1.0.1",
     "pre-commit": "^1.0.10",
     "request": "^2.60.0"
   }
