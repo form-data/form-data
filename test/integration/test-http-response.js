@@ -13,14 +13,13 @@ var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';
 var FIELDS;
 var server;
 
-var parsedUrl = parseUrl(remoteFile)
-  , options = {
-      method: 'get',
-      port: parsedUrl.port || 80,
-      path: parsedUrl.pathname,
-      host: parsedUrl.hostname
-    }
-  ;
+var parsedUrl = parseUrl(remoteFile);
+var options = {
+  method: 'get',
+  port: parsedUrl.port || 80,
+  path: parsedUrl.pathname,
+  host: parsedUrl.hostname
+};
 
 // request static file
 http.request(options, function(response) {

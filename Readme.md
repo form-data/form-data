@@ -1,13 +1,17 @@
 # Form-Data [![NPM Module](https://img.shields.io/npm/v/form-data.svg)](https://www.npmjs.com/package/form-data) [![Join the chat at https://gitter.im/form-data/form-data](http://form-data.github.io/images/gitterbadge.svg)](https://gitter.im/form-data/form-data)
 
-[![Codacy Badge](https://img.shields.io/codacy/43ece80331c246179695e41f81eeffe2.svg)](https://www.codacy.com/app/form-data/form-data) [![Build Status](https://img.shields.io/travis/form-data/form-data/master.svg)](https://travis-ci.org/form-data/form-data) [![Dependency Status](https://img.shields.io/david/form-data/form-data.svg)](https://david-dm.org/form-data/form-data)
-
 A library to create readable ```"multipart/form-data"``` streams. Can be used to submit forms and file uploads to other web applications.
 
 The API of this library is inspired by the [XMLHttpRequest-2 FormData Interface][xhr2-fd].
 
 [xhr2-fd]: http://dev.w3.org/2006/webapi/XMLHttpRequest-2/Overview.html#the-formdata-interface
 [streams2-thing]: http://nodejs.org/api/stream.html#stream_compatibility_with_older_node_versions
+
+[![Build Status](https://img.shields.io/travis/form-data/form-data/master.svg)](https://travis-ci.org/form-data/form-data) [![Coverage Status](https://coveralls.io/repos/form-data/form-data/badge.svg?branch=master&service=github)](https://coveralls.io/github/form-data/form-data?branch=master) [![Dependency Status](https://img.shields.io/david/form-data/form-data.svg)](https://david-dm.org/form-data/form-data)
+
+<!--
+[![bitHound Overall Score](https://www.bithound.io/github/form-data/form-data/badges/score.svg)](https://www.bithound.io/github/form-data/form-data) [![Codacy Badge](https://img.shields.io/codacy/43ece80331c246179695e41f81eeffe2.svg)](https://www.codacy.com/app/form-data/form-data)
+-->
 
 ## Install
 

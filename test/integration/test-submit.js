@@ -18,15 +18,15 @@ var FIELDS = {
   },
   'my_buffer': {
     type: FormData.DEFAULT_CONTENT_TYPE,
-    value: function(){ return new Buffer([1, 2, 3]); }
+    value: function() { return new Buffer([1, 2, 3]); }
   },
   'my_file': {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
+    value: function() { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
   },
   'remote_file': {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function(){ return request(remoteFile); }
+    value: function() { return request(remoteFile); }
   }
 };
 var fieldsPassed = Object.keys(FIELDS).length;

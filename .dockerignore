@@ -1,12 +1,7 @@
 *.iml
-*.log
 *.sublime-*
 *.un~
-
 .idea
-
 sftp-config.json
-
-coverage/
 node_modules/
 test/tmp/

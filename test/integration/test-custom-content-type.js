@@ -16,23 +16,23 @@ var FIELDS = {
     value: 'my_value',
     expectedType: 'image/png',
     options: {
-        contentType: 'image/png'
+      contentType: 'image/png'
     }
   },
   'default_type': {
     expectedType: FormData.DEFAULT_CONTENT_TYPE,
-    value: function(){ return new Buffer([1, 2, 3]); }
+    value: function() { return new Buffer([1, 2, 3]); }
   },
   'implicit_type': {
     expectedType: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
+    value: function() { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
   },
   'overridden_type': {
     expectedType: 'image/png',
     options: {
-        contentType: 'image/png'
+      contentType: 'image/png'
     },
-    value: function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
+    value: function() { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
   }
 };
 var fieldsPassed = false;

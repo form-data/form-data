@@ -4,6 +4,9 @@ var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
 var server;
 
+/**
+ * Test submission to HTTPS endpoint
+ */
 function submitForm() {
 
   var form = new FormData();
@@ -41,7 +44,7 @@ server = https.createServer({
 }, function(req, res) {
 
   // old and simple
-  req.on('data', function(){});
+  req.on('data', function() {});
 
   req.on('end', function() {
     res.writeHead(200, {'x-success': 'OK'});

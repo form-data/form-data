@@ -1,14 +1,17 @@
 *.iml
+*.log
 *.sublime-*
 *.un~
 
 .idea
 .gitignore
+.istanbul.yml
 .npmignore
 .travis.yml
 
 Makefile
 sftp-config.json
 
+coverage/
 node_modules/
 test/

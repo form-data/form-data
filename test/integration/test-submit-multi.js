@@ -6,6 +6,9 @@ var IncomingForm = require('formidable').IncomingForm;
 var times = 10;
 var server;
 
+/**
+ * Test parallel submissions to the same server
+ */
 function submitForm() {
   var form = new FormData();
 
@@ -55,7 +58,6 @@ server.listen(common.port, function() {
     submitForm();
   }
 });
-
 
 process.on('exit', function() {
   assert.strictEqual(times, 0);
