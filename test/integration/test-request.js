@@ -13,7 +13,7 @@ var fs = require('fs');
 var IncomingForm = require('formidable').IncomingForm;
 
 var fileName = common.dir.fixture + '/unicycle.jpg';
-var myFile = function(){ return fs.createReadStream(fileName); };
+var myFile = function() { return fs.createReadStream(fileName); };
 var numItems = 5;
 
 // Make request to use our FormData

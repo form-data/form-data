@@ -44,7 +44,7 @@ server = https.createServer({
 }, function(req, res) {
 
   // old and simple
-  req.on('data', function(){});
+  req.on('data', function() {});
 
   req.on('end', function() {
     res.writeHead(200, {'x-success': 'OK'});
