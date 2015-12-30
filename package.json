@@ -10,12 +10,17 @@
   "main": "./lib/form_data",
   "browser": "./lib/browser",
   "scripts": {
-    "test": "./test/run.js",
-    "lint": "eslint lib/*.js test/*.js test/**/*.js"
+    "pretest": "rimraf coverage test/tmp",
+    "test": "istanbul cover --report none test/run.js && istanbul report",
+    "lint": "eslint lib/*.js test/*.js test/**/*.js",
+    "predebug": "rimraf coverage test/tmp",
+    "debug": "verbose=1 ./test/run.js",
+    "check": "istanbul check-coverage coverage/coverage*.json"
   },
   "pre-commit": [
     "lint",
-    "test"
+    "test",
+    "check"
   ],
   "engines": {
     "node": ">= 0.10"
@@ -27,11 +32,14 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^0.24.1",
+    "coveralls": "^2.11.6",
+    "eslint": "^1.10.3",
     "fake": "^0.2.2",
     "far": "^0.0.7",
     "formidable": "^1.0.17",
+    "istanbul": "^0.4.1",
     "pre-commit": "^1.0.10",
-    "request": "^2.60.0"
+    "request": "^2.60.0",
+    "rimraf": "^2.5.0"
   }
 }

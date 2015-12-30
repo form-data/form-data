@@ -16,7 +16,7 @@ var FIELDS = {
     value: 'my_value',
     expectedType: 'image/png',
     options: {
-        contentType: 'image/png'
+      contentType: 'image/png'
     }
   },
   'default_type': {
@@ -30,7 +30,7 @@ var FIELDS = {
   'overridden_type': {
     expectedType: 'image/png',
     options: {
-        contentType: 'image/png'
+      contentType: 'image/png'
     },
     value: function(){ return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
   }

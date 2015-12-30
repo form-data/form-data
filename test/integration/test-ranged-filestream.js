@@ -33,6 +33,11 @@ var testSubjects = {
   }
 };
 
+/**
+ * Accumulates read data size
+ *
+ * @param   {string} data - chunk of read data
+ */
 function readSizeAccumulator(data) {
   this.readSize += data.length;
 }

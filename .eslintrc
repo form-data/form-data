@@ -1,11 +1,10 @@
 {
   "rules": {
-    "indent": [2, 2],
+    "indent": [2, 2, {"SwitchCase": 1}],
     "quotes": [2, "single"],
     "linebreak-style": [2, "unix"],
     "semi": [2, "always"],
-    "curly": [2, "all"],
-    "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+    "curly": [2, "multi-line"],
     "handle-callback-err": [2, "^err"],
     "valid-jsdoc": [2, {
       "requireReturn": false,
@@ -14,20 +13,31 @@
         "return": "returns"
       }
     }],
+    "require-jsdoc": [2, {
+      "require": {
+        "FunctionDeclaration": true
+      }
+    }],
+    "no-redeclare": [2, { "builtinGlobals": true }],
+    "no-shadow": [2, { "builtinGlobals": true, "hoist": "all" }],
+    "no-use-before-define": [2, "nofunc"],
+    "no-shadow-restricted-names": 2,
+    "no-extra-semi": 2,
+    "no-unused-vars": 2,
+    "no-undef": 2,
     "key-spacing": 0,
     "strict": 0,
-    "no-underscore-dangle": 0,
-    "no-use-before-define": 0,
     "dot-notation": 0,
     "eol-last": 0,
     "no-new": 0,
     "semi-spacing": 0,
     "no-multi-spaces": 0,
     "eqeqeq": 0,
-    "no-mixed-requires": 0
+    "no-mixed-requires": 0,
+    "no-console": 0
   },
   "env": {
     "node": true,
-    "browser": true
+    "browser": false
   }
 }

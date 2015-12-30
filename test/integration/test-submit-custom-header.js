@@ -79,9 +79,9 @@ server.listen(common.port, function() {
   form.submit({
     port: common.port,
     path: '/',
-	headers: {
-    'x-test-header': 'test-header-value'
-	}
+    headers: {
+      'x-test-header': 'test-header-value'
+    }
   }, function(err, res) {
 
     if (err) {

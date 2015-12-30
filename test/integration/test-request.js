@@ -8,12 +8,35 @@ var http = require('http');
 var path = require('path');
 var mime = require('mime-types');
 var request = require('request');
+var FormData = require(common.dir.lib + '/form_data');
 var fs = require('fs');
 var IncomingForm = require('formidable').IncomingForm;
 
 var fileName = common.dir.fixture + '/unicycle.jpg';
 var myFile = function(){ return fs.createReadStream(fileName); };
 var numItems = 5;
+
+// Make request to use our FormData
+request.prototype.form = function (form) {
+  var self = this;
+  if (form) {
+    if (!/^application\/x-www-form-urlencoded\b/.test(self.getHeader('content-type'))) {
+      self.setHeader('content-type', 'application/x-www-form-urlencoded');
+    }
+    self.body = (typeof form === 'string')
+      ? self._qs.rfc3986(form.toString('utf8'))
+      : self._qs.stringify(form).toString('utf8');
+    return self;
+  }
+  // create form-data object
+  self._form = new FormData();
+  self._form.on('error', function(err) {
+    err.message = 'form-data: ' + err.message;
+    self.emit('error', err);
+    self.abort();
+  });
+  return self._form;
+};
 
 var server = http.createServer(function(req, res) {
 
