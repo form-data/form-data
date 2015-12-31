@@ -39,9 +39,7 @@ var server = http.createServer(function(req, res) {
   form
     .on('field', function(name, value) {
       fieldsPassed--;
-      assert.ok(name in FIELDS);
-      var field = FIELDS[name];
-      assert.strictEqual(value, field.value + '');
+      common.actions.formOnField(FIELDS, name, value);
     })
     .on('file', function(name, file) {
       fieldsPassed--;
