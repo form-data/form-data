@@ -36,18 +36,7 @@ http.request(options, function(response) {
   });
 
   server.listen(common.port, function() {
-
-    form.submit('http://localhost:' + common.port + '/', function(err, res) {
-      if (err) { throw err; }
-
-      assert.strictEqual(res.statusCode, 200);
-
-      // unstuck new streams
-      res.resume();
-
-      server.close();
-    });
-
+    common.actions.submit(form, server);
   });
 
 }).end();
@@ -72,10 +61,7 @@ server = http.createServer(function(req, res) {
       assert.strictEqual(file.name, path.basename(field.value.path || remoteFile));
       assert.strictEqual(file.type, mime.lookup(file.name));
     })
-    .on('end', function() {
-      res.writeHead(200);
-      res.end('done');
-    });
+    .on('end', common.actions.formOnEnd.bind(null, res));
 });
 
 

@@ -13,19 +13,7 @@ function submitForm() {
 
   form.append('field', 'value');
 
-  form.submit('http://localhost:' + common.port + '/', function(err, res) {
-
-    if (err) {
-      throw err;
-    }
-
-    assert.strictEqual(res.statusCode, 200);
-
-    // unstuck new streams
-    res.resume();
-
-    server.close();
-  });
+  common.actions.submit(form, server);
 }
 
 // create https server
