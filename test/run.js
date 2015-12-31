@@ -3,6 +3,7 @@ var path = require('path');
 var spawn = require('child_process').spawn;
 var static = require('./static');
 var far = require('far').create();
+var farPaths = require('far/lib/paths');
 var basePath = process.cwd();
 var istanbul = path.join(basePath, './node_modules/.bin/istanbul');
 
@@ -48,6 +49,30 @@ if (process.env.running_under_istanbul) {
     }.bind(this));
   };
 }
+
+// augment far to work on windows
+
+farPaths.expandSync = function(pathList) {
+  var expanded = {};
+
+  pathList.forEach(function(p) {
+    p = path.resolve(process.cwd(), p);
+
+    if (!farPaths.isDirectory(p)) {
+      expanded[p] = true;
+      return;
+    }
+
+    farPaths
+      .findRecursiveSync(p)
+      .forEach(function(pp) {
+        expanded[pp] = true;
+      });
+  });
+
+  return Object.keys(expanded);
+};
+
 // continue as normal
 
 if (process.env.verbose) {

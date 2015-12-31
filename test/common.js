@@ -48,6 +48,16 @@ common.actions.submit = function(form, server)
   });
 };
 
+common.actions.basicFormOnField = function(name, value) {
+  assert.strictEqual(name, 'my_field');
+  assert.strictEqual(value, 'my_value');
+};
+
+common.actions.formOnField = function(FIELDS, name, value) {
+  assert.ok(name in FIELDS);
+  var field = FIELDS[name];
+  assert.strictEqual(value, field.value + '');
+};
 
 common.actions.formOnFile = function(FIELDS, name, file) {
   assert.ok(name in FIELDS);
