@@ -10,6 +10,7 @@
 .travis.yml
 
 Makefile
+appveyor.yml
 sftp-config.json
 
 coverage/
