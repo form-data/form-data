@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 var path = require('path');
-var spawn = require('child_process').spawn;
 var static = require('./static');
 var far = require('far').create();
 var farPaths = require('far/lib/paths');
+var spawn = require('win-spawn');
 var basePath = process.cwd();
 var istanbul = path.join(basePath, './node_modules/.bin/istanbul');
 
