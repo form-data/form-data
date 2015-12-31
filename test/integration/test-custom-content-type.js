@@ -21,7 +21,7 @@ var FIELDS = {
   },
   'default_type': {
     expectedType: FormData.DEFAULT_CONTENT_TYPE,
-    value: function() { return new Buffer([1, 2, 3]); }
+    value: common.defaultTypeValue
   },
   'implicit_type': {
     expectedType: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
@@ -81,22 +81,23 @@ server.listen(common.port, function() {
   }
 
   // custom params object passed to submit
-  form.submit({
-    port: common.port,
-    path: '/'
-  }, function(err, res) {
-
-    if (err) {
-      throw err;
-    }
-
-    assert.strictEqual(res.statusCode, 200);
-
-    // unstuck new streams
-    res.resume();
-
-    server.close();
-  });
+  common.actions.submit(form, server);
+  // form.submit({
+  //   port: common.port,
+  //   path: '/'
+  // }, function(err, res) {
+  //
+  //   if (err) {
+  //     throw err;
+  //   }
+  //
+  //   assert.strictEqual(res.statusCode, 200);
+  //
+  //   // unstuck new streams
+  //   res.resume();
+  //
+  //   server.close();
+  // });
 
 });
 

@@ -66,17 +66,5 @@ server.listen(common.port, function() {
   // No options or implicit file type from extension.
   form.append('unknown_everything', fs.createReadStream(unknownFile));
 
-  form.submit('http://localhost:' + common.port + '/', function(err, res) {
-    if (err) {
-      throw err;
-    }
-
-    assert.strictEqual(res.statusCode, 200);
-
-    // unstuck new streams
-    res.resume();
-
-    server.close();
-  });
-
+  common.actions.submit(form, server);
 });

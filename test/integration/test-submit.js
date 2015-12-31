@@ -1,7 +1,6 @@
 var common = require('../common');
 var assert = common.assert;
 var http = require('http');
-var path = require('path');
 var mime = require('mime-types');
 var request = require('request');
 var fs = require('fs');
@@ -18,7 +17,7 @@ var FIELDS = {
   },
   'my_buffer': {
     type: FormData.DEFAULT_CONTENT_TYPE,
-    value: function() { return new Buffer([1, 2, 3]); }
+    value: common.defaultTypeValue
   },
   'my_file': {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
@@ -46,15 +45,9 @@ var server = http.createServer(function(req, res) {
     })
     .on('file', function(name, file) {
       fieldsPassed--;
-      assert.ok(name in FIELDS);
-      var field = FIELDS[name];
-      assert.strictEqual(file.name, path.basename(field.value.path));
-      assert.strictEqual(file.type, field.type);
+      common.actions.formOnFile(FIELDS, name, file);
     })
-    .on('end', function() {
-      res.writeHead(200);
-      res.end('done');
-    });
+    .on('end', common.actions.formOnEnd.bind(null, res));
 });
 
 server.listen(common.port, function() {
@@ -73,20 +66,7 @@ server.listen(common.port, function() {
     form.append(name, field.value);
   }
 
-  form.submit('http://localhost:' + common.port + '/', function(err, res) {
-
-    if (err) {
-      throw err;
-    }
-
-    assert.strictEqual(res.statusCode, 200);
-
-    // unstuck new streams
-    res.resume();
-
-    server.close();
-  });
-
+  common.actions.submit(form, server);
 });
 
 process.on('exit', function() {

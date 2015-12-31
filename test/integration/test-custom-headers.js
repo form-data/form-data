@@ -50,17 +50,5 @@ server.listen(common.port, function() {
   // (available to req handler)
   expectedLength = form._lastBoundary().length + form._overheadLength + options.knownLength;
 
-  form.submit('http://localhost:' + common.port + '/', function(err, res) {
-    if (err) {
-      throw err;
-    }
-
-    assert.strictEqual(res.statusCode, 200);
-
-    // unstuck new streams
-    res.resume();
-
-    server.close();
-  });
-
+  common.actions.submit(form, server);
 });
