@@ -2,6 +2,7 @@ var common = require('../common');
 var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
 var fake = require('fake').create();
+var path = require('path');
 var fs = require('fs');
 var http = require('http');
 
@@ -66,8 +67,9 @@ var http = require('http');
 (function testStreamError() {
   var req;
   var form = new FormData();
-  var path = '/why/u/no/exists';
-  var src = fs.createReadStream(path);
+  // make it windows friendly
+  var fakePath = path.resolve('/why/u/no/exists');
+  var src = fs.createReadStream(fakePath);
   var server = http.createServer();
   var addr = 'http://localhost:' + common.port;
 
@@ -75,7 +77,7 @@ var http = require('http');
 
   form.on('error', function(err) {
     assert.equal(err.code, 'ENOENT');
-    assert.equal(err.path, path);
+    assert.equal(err.path, fakePath);
     req.on('error', function() {});
     server.close();
   });

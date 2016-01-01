@@ -41,14 +41,8 @@ server = http.createServer(function(req, res) {
   form.parse(req);
 
   form
-    .on('field', function(name, value) {
-      assert.strictEqual(name, 'my_field');
-      assert.strictEqual(value, 'my_value');
-    })
-    .on('end', function() {
-      res.writeHead(200);
-      res.end('done');
-    });
+    .on('field', common.actions.basicFormOnField)
+    .on('end', common.actions.formOnEnd.bind(null, res));
 });
 
 server.listen(common.port, function() {
