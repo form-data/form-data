@@ -11,7 +11,6 @@ var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';
 
 // wrap non simple values into function
 // just to deal with ReadStream "autostart"
-// Can't wait for 0.10
 var FIELDS = {
   'my_field': {
     value: 'my_value'
@@ -37,16 +36,13 @@ var server = http.createServer(function(req, res) {
 
   form.parse(req);
 
-  form
-    .on('field', function(name, value) {
-      fieldsPassed--;
-      common.actions.formOnField(FIELDS, name, value);
-    })
-    .on('file', function(name, file) {
-      fieldsPassed--;
-      common.actions.formOnFile(FIELDS, name, file);
-    })
-    .on('end', common.actions.formOnEnd.bind(null, res));
+  common.actions.checkForm(form, FIELDS, function(fieldsChecked)
+  {
+    // keep track of number of the processed fields
+    fieldsPassed = fieldsPassed - fieldsChecked;
+    // finish it
+    common.actions.formOnEnd(res);
+  });
 });
 
 server.listen(common.port, function() {

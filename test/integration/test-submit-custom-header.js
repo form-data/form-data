@@ -11,7 +11,6 @@ var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';
 
 // wrap non simple values into function
 // just to deal with ReadStream "autostart"
-// Can't wait for 0.10
 var FIELDS = {
   'my_field': {
     value: 'my_value'
@@ -38,33 +37,20 @@ var server = http.createServer(function(req, res) {
 
   form.parse(req);
 
-  form
-    .on('field', function(name, value) {
-      fieldsPassed--;
-      common.actions.formOnField(FIELDS, name, value);
-    })
-    .on('file', function(name, file) {
-      fieldsPassed--;
-      common.actions.formOnFile(FIELDS, name, file);
-    })
-    .on('end', common.actions.formOnEnd.bind(null, res));
+  common.actions.checkForm(form, FIELDS, function(fieldsChecked)
+  {
+    // keep track of number of the processed fields
+    fieldsPassed = fieldsPassed - fieldsChecked;
+    // finish it
+    common.actions.formOnEnd(res);
+  });
 });
 
 server.listen(common.port, function() {
 
   var form = new FormData();
 
-  var field;
-  for (var name in FIELDS) {
-    if (!FIELDS.hasOwnProperty(name)) { continue; }
-
-    field = FIELDS[name];
-    // important to append ReadStreams within the same tick
-    if ((typeof field.value == 'function')) {
-      field.value = field.value();
-    }
-    form.append(name, field.value);
-  }
+  common.actions.populateFields(form, FIELDS);
 
   // custom params object passed to submit
   form.submit({
@@ -73,13 +59,15 @@ server.listen(common.port, function() {
     headers: {
       'x-test-header': 'test-header-value'
     }
-  }, function(err, res) {
-    if (err) throw err;
+  }, function(error, result) {
+    if (error) {
+      throw error;
+    }
 
-    assert.strictEqual(res.statusCode, 200);
+    assert.strictEqual(result.statusCode, 200);
 
     // unstuck streams
-    res.resume();
+    result.resume();
     server.close();
   });
 
