@@ -74,7 +74,7 @@ server.listen(common.port, function() {
     });
   };
 
-  // track progres
+  // track progress
   form.on('progress', function(chunk) {
     progress += chunk.length;
     assert.ok(progress <= expectedLength);

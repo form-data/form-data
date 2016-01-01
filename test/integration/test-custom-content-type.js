@@ -7,7 +7,6 @@ var FormData = require(common.dir.lib + '/form_data');
 
 // wrap non simple values into function
 // just to deal with ReadStream "autostart"
-// Can't wait for 0.10
 var FIELDS = {
   'no_type': {
     value: 'my_value'
@@ -82,23 +81,6 @@ server.listen(common.port, function() {
 
   // custom params object passed to submit
   common.actions.submit(form, server);
-  // form.submit({
-  //   port: common.port,
-  //   path: '/'
-  // }, function(err, res) {
-  //
-  //   if (err) {
-  //     throw err;
-  //   }
-  //
-  //   assert.strictEqual(res.statusCode, 200);
-  //
-  //   // unstuck new streams
-  //   res.resume();
-  //
-  //   server.close();
-  // });
-
 });
 
 process.on('exit', function() {

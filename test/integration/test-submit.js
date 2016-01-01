@@ -36,33 +36,20 @@ var server = http.createServer(function(req, res) {
 
   form.parse(req);
 
-  form
-    .on('field', function(name, value) {
-      fieldsPassed--;
-      common.actions.formOnField(FIELDS, name, value);
-    })
-    .on('file', function(name, file) {
-      fieldsPassed--;
-      common.actions.formOnFile(FIELDS, name, file);
-    })
-    .on('end', common.actions.formOnEnd.bind(null, res));
+  common.actions.checkForm(form, FIELDS, function(fieldsChecked)
+  {
+    // keep track of number of the processed fields
+    fieldsPassed = fieldsPassed - fieldsChecked;
+    // finish it
+    common.actions.formOnEnd(res);
+  });
 });
 
 server.listen(common.port, function() {
 
   var form = new FormData();
 
-  var field;
-  for (var name in FIELDS) {
-    if (!FIELDS.hasOwnProperty(name)) { continue; }
-
-    field = FIELDS[name];
-    // important to append ReadStreams within the same tick
-    if ((typeof field.value == 'function')) {
-      field.value = field.value();
-    }
-    form.append(name, field.value);
-  }
+  common.actions.populateFields(form, FIELDS);
 
   common.actions.submit(form, server);
 });

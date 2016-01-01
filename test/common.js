@@ -2,6 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var assert = require('assert');
 var fake = require('fake');
+var mime = require('mime-types');
 
 var common = module.exports;
 
@@ -30,6 +31,22 @@ common.httpsServerCert = fs.readFileSync(path.join(__dirname, './fixture/cert.pe
 
 common.actions = {};
 
+// generic form field population
+common.actions.populateFields = function(form, fields)
+{
+  var field;
+  for (var name in fields) {
+    if (!fields.hasOwnProperty(name)) { continue; }
+
+    field = fields[name];
+    // important to append ReadStreams within the same tick
+    if ((typeof field.value == 'function')) {
+      field.value = field.value();
+    }
+    form.append(name, field.value);
+  }
+};
+
 // generic form submit
 common.actions.submit = function(form, server)
 {
@@ -48,6 +65,24 @@ common.actions.submit = function(form, server)
   });
 };
 
+common.actions.checkForm = function(form, fields, callback)
+{
+  var fieldChecked = 0;
+
+  form
+    .on('field', function(name, value) {
+      fieldChecked++;
+      common.actions.formOnField(fields, name, value);
+    })
+    .on('file', function(name, file) {
+      fieldChecked++;
+      common.actions.formOnFile(fields, name, file);
+    })
+    .on('end', function() {
+      callback(fieldChecked);
+    });
+};
+
 common.actions.basicFormOnField = function(name, value) {
   assert.strictEqual(name, 'my_field');
   assert.strictEqual(value, 'my_value');
@@ -62,8 +97,8 @@ common.actions.formOnField = function(FIELDS, name, value) {
 common.actions.formOnFile = function(FIELDS, name, file) {
   assert.ok(name in FIELDS);
   var field = FIELDS[name];
-  assert.strictEqual(file.name, path.basename(field.value.path));
-  assert.strictEqual(file.type, field.type);
+  assert.strictEqual(file.name, path.basename(field.value.path || field.name));
+  assert.strictEqual(file.type, field.type ? field.type : mime.lookup(file.name));
 };
 
 // after form has finished parsing
