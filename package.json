@@ -44,6 +44,6 @@
     "istanbul": "^0.4.1",
     "pre-commit": "^1.0.10",
     "request": "^2.60.0",
-    "rimraf": "^2.5.0"
+    "rimraf": "^2.5.2"
   }
 }
