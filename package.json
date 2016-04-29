@@ -37,7 +37,7 @@
     "codacy-coverage": "^1.1.3",
     "coveralls": "^2.11.8",
     "cross-spawn": "^2.1.5",
-    "eslint": "^2.4.0",
+    "eslint": "^2.9.0",
     "fake": "^0.2.2",
     "far": "^0.0.7",
     "formidable": "^1.0.17",
