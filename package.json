@@ -30,7 +30,7 @@
   "dependencies": {
     "async": "^1.5.2",
     "combined-stream": "^1.0.5",
-    "mime-types": "^2.1.10"
+    "mime-types": "^2.1.11"
   },
   "license": "MIT",
   "devDependencies": {
