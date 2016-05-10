@@ -42,7 +42,7 @@
     "far": "^0.0.7",
     "formidable": "^1.0.17",
     "istanbul": "^0.4.2",
-    "pre-commit": "^1.1.2",
+    "pre-commit": "^1.1.3",
     "request": "^2.69.0",
     "rimraf": "^2.5.2"
   }
