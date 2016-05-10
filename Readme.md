@@ -145,6 +145,15 @@ someModule.stream(function(err, stdout, stderr) {
 });
 ```
 
+By default only the basename of the file is included in the form. To include the full path, pass `includePath: true`.
+
+``` javascript
+form.append('file', stream, {
+  filename: 'images/logo.png',
+  includePath: true
+});
+```
+
 For edge cases, like POST request to URL with query string or to pass HTTP auth credentials, object can be passed to `form.submit()` as first parameter:
 
 ``` javascript

@@ -20,6 +20,10 @@ var options = {
   contentType: 'image/gif'
 };
 
+var optionsWithPath = {
+  filename: 'subdir/test.png',
+};
+
 var server = http.createServer(function(req, res) {
 
   var form = new IncomingForm({uploadDir: common.dir.tmp});
@@ -43,6 +47,9 @@ var server = http.createServer(function(req, res) {
     assert.strictEqual(files['unknown_with_filename_as_object'].name, options.filename, 'Expects custom filename');
     assert.strictEqual(files['unknown_with_filename_as_object'].type, mime.lookup(options.filename), 'Expects filename-derived content-type');
 
+    assert('relative_path' in files);
+    assert.strictEqual(files['relative_path'].name, optionsWithPath.filename, 'Expects filename with relative path');
+
     assert('unknown_everything' in files);
     assert.strictEqual(files['unknown_everything'].type, FormData.DEFAULT_CONTENT_TYPE, 'Expects default content-type');
 
@@ -63,6 +70,8 @@ server.listen(common.port, function() {
   form.append('unknown_with_filename', fs.createReadStream(unknownFile), options.filename);
   // Filename only with unknown file
   form.append('unknown_with_filename_as_object', fs.createReadStream(unknownFile), {filename: options.filename});
+  // Filename with a relative path
+  form.append('relative_path', fs.createReadStream(unknownFile), {filename: optionsWithPath.filename, includePath: true});
   // No options or implicit file type from extension.
   form.append('unknown_everything', fs.createReadStream(unknownFile));
 
