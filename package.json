@@ -28,9 +28,9 @@
     "node": ">= 0.10"
   },
   "dependencies": {
-    "async": "^1.5.2",
     "combined-stream": "^1.0.5",
-    "mime-types": "^2.1.10"
+    "mime-types": "^2.1.10",
+    "run-parallel": "^1.1.6"
   },
   "license": "MIT",
   "devDependencies": {
