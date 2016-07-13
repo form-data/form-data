@@ -28,7 +28,7 @@
     "node": ">= 0.10"
   },
   "dependencies": {
-    "async": "^1.5.2",
+    "async": "^2.0.0",
     "combined-stream": "^1.0.5",
     "mime-types": "^2.1.10"
   },
