@@ -20,6 +20,13 @@ var server = http.createServer(function(req, res) {
   assert.ok( typeof req.headers['content-length'] !== 'undefined' );
   assert.equal(req.headers['content-length'], expectedLength);
 
+  req.on('data', function (data) {
+    assert.equal(
+      data.toString('utf8').split('\n')[2],
+      'X-Test-Fake: 123\r'
+    );
+  });
+
   res.writeHead(200);
   res.end('done');
 });

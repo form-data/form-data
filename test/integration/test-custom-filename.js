@@ -43,6 +43,10 @@ var server = http.createServer(function(req, res) {
     assert.strictEqual(files['unknown_with_filename_as_object'].name, options.filename, 'Expects custom filename');
     assert.strictEqual(files['unknown_with_filename_as_object'].type, mime.lookup(options.filename), 'Expects filename-derived content-type');
 
+    assert('unknown_with_name_prop' in files);
+    assert.strictEqual(files['unknown_with_name_prop'].name, options.filename, 'Expects custom filename');
+    assert.strictEqual(files['unknown_with_name_prop'].type, mime.lookup(options.filename), 'Expects filename-derived content-type');
+
     assert('unknown_everything' in files);
     assert.strictEqual(files['unknown_everything'].type, FormData.DEFAULT_CONTENT_TYPE, 'Expects default content-type');
 
@@ -63,6 +67,10 @@ server.listen(common.port, function() {
   form.append('unknown_with_filename', fs.createReadStream(unknownFile), options.filename);
   // Filename only with unknown file
   form.append('unknown_with_filename_as_object', fs.createReadStream(unknownFile), {filename: options.filename});
+  // No options or implicit file type from extension on name property.
+  var customNameStream = fs.createReadStream(unknownFile);
+  customNameStream.name = options.filename;
+  form.append('unknown_with_name_prop', customNameStream);
   // No options or implicit file type from extension.
   form.append('unknown_everything', fs.createReadStream(unknownFile));
 
