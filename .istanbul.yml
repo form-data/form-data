@@ -4,11 +4,11 @@ instrumentation:
     extensions:
         - .js
     default-excludes: true
-    excludes: ['browser.js']
+    excludes: ['lib/browser.js']
 reporting:
     print: summary
     reports:
-        - lcov
+        - json
     dir: ./coverage
     watermarks:
         statements: [80, 95]

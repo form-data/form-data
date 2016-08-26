@@ -3,11 +3,7 @@
 *.sublime-*
 *.un~
 
-.idea
-.gitignore
-.istanbul.yml
-.npmignore
-.travis.yml
+.*
 
 Makefile
 appveyor.yml
