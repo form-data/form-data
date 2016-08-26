@@ -12,7 +12,6 @@ The API of this library is inspired by the [XMLHttpRequest-2 FormData Interface]
 [![Coverage Status](https://img.shields.io/coveralls/form-data/form-data/master.svg?label=code+coverage)](https://coveralls.io/github/form-data/form-data?branch=master)
 
 [![Dependency Status](https://img.shields.io/david/form-data/form-data.svg)](https://david-dm.org/form-data/form-data)
-[![Codacy Badge](https://img.shields.io/codacy/43ece80331c246179695e41f81eeffe2.svg)](https://www.codacy.com/app/form-data/form-data)
 [![bitHound Overall Score](https://www.bithound.io/github/form-data/form-data/badges/score.svg)](https://www.bithound.io/github/form-data/form-data)
 
 ## Install
@@ -211,8 +210,8 @@ fetch('http://example.com', { method: 'POST', body: form })
 ## Notes
 
 - ```getLengthSync()``` method DOESN'T calculate length for streams, use ```knownLength``` options as workaround.
-- If it feels like FormData hangs after submit and you're on ```node-0.10```, please check [Compatibility with Older Node Versions][streams2-thing]
+- If it feels like FormData hangs after submit, please check [Compatibility with Older Node Versions][streams2-thing]
 
 ## License
 
-Form-Data is licensed under the MIT license.
+Form-Data is released under the [MIT](License) license.
