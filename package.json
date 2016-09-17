@@ -33,7 +33,6 @@
     "node": ">= 0.10"
   },
   "dependencies": {
-    "async": "^2.0.1",
     "combined-stream": "^1.0.5",
     "mime-types": "^2.1.11"
   },
