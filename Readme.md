@@ -5,12 +5,12 @@ A library to create readable ```"multipart/form-data"``` streams. Can be used to
 The API of this library is inspired by the [XMLHttpRequest-2 FormData Interface][xhr2-fd].
 
 [xhr2-fd]: http://dev.w3.org/2006/webapi/XMLHttpRequest-2/Overview.html#the-formdata-interface
-[streams2-thing]: http://nodejs.org/api/stream.html#stream_compatibility_with_older_node_versions
 
-[![Linux Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=linux:0.10-6.x)](https://travis-ci.org/form-data/form-data)
-[![Windows Build](https://img.shields.io/appveyor/ci/alexindigo/form-data/master.svg?label=windows:0.10-6.x)](https://ci.appveyor.com/project/alexindigo/form-data)
+[![Linux Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=linux:0.12-6.x)](https://travis-ci.org/form-data/form-data)
+[![MacOS Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=macos:0.12-6.x)](https://travis-ci.org/form-data/form-data)
+[![Windows Build](https://img.shields.io/appveyor/ci/alexindigo/form-data/master.svg?label=windows:0.12-6.x)](https://ci.appveyor.com/project/alexindigo/form-data)
+
 [![Coverage Status](https://img.shields.io/coveralls/form-data/form-data/master.svg?label=code+coverage)](https://coveralls.io/github/form-data/form-data?branch=master)
-
 [![Dependency Status](https://img.shields.io/david/form-data/form-data.svg)](https://david-dm.org/form-data/form-data)
 [![bitHound Overall Score](https://www.bithound.io/github/form-data/form-data/badges/score.svg)](https://www.bithound.io/github/form-data/form-data)
 
@@ -210,7 +210,7 @@ fetch('http://example.com', { method: 'POST', body: form })
 ## Notes
 
 - ```getLengthSync()``` method DOESN'T calculate length for streams, use ```knownLength``` options as workaround.
-- If it feels like FormData hangs after submit, please check [Compatibility with Older Node Versions][streams2-thing]
+- Starting version `2.x` FormData has dropped support for `node@0.10.x`.
 
 ## License
 
