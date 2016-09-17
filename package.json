@@ -13,7 +13,8 @@
     "pretest": "rimraf coverage test/tmp",
     "test": "istanbul cover test/run.js",
     "posttest": "istanbul report lcov text",
-    "lint": "eslint lib/*.js test/*.js test/**/*.js",
+    "lint": "eslint lib/*.js test/*.js test/integration/*.js",
+    "ci-lint": "is-node-modern && npm run lint || is-node-not-modern",
     "predebug": "rimraf coverage test/tmp",
     "debug": "verbose=1 ./test/run.js",
     "check": "istanbul check-coverage coverage/coverage*.json",
@@ -30,21 +31,22 @@
     "check"
   ],
   "engines": {
-    "node": ">= 0.10"
+    "node": ">= 0.12"
   },
   "dependencies": {
-    "async": "^2.0.1",
+    "asynckit": "^0.4.0",
     "combined-stream": "^1.0.5",
     "mime-types": "^2.1.11"
   },
   "devDependencies": {
-    "coveralls": "^2.11.12",
+    "coveralls": "^2.11.13",
     "cross-spawn": "^4.0.0",
-    "eslint": "^2.13.1",
+    "eslint": "^3.5.0",
     "fake": "^0.2.2",
     "far": "^0.0.7",
     "formidable": "^1.0.17",
     "in-publish": "^2.0.0",
+    "is-node-modern": "^1.0.0",
     "istanbul": "^0.4.5",
     "pkgfiles": "^2.3.0",
     "pre-commit": "^1.1.3",
