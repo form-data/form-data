@@ -41,7 +41,7 @@
   "devDependencies": {
     "coveralls": "^2.11.13",
     "cross-spawn": "^4.0.0",
-    "eslint": "^3.5.0",
+    "eslint": "^3.6.1",
     "fake": "^0.2.2",
     "far": "^0.0.7",
     "formidable": "^1.0.17",
