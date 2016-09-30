@@ -51,20 +51,12 @@ http.request(options, function(response) {
 }).end();
 
 // prepare form-receiving http server
-server = http.createServer(function(req, res) {
+var incomingForm = new IncomingForm({uploadDir: common.dir.tmp});
 
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
-
-  form.parse(req);
-
-  common.actions.checkForm(form, FIELDS, function(fieldsChecked)
-  {
-    // keep track of number of the processed fields
-    fieldsPassed = fieldsPassed - fieldsChecked;
-    // finish it
-    common.actions.formOnEnd(res);
-  });
+server = common.createServer(incomingForm, FIELDS, function(fields){
+  fieldsPassed = fields;
 });
+
 
 
 process.on('exit', function() {

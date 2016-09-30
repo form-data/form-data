@@ -1,6 +1,5 @@
 var common = require('../common');
 var assert = common.assert;
-var http = require('http');
 var mime = require('mime-types');
 var request = require('request');
 var fs = require('fs');
@@ -30,20 +29,12 @@ var FIELDS = {
 };
 var fieldsPassed = Object.keys(FIELDS).length;
 
-var server = http.createServer(function(req, res) {
+var incomingForm = new IncomingForm({uploadDir: common.dir.tmp});
 
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
-
-  form.parse(req);
-
-  common.actions.checkForm(form, FIELDS, function(fieldsChecked)
-  {
-    // keep track of number of the processed fields
-    fieldsPassed = fieldsPassed - fieldsChecked;
-    // finish it
-    common.actions.formOnEnd(res);
-  });
+var server = common.createServer(incomingForm, FIELDS, function(fields){
+  fieldsPassed = fields;
 });
+
 
 server.listen(common.port, function() {
 

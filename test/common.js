@@ -3,6 +3,7 @@ var path = require('path');
 var assert = require('assert');
 var fake = require('fake');
 var mime = require('mime-types');
+var http = require('http');
 
 var common = module.exports;
 
@@ -26,6 +27,21 @@ common.httpsPort = 9443;
 // store server cert in common for later reuse, because self-signed
 common.httpsServerKey = fs.readFileSync(path.join(__dirname, './fixture/key.pem'));
 common.httpsServerCert = fs.readFileSync(path.join(__dirname, './fixture/cert.pem'));
+
+common.createServer = function (form, FIELDS, callback) {
+  return http.createServer(function (req, res) {
+
+    form.parse(req);
+
+    var fieldsPassed = Object.keys(FIELDS).length;
+    common.actions.checkForm(form, FIELDS, function (fieldsChecked) {
+      // keep track of number of the processed fields
+      callback(fieldsPassed - fieldsChecked);
+      // finish it
+      common.actions.formOnEnd(res);
+    });
+  });
+};
 
 // Actions
 
