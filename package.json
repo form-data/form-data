@@ -39,7 +39,7 @@
     "mime-types": "^2.1.11"
   },
   "devDependencies": {
-    "coveralls": "^2.11.13",
+    "coveralls": "^2.11.14",
     "cross-spawn": "^4.0.0",
     "eslint": "^3.7.0",
     "fake": "^0.2.2",
