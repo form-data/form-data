@@ -36,7 +36,7 @@
   "dependencies": {
     "asynckit": "^0.4.0",
     "combined-stream": "^1.0.5",
-    "mime-types": "^2.1.11"
+    "mime-types": "^2.1.12"
   },
   "devDependencies": {
     "coveralls": "^2.11.13",
