@@ -4,7 +4,6 @@ var mime = require('mime-types');
 var request = require('request');
 var fs = require('fs');
 var FormData = require(common.dir.lib + '/form_data');
-var IncomingForm = require('formidable').IncomingForm;
 
 var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';
 
@@ -27,11 +26,12 @@ var FIELDS = {
     value: function() { return request(remoteFile); }
   }
 };
+
+// count total
 var fieldsPassed = Object.keys(FIELDS).length;
 
-var incomingForm = new IncomingForm({uploadDir: common.dir.tmp});
-
-var server = common.createServer(incomingForm, FIELDS, function(fields){
+// prepare form-receiving http server
+var server = common.testFields( FIELDS, function(fields){
   fieldsPassed = fields;
 });
 

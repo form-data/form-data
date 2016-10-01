@@ -4,6 +4,7 @@ var assert = require('assert');
 var fake = require('fake');
 var mime = require('mime-types');
 var http = require('http');
+var IncomingForm = require('formidable').IncomingForm;
 
 var common = module.exports;
 
@@ -14,7 +15,9 @@ common.dir = {
   tmp: path.join(rootDir, '/test/tmp')
 };
 
-common.defaultTypeValue = function() { return new Buffer([1, 2, 3]); };
+common.defaultTypeValue = function () {
+  return new Buffer([1, 2, 3]);
+};
 
 common.assert = assert;
 common.fake = fake;
@@ -28,13 +31,17 @@ common.httpsPort = 9443;
 common.httpsServerKey = fs.readFileSync(path.join(__dirname, './fixture/key.pem'));
 common.httpsServerCert = fs.readFileSync(path.join(__dirname, './fixture/cert.pem'));
 
-common.createServer = function (form, FIELDS, callback) {
+common.testFields = function (FIELDS, callback) {
+
+  var fieldsPassed = Object.keys(FIELDS).length;
+
   return http.createServer(function (req, res) {
 
-    form.parse(req);
+    var incomingForm = new IncomingForm({uploadDir: common.dir.tmp});
 
-    var fieldsPassed = Object.keys(FIELDS).length;
-    common.actions.checkForm(form, FIELDS, function (fieldsChecked) {
+    incomingForm.parse(req);
+    
+    common.actions.checkForm(incomingForm, FIELDS, function (fieldsChecked) {
       // keep track of number of the processed fields
       callback(fieldsPassed - fieldsChecked);
       // finish it
