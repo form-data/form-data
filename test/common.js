@@ -3,6 +3,8 @@ var path = require('path');
 var assert = require('assert');
 var fake = require('fake');
 var mime = require('mime-types');
+var http = require('http');
+var IncomingForm = require('formidable').IncomingForm;
 
 var common = module.exports;
 
@@ -13,7 +15,9 @@ common.dir = {
   tmp: path.join(rootDir, '/test/tmp')
 };
 
-common.defaultTypeValue = function() { return new Buffer([1, 2, 3]); };
+common.defaultTypeValue = function () {
+  return new Buffer([1, 2, 3]);
+};
 
 common.assert = assert;
 common.fake = fake;
@@ -26,6 +30,25 @@ common.httpsPort = 9443;
 // store server cert in common for later reuse, because self-signed
 common.httpsServerKey = fs.readFileSync(path.join(__dirname, './fixture/key.pem'));
 common.httpsServerCert = fs.readFileSync(path.join(__dirname, './fixture/cert.pem'));
+
+common.testFields = function (FIELDS, callback) {
+
+  var fieldsPassed = Object.keys(FIELDS).length;
+
+  return http.createServer(function (req, res) {
+
+    var incomingForm = new IncomingForm({uploadDir: common.dir.tmp});
+
+    incomingForm.parse(req);
+    
+    common.actions.checkForm(incomingForm, FIELDS, function (fieldsChecked) {
+      // keep track of number of the processed fields
+      callback(fieldsPassed - fieldsChecked);
+      // finish it
+      common.actions.formOnEnd(res);
+    });
+  });
+};
 
 // Actions
 

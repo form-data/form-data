@@ -3,7 +3,6 @@ var assert = common.assert;
 var http = require('http');
 var parseUrl = require('url').parse;
 var FormData = require(common.dir.lib + '/form_data');
-var IncomingForm = require('formidable').IncomingForm;
 
 // static server prepared for all tests
 var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';
@@ -31,8 +30,6 @@ var FIELDS = {
     name: remoteFile
   }
 };
-// count total
-var fieldsPassed = Object.keys(FIELDS).length;
 
 // request static file
 http.request(options, function(response) {
@@ -50,20 +47,12 @@ http.request(options, function(response) {
 
 }).end();
 
+// count total
+var fieldsPassed = Object.keys(FIELDS).length;
+
 // prepare form-receiving http server
-server = http.createServer(function(req, res) {
-
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
-
-  form.parse(req);
-
-  common.actions.checkForm(form, FIELDS, function(fieldsChecked)
-  {
-    // keep track of number of the processed fields
-    fieldsPassed = fieldsPassed - fieldsChecked;
-    // finish it
-    common.actions.formOnEnd(res);
-  });
+server = common.testFields(FIELDS, function(fields){
+  fieldsPassed = fields;
 });
 
 
