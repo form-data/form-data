@@ -14,9 +14,12 @@
     "test": "istanbul cover test/run.js",
     "posttest": "istanbul report lcov text",
     "lint": "eslint lib/*.js test/*.js test/integration/*.js",
-    "ci-lint": "is-node-modern && npm run lint || is-node-not-modern",
+    "report": "istanbul report lcov text",
+    "ci-lint": "is-node-modern 6 && npm run lint || is-node-not-modern 6",
+    "ci-test": "npm run test && npm run browser && npm run report",
     "predebug": "rimraf coverage test/tmp",
     "debug": "verbose=1 ./test/run.js",
+    "browser": "browserify -t browserify-istanbul test/run-browser.js | obake --coverage",
     "check": "istanbul check-coverage coverage/coverage*.json",
     "files": "pkgfiles --sort=name",
     "get-version": "node -e \"console.log(require('./package.json').version)\"",
@@ -27,7 +30,7 @@
   },
   "pre-commit": [
     "lint",
-    "test",
+    "ci-test",
     "check"
   ],
   "engines": {
@@ -39,19 +42,24 @@
     "mime-types": "^2.1.12"
   },
   "devDependencies": {
+    "browserify": "^13.1.1",
+    "browserify-istanbul": "^2.0.0",
     "coveralls": "^2.11.14",
     "cross-spawn": "^4.0.2",
-    "eslint": "^3.7.1",
+    "eslint": "^3.9.1",
     "fake": "^0.2.2",
     "far": "^0.0.7",
     "formidable": "^1.0.17",
     "in-publish": "^2.0.0",
     "is-node-modern": "^1.0.0",
     "istanbul": "^0.4.5",
+    "obake": "^0.1.2",
+    "phantomjs-prebuilt": "^2.1.13",
     "pkgfiles": "^2.3.0",
     "pre-commit": "^1.1.3",
-    "request": "^2.75.0",
-    "rimraf": "^2.5.4"
+    "request": "2.76.0",
+    "rimraf": "^2.5.4",
+    "tape": "^4.6.2"
   },
   "license": "MIT"
 }

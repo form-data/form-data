@@ -4,7 +4,6 @@ instrumentation:
     extensions:
         - .js
     default-excludes: true
-    excludes: ['lib/browser.js']
 reporting:
     print: summary
     reports:
