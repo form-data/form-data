@@ -20,7 +20,7 @@ script:
   - node --version
   - npm --version
   - npm run ci-lint
-  - npm run test
+  - npm run ci-test
   - npm run check
 
 after_success:
