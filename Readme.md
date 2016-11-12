@@ -133,7 +133,7 @@ someModule.stream(function(err, stdout, stderr) {
 
   form.append('file', stdout, {
     filename: 'unicycle.jpg',
-    contentType: 'image/jpg',
+    contentType: 'image/jpeg',
     knownLength: 19806
   });
 
