@@ -45,7 +45,7 @@
     "browserify": "^13.1.1",
     "browserify-istanbul": "^2.0.0",
     "coveralls": "^2.11.14",
-    "cross-spawn": "^4.0.2",
+    "cross-spawn": "^5.1.0",
     "eslint": "^3.9.1",
     "fake": "^0.2.2",
     "far": "^0.0.7",
