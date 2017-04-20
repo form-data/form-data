@@ -16,7 +16,7 @@ The API of this library is inspired by the [XMLHttpRequest-2 FormData Interface]
 
 ## Install
 
-```
+```bash
 npm install --save form-data
 ```
 
@@ -25,11 +25,11 @@ npm install --save form-data
 In this example we are constructing a form with 3 fields that contain a string,
 a buffer and a file stream.
 
-``` javascript
-var FormData = require('form-data');
-var fs = require('fs');
+```js
+const FormData = require('form-data');
+const fs = require('fs');
 
-var form = new FormData();
+const form = new FormData();
 form.append('my_field', 'my value');
 form.append('my_buffer', new Buffer(10));
 form.append('my_file', fs.createReadStream('/foo/bar.jpg'));
@@ -37,13 +37,13 @@ form.append('my_file', fs.createReadStream('/foo/bar.jpg'));
 
 Also you can use http-response stream:
 
-``` javascript
-var FormData = require('form-data');
-var http = require('http');
+```js
+const FormData = require('form-data');
+const http = require('http');
 
-var form = new FormData();
+const form = new FormData();
 
-http.request('http://nodejs.org/images/logo.png', function(response) {
+http.request('http://nodejs.org/images/logo.png', (response) => {
   form.append('my_field', 'my value');
   form.append('my_buffer', new Buffer(10));
   form.append('my_logo', response);
@@ -52,11 +52,11 @@ http.request('http://nodejs.org/images/logo.png', function(response) {
 
 Or @mikeal's [request](https://github.com/request/request) stream:
 
-``` javascript
-var FormData = require('form-data');
-var request = require('request');
+```js
+const FormData = require('form-data');
+const request = require('request');
 
-var form = new FormData();
+const form = new FormData();
 
 form.append('my_field', 'my value');
 form.append('my_buffer', new Buffer(10));
@@ -65,8 +65,8 @@ form.append('my_logo', request('http://nodejs.org/images/logo.png'));
 
 In order to submit this form to a web application, call ```submit(url, [callback])``` method:
 
-``` javascript
-form.submit('http://example.org/', function(err, res) {
+```js
+form.submit('http://example.org/', (err, res) => {
   // res – response object (http.IncomingMessage)  //
   res.resume();
 });
@@ -79,10 +79,10 @@ For more advanced request manipulations ```submit()``` method returns ```http.Cl
 
 You can use node's http client interface:
 
-``` javascript
-var http = require('http');
+```js
+const http = require('http');
 
-var request = http.request({
+const request = http.request({
   method: 'post',
   host: 'example.org',
   path: '/upload',
@@ -91,33 +91,33 @@ var request = http.request({
 
 form.pipe(request);
 
-request.on('response', function(res) {
+request.on('response', (res) => {
   console.log(res.statusCode);
 });
 ```
 
 Or if you would prefer the `'Content-Length'` header to be set for you:
 
-``` javascript
-form.submit('example.org/upload', function(err, res) {
+```js
+form.submit('example.org/upload', (err, res) => {
   console.log(res.statusCode);
 });
 ```
 
 To use custom headers and pre-known length in parts:
 
-``` javascript
-var CRLF = '\r\n';
-var form = new FormData();
+```js
+const CRLF = '\r\n';
+const form = new FormData();
 
-var options = {
+const options = {
   header: CRLF + '--' + form.getBoundary() + CRLF + 'X-Custom-Header: 123' + CRLF + CRLF,
   knownLength: 1
 };
 
 form.append('my_buffer', buffer, options);
 
-form.submit('http://example.com/', function(err, res) {
+form.submit('http://example.com/', (err, res) => {
   if (err) throw err;
   console.log('Done');
 });
@@ -125,11 +125,11 @@ form.submit('http://example.com/', function(err, res) {
 
 Form-Data can recognize and fetch all the required information from common types of streams (```fs.readStream```, ```http.response``` and ```mikeal's request```), for some other types of streams you'd need to provide "file"-related information manually:
 
-``` javascript
-someModule.stream(function(err, stdout, stderr) {
+```js
+someModule.stream((err, stdout, stderr) => {
   if (err) throw err;
 
-  var form = new FormData();
+  const form = new FormData();
 
   form.append('file', stdout, {
     filename: 'unicycle.jpg',
@@ -137,7 +137,7 @@ someModule.stream(function(err, stdout, stderr) {
     knownLength: 19806
   });
 
-  form.submit('http://example.com/', function(err, res) {
+  form.submit('http://example.com/', (err, res) => {
     if (err) throw err;
     console.log('Done');
   });
@@ -146,24 +146,24 @@ someModule.stream(function(err, stdout, stderr) {
 
 For edge cases, like POST request to URL with query string or to pass HTTP auth credentials, object can be passed to `form.submit()` as first parameter:
 
-``` javascript
+```js
 form.submit({
   host: 'example.com',
   path: '/probably.php?extra=params',
   auth: 'username:password'
-}, function(err, res) {
+}, (err, res) => {
   console.log(res.statusCode);
 });
 ```
 
 In case you need to also send custom HTTP headers with the POST request, you can use the `headers` key in first parameter of `form.submit()`:
 
-``` javascript
+```js
 form.submit({
   host: 'example.com',
   path: '/surelynot.php',
   headers: {'x-test-header': 'test-header-value'}
-}, function(err, res) {
+}, (err, res) => {
   console.log(res.statusCode);
 });
 ```
@@ -175,12 +175,12 @@ form.submit({
 Form submission using  [request](https://github.com/request/request):
 
 ```javascript
-var formData = {
+const formData = {
   my_field: 'my_value',
   my_file: fs.createReadStream(__dirname + '/unicycle.jpg'),
 };
 
-request.post({url:'http://service.com/upload', formData: formData}, function(err, httpResponse, body) {
+request.post({url:'http://service.com/upload', formData: formData}, (err, httpResponse, body) => {
   if (err) {
     return console.error('upload failed:', err);
   }
@@ -195,14 +195,14 @@ For more details see [request readme](https://github.com/request/request#multipa
 You can also submit a form using [node-fetch](https://github.com/bitinn/node-fetch):
 
 ```javascript
-var form = new FormData();
+const form = new FormData();
 
 form.append('a', 1);
 
 fetch('http://example.com', { method: 'POST', body: form })
-    .then(function(res) {
+    .then((res) => {
         return res.json();
-    }).then(function(json) {
+    }).then((json) => {
         console.log(json);
     });
 ```
