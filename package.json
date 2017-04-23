@@ -39,7 +39,7 @@
   "dependencies": {
     "asynckit": "^0.4.0",
     "combined-stream": "^1.0.5",
-    "mime-types": "^2.1.12"
+    "mime-types": "^2.1.15"
   },
   "devDependencies": {
     "browserify": "^13.1.1",
