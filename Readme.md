@@ -132,7 +132,8 @@ someModule.stream(function(err, stdout, stderr) {
   var form = new FormData();
 
   form.append('file', stdout, {
-    filename: 'unicycle.jpg',
+    filename: 'unicycle.jpg', // ... or:
+    filepath: 'photos/toys/unicycle.jpg',
     contentType: 'image/jpg',
     knownLength: 19806
   });
@@ -143,6 +144,8 @@ someModule.stream(function(err, stdout, stderr) {
   });
 });
 ```
+
+The `filepath` property overrides `filename` and may contain a relative path. This is typically used when uploading [multiple files from a directory](https://wicg.github.io/entries-api/#dom-htmlinputelement-webkitdirectory).
 
 For edge cases, like POST request to URL with query string or to pass HTTP auth credentials, object can be passed to `form.submit()` as first parameter:
 
