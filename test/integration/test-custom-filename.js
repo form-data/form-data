@@ -38,7 +38,7 @@ var server = http.createServer(function(req, res) {
     assert.strictEqual(files['custom_filename'].type, mime.lookup(knownFile), 'Expects original content-type');
 
     assert('custom_filepath' in files);
-    assert.strictEqual(files['custom_filepath'].name, relativeFile.replace(/\\/g, '/'), 'Expects custom filename');
+    assert.strictEqual(files['custom_filepath'].name, relativeFile.replace(/\\/g, '/'), 'Expects custom filepath');
     assert.strictEqual(files['custom_filepath'].type, mime.lookup(knownFile), 'Expects original content-type');
 
     assert('unknown_with_filename' in files);
