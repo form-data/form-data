@@ -8,12 +8,14 @@ var assert       = common.assert;
 var mime         = require('mime-types');
 var http         = require('http');
 var fs           = require('fs');
+var path         = require('path');
 
 var FormData     = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
 
-var knownFile = common.dir.fixture + '/unicycle.jpg';
-var unknownFile = common.dir.fixture + '/unknown_file_type';
+var knownFile = path.join(common.dir.fixture, 'unicycle.jpg');
+var unknownFile = path.join(common.dir.fixture, 'unknown_file_type');
+var relativeFile = path.relative(path.join(knownFile, '..', '..'), knownFile);
 
 var options = {
   filename: 'test.png',
@@ -34,6 +36,10 @@ var server = http.createServer(function(req, res) {
     assert('custom_filename' in files);
     assert.strictEqual(files['custom_filename'].name, options.filename, 'Expects custom filename');
     assert.strictEqual(files['custom_filename'].type, mime.lookup(knownFile), 'Expects original content-type');
+
+    assert('custom_filepath' in files);
+    assert.strictEqual(files['custom_filepath'].name, relativeFile.replace(/\\/g, '/'), 'Expects custom filepath');
+    assert.strictEqual(files['custom_filepath'].type, mime.lookup(knownFile), 'Expects original content-type');
 
     assert('unknown_with_filename' in files);
     assert.strictEqual(files['unknown_with_filename'].name, options.filename, 'Expects custom filename');
@@ -67,6 +73,8 @@ server.listen(common.port, function() {
   form.append('unknown_with_filename', fs.createReadStream(unknownFile), options.filename);
   // Filename only with unknown file
   form.append('unknown_with_filename_as_object', fs.createReadStream(unknownFile), {filename: options.filename});
+  // Filename with relative path
+  form.append('custom_filepath', fs.createReadStream(knownFile), {filepath: relativeFile});
   // No options or implicit file type from extension on name property.
   var customNameStream = fs.createReadStream(unknownFile);
   customNameStream.name = options.filename;
