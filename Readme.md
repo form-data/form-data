@@ -75,6 +75,20 @@ form.submit('http://example.org/', function(err, res) {
 
 For more advanced request manipulations ```submit()``` method returns ```http.ClientRequest``` object, or you can choose from one of the alternative submission methods.
 
+### Custom options
+
+You can provide custom options, such as `maxDataSize`:
+
+``` javascript
+var FormData = require('form-data');
+
+var form = new FormData({ maxDataSize: 20971520 });
+form.append('my_field', 'my value');
+form.append('my_buffer', /* something big */);
+```
+
+List of available options could be found in [combined-stream](https://github.com/felixge/node-combined-stream/blob/master/lib/combined_stream.js#L7-L15)
+
 ### Alternative submission methods
 
 You can use node's http client interface:
