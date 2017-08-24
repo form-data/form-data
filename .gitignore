@@ -4,6 +4,7 @@
 *.sublime-*
 *.un~
 
+.DS_Store
 .idea
 
 sftp-config.json
