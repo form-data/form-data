@@ -1,9 +1,3 @@
-*.bak
-*.iml
-*.log
-*.sublime-*
-*.un~
-
 .*
 
 Makefile
