@@ -227,6 +227,8 @@ fetch('http://example.com', { method: 'POST', body: form })
 ## Notes
 
 - ```getLengthSync()``` method DOESN'T calculate length for streams, use ```knownLength``` options as workaround.
+- ```getLength(cb)``` will send an error as first parameter of callback if stream length cannot be calculated (e.g. send in custom streams w/o using ```knownLength```).
+- ```sbumit``` will not add `content-length` if form length is unknown or not calculable.
 - Starting version `2.x` FormData has dropped support for `node@0.10.x`.
 
 ## License
