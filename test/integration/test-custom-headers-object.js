@@ -9,7 +9,12 @@ var http = require('http');
 
 var FormData = require(common.dir.lib + '/form_data');
 
-var testHeader = { 'X-Test-Fake': 123 };
+var testHeader = {
+  'X-Test-Fake': 123,
+
+  // Cover "skip nullish header" code branch
+  'X-Empty-Header': undefined
+};
 
 var expectedLength;
 
@@ -48,6 +53,13 @@ server.listen(common.port, function() {
   var buffer = new Buffer(bufferData);
 
   form.append('my_buffer', buffer, options);
+
+  // Cover the "userHeaders.hasOwnProperty(header)" code branch
+  var headers = form.getHeaders({
+    'X-Custom-Header': 'value'
+  });
+
+  assert.strictEqual(headers['x-custom-header'], 'value');
 
   // (available to req handler)
   expectedLength = form._lastBoundary().length + form._overheadLength + options.knownLength;

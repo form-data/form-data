@@ -3,6 +3,7 @@ var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
 var fake = require('fake').create();
 var fs = require('fs');
+var Stream = require('stream');
 
 (function testEmptyForm() {
   var form = new FormData();
@@ -88,4 +89,87 @@ var fs = require('fs');
   var callback = fake.callback('testStringFileBufferFile-getLength');
   fake.expectAnytime(callback, [null, expectedLength]);
   form.getLength(callback);
+})();
+
+(function testPassthroughStreamData() {
+
+  var fields = [
+    {
+      name: 'my_field',
+      value: 'Test 123'
+    },
+    {
+      name: 'my_image',
+      value: fs.createReadStream(common.dir.fixture + '/unicycle.jpg').pipe(new Stream.PassThrough())
+    },
+    {
+      name: 'my_buffer',
+      value: new Buffer('123')
+    },
+    {
+      name: 'my_txt',
+      value: fs.createReadStream(common.dir.fixture + '/veggies.txt').pipe(new Stream.PassThrough())
+    }
+  ];
+
+  var form = new FormData();
+
+  fields.forEach(function(field) {
+    form.append(field.name, field.value);
+  });
+
+  var callback = fake.callback('testPassthroughStreamData-getLength');
+  fake.expectAnytime(callback, []);
+  form.getLength(function (err, length) {
+    assert.ok(err, 'getLength should send an error');
+    assert.ok(isNaN(length), 'length should be NaN');
+    callback();
+  });
+})();
+
+
+(function testGetLengthCache() {
+  var fields = [
+    {
+      name: 'my_field',
+      value: 'Test 123'
+    },
+    {
+      name: 'my_image',
+      value: fs.createReadStream(common.dir.fixture + '/unicycle.jpg')
+    },
+    {
+      name: 'my_buffer',
+      value: new Buffer('123')
+    },
+    {
+      name: 'my_txt',
+      value: fs.createReadStream(common.dir.fixture + '/veggies.txt')
+    }
+  ];
+
+  var form = new FormData();
+  var expectedLength = 0;
+
+  fields.forEach(function(field) {
+    form.append(field.name, field.value);
+    if (field.value.path) {
+      var stat = fs.statSync(field.value.path);
+      expectedLength += stat.size;
+    } else {
+      expectedLength += field.value.length;
+    }
+  });
+
+  expectedLength += form._overheadLength + form._lastBoundary().length;
+
+  var callback = fake.callback('testGetLengthCache-getLength');
+  fake.expectAnytime(callback, [null, expectedLength]);
+
+  form.getLength(function (err, length) {
+    assert.equal(err, null, 'getLength should not throw');
+    assert.equal(form._calculatedLength, length, 'cached _calculatedLength should be equal to calculated length');
+
+    form.getLength(callback); // should take it from cache now
+  });
 })();

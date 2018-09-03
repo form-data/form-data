@@ -66,7 +66,7 @@ common.actions.populateFields = function(form, fields)
     if ((typeof field.value == 'function')) {
       field.value = field.value();
     }
-    form.append(name, field.value);
+    form.append(name, field.value, field.options);
   }
 };
 
