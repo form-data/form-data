@@ -241,7 +241,7 @@ axios.post('http://example.com', form, {
     ...formHeaders,
   },
 })
-.then((response) => response)
+.then(response => response)
 .catch(error => error)
 ```
 
