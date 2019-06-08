@@ -224,6 +224,27 @@ fetch('http://example.com', { method: 'POST', body: form })
     });
 ```
 
+#### axios
+
+In Node.js you can post a file using [axios](https://github.com/axios/axios):
+```javascript
+const form = new FormData();
+const stream = fs.createReadStream(PATH_TO_FILE);
+
+form.append('image', stream);
+
+// In Node.js environment you need to set boundary in the header field 'Content-Type' by calling method `getHeaders`
+const formHeaders = form.getHeaders();
+
+axios.post('http://example.com', form, {
+  headers: {
+    ...formHeaders,
+  },
+})
+.then(response => response)
+.catch(error => error)
+```
+
 ## Notes
 
 - ```getLengthSync()``` method DOESN'T calculate length for streams, use ```knownLength``` options as workaround.
