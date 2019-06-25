@@ -46,9 +46,9 @@
   "devDependencies": {
     "browserify": "^13.1.1",
     "browserify-istanbul": "^2.0.0",
-    "coveralls": "^2.11.14",
+    "coveralls": "^3.0.4",
     "cross-spawn": "^4.0.2",
-    "eslint": "^3.9.1",
+    "eslint": "^6.0.1",
     "fake": "^0.2.2",
     "far": "^0.0.7",
     "formidable": "^1.0.17",
