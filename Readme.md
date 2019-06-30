@@ -213,7 +213,7 @@ You may provide a string for options, or an object.
 form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), 'bar.jpg' );
 
 // provide an object.
-form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), {filename: 'bar.jpg', filesize: 1045} );
+form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), {filename: 'bar.jpg', contentType: 'image/jpeg', knownLength: 19806} );
 ```
 
 #### _Array_ getHeaders( [**Array** _userHeaders_] )
