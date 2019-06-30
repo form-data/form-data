@@ -8,7 +8,7 @@ The API of this library is inspired by the [XMLHttpRequest-2 FormData Interface]
 
 [![Linux Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=linux:4.x-12.x)](https://travis-ci.org/form-data/form-data)
 [![MacOS Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=macos:4.x-12.x)](https://travis-ci.org/form-data/form-data)
-[![Windows Build](https://img.shields.io/appveyor/ci/alexindigo/form-data/master.svg?label=windows:4.x-12.x)](https://ci.appveyor.com/project/alexindigo/form-data)
+[![Windows Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=windows:4.x-12.x)](https://travis-ci.org/form-data/form-data)
 
 [![Coverage Status](https://img.shields.io/coveralls/form-data/form-data/master.svg?label=code+coverage)](https://coveralls.io/github/form-data/form-data?branch=master)
 [![Dependency Status](https://img.shields.io/david/form-data/form-data.svg)](https://david-dm.org/form-data/form-data)
