@@ -186,7 +186,7 @@ form.submit({
 
 ### Methods
 
-#####_void_ append( **String** _field_, **Mixed** _value_ [, **Mixed** _options_] )
+##### _void_ append( **String** _field_, **Mixed** _value_ [, **Mixed** _options_] )
 Append data to the form. You can submit about any format (string, integer, boolean, buffer, etc.). However, Arrays are not supported and need to be turned into strings by the user.
 ```javascript
 var form = new FormData();
@@ -206,10 +206,10 @@ form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), 'bar.jpg' );
 form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), {filename: 'bar.jpg', filesize: 1045} );
 ```
 
-#####_Array_ getHeaders( [**Array** _userHeaders_] )
+##### _Array_ getHeaders( [**Array** _userHeaders_] )
 This method ads the correct `content-type` header to the provided array of `userHeaders`.  
 
-#####_String_ getBoundary()
+##### _String_ getBoundary()
 Return the boundary of the formData. A boundary consists of 26x `-` followed by 24 numbers
 for example:
 ```javascript
@@ -217,7 +217,7 @@ for example:
 ```
 _Note: The boundary must be unique and may not appear in the data._
 
-#####_Buffer_ getBuffer()
+##### _Buffer_ getBuffer()
 Return the full formdata request package, as a Buffer. You can insert this Buffer in e.g. Axios to send multipart data.
 
 ```javascript
@@ -231,12 +231,12 @@ axios.post( 'https://example.com/path/to/api',
           )
 ```
 
-#####_Integer_ getLengthSync()
+##### _Integer_ getLengthSync()
 Same as `getLength` but synchronous.
 
 _Note: getLengthSync __doesn't__ calculate streams length._
 
-#####_Integer_ getLength( function _callback_ )
+##### _Integer_ getLength( function _callback_ )
 Returns the `Content-Length` async. The callback is used to handle errors and continue once the length has been calculated
 ```javascript
 this.getLength(function(err, length) {
@@ -252,10 +252,10 @@ this.getLength(function(err, length) {
 }.bind(this));
 ```
 
-#####_boolean_ hasKnownLength()
+##### _boolean_ hasKnownLength()
 Checks if the length of added values is known.
 
-#####_request_ submit( _params_, function _callback_ )
+##### _request_ submit( _params_, function _callback_ )
 Submit the form to a web application.
 ```javascript
 var form = new FormData();
@@ -267,7 +267,7 @@ form.submit( 'http://example.com/', function(err, res) {
 } );
 ```
 
-#####_String_ toString()
+##### _String_ toString()
 Returns the form data as a string. Don't use this if you are sending files or buffers, use `getBuffer()` instead.
 
 ### Integration with other libraries
