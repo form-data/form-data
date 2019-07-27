@@ -11,7 +11,7 @@ export = FormData;
 
 declare class FormData extends stream.Readable {
   append(key: string, value: any, options?: FormData.AppendOptions | string): void;
-  getHeaders(): FormData.Headers;
+  getHeaders(userHeaders: FormData.Headers): FormData.Headers;
   submit(
     params: string | FormData.SubmitOptions,
     callback?: (error: Error | undefined, response: http.IncomingMessage) => void

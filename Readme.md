@@ -187,7 +187,7 @@ form.submit({
 ### Methods
 
 - [_Void_ append( **String** _field_, **Mixed** _value_ [, **Mixed** _options_] )](https://github.com/form-data/form-data#void-append-string-field-mixed-value--mixed-options-).
-- [_Array_ getHeaders( [**Array** _userHeaders_] )](https://github.com/form-data/form-data#array-getheaders-array-userheaders-)
+- [_Headers_ getHeaders( [**Headers** _userHeaders_] )](https://github.com/form-data/form-data#array-getheaders-array-userheaders-)
 - [_String_ getBoundary()](https://github.com/form-data/form-data#string-getboundary)
 - [_Buffer_ getBuffer()](https://github.com/form-data/form-data#buffer-getbuffer)
 - [_Integer_ getLengthSync()](https://github.com/form-data/form-data#integer-getlengthsync)
@@ -216,7 +216,7 @@ form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), 'bar.jpg' );
 form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), {filename: 'bar.jpg', contentType: 'image/jpeg', knownLength: 19806} );
 ```
 
-#### _Array_ getHeaders( [**Array** _userHeaders_] )
+#### _Headers_ getHeaders( [**Headers** _userHeaders_] )
 This method ads the correct `content-type` header to the provided array of `userHeaders`.  
 
 #### _String_ getBoundary()
