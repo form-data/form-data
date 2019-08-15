@@ -10,6 +10,9 @@ import * as http from 'http';
 export = FormData;
 
 interface Options {
+  writable?: boolean;
+  readable?: boolean;
+  dataSize?: number;
   maxDataSize?: number;
   pauseStreams?: boolean;
 }
