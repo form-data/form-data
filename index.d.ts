@@ -9,7 +9,16 @@ import * as http from 'http';
 
 export = FormData;
 
+interface Options {
+  writable?: boolean;
+  readable?: boolean;
+  dataSize?: number;
+  maxDataSize?: number;
+  pauseStreams?: boolean;
+}
+
 declare class FormData extends stream.Readable {
+  constructor(options?: Options);
   append(key: string, value: any, options?: FormData.AppendOptions | string): void;
   getHeaders(): FormData.Headers;
   submit(
