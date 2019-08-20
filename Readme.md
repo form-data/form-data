@@ -229,17 +229,17 @@ _Note: The boundary must be unique and may not appear in the data._
 
 #### _Buffer_ getBuffer()
 Return the full formdata request package, as a Buffer. You can insert this Buffer in e.g. Axios to send multipart data.
-
 ```javascript
 var form = new FormData();
 form.append( 'my_buffer', Buffer.from([0x4a,0x42,0x20,0x52,0x6f,0x63,0x6b,0x73]) );
-form.append( 'my_file', fs.createReadStream('/foo/bar.jpg') );
+form.append( 'my_file', fs.readFileSync('/foo/bar.jpg') );
 
 axios.post( 'https://example.com/path/to/api',
             form.getBuffer(),
             form.getHeaders()
           )
 ```
+**Note:** Because the output is of type Buffer, you can only append types that are accepted by Buffer: *string, Buffer, ArrayBuffer, Array, or Array-like Object*. A ReadStream for example will result in an error.
 
 #### _Integer_ getLengthSync()
 Same as `getLength` but synchronous.
