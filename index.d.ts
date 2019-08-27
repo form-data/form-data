@@ -23,11 +23,11 @@ declare class FormData extends stream.Readable {
   getHeaders(): FormData.Headers;
   submit(
     params: string | FormData.SubmitOptions,
-    callback?: (error: Error | undefined, response: http.IncomingMessage) => void
+    callback?: (error: Error | null, response: http.IncomingMessage) => void
   ): http.ClientRequest;
   getBuffer(): Buffer;
   getBoundary(): string;
-  getLength(callback: (err: Error | undefined, length: number) => void): void;
+  getLength(callback: (err: Error | null, length: number) => void): void;
   getLengthSync(): number;
   hasKnownLength(): boolean;
 }
