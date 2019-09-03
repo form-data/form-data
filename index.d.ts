@@ -9,16 +9,25 @@ import * as http from 'http';
 
 export = FormData;
 
+interface Options {
+  writable?: boolean;
+  readable?: boolean;
+  dataSize?: number;
+  maxDataSize?: number;
+  pauseStreams?: boolean;
+}
+
 declare class FormData extends stream.Readable {
+  constructor(options?: Options);
   append(key: string, value: any, options?: FormData.AppendOptions | string): void;
   getHeaders(userHeaders: FormData.Headers): FormData.Headers;
   submit(
     params: string | FormData.SubmitOptions,
-    callback?: (error: Error | undefined, response: http.IncomingMessage) => void
+    callback?: (error: Error | null, response: http.IncomingMessage) => void
   ): http.ClientRequest;
   getBuffer(): Buffer;
   getBoundary(): string;
-  getLength(callback: (err: Error | undefined, length: number) => void): void;
+  getLength(callback: (err: Error | null, length: number) => void): void;
   getLengthSync(): number;
   hasKnownLength(): boolean;
 }
