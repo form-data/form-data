@@ -9,7 +9,17 @@ import * as http from 'http';
 
 export = FormData;
 
-interface Options {
+// Extracted because @types/node doesn't export interfaces.
+interface ReadableOptions {
+  highWaterMark?: number;
+  encoding?: string;
+  objectMode?: boolean;
+  read?(this: stream.Readable, size: number): void;
+  destroy?(this: stream.Readable, error: Error | null, callback: (error: Error | null) => void): void;
+  autoDestroy?: boolean;
+}
+
+interface Options extends ReadableOptions {
   writable?: boolean;
   readable?: boolean;
   dataSize?: number;
