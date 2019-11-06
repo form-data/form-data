@@ -6,9 +6,9 @@ The API of this library is inspired by the [XMLHttpRequest-2 FormData Interface]
 
 [xhr2-fd]: http://dev.w3.org/2006/webapi/XMLHttpRequest-2/Overview.html#the-formdata-interface
 
-[![Linux Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=linux:4.x-12.x)](https://travis-ci.org/form-data/form-data)
-[![MacOS Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=macos:4.x-12.x)](https://travis-ci.org/form-data/form-data)
-[![Windows Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=windows:4.x-12.x)](https://travis-ci.org/form-data/form-data)
+[![Linux Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=linux:6.x-12.x)](https://travis-ci.org/form-data/form-data)
+[![MacOS Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=macos:6.x-12.x)](https://travis-ci.org/form-data/form-data)
+[![Windows Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=windows:6.x-12.x)](https://travis-ci.org/form-data/form-data)
 
 [![Coverage Status](https://img.shields.io/coveralls/form-data/form-data/master.svg?label=code+coverage)](https://coveralls.io/github/form-data/form-data?branch=master)
 [![Dependency Status](https://img.shields.io/david/form-data/form-data.svg)](https://david-dm.org/form-data/form-data)
@@ -344,6 +344,7 @@ axios.post('http://example.com', form, {
 
 - ```getLengthSync()``` method DOESN'T calculate length for streams, use ```knownLength``` options as workaround.
 - Starting version `2.x` FormData has dropped support for `node@0.10.x`.
+- Starting version `3.x` FormData has dropped support for `node@4.x`.
 
 ## License
 
