@@ -217,7 +217,7 @@ form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), {filename: 'bar.jpg
 ```
 
 #### _Headers_ getHeaders( [**Headers** _userHeaders_] )
-This method ads the correct `content-type` header to the provided array of `userHeaders`.  
+This method adds the correct `content-type` header to the provided array of `userHeaders`.  
 
 #### _String_ getBoundary()
 Return the boundary of the formData. A boundary consists of 26 `-` followed by 24 numbers
