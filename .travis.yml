@@ -20,7 +20,7 @@ script:
   - node --version
   - npm --version
   - if [ "$TRAVIS_OS_NAME" != "windows" ]; then npm run ci-lint; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then npm run test; else npm run ci-test; fi
+  - npm run test
   - npm run check
 
 after_success:

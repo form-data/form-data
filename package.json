@@ -13,14 +13,12 @@
   "scripts": {
     "pretest": "rimraf coverage test/tmp",
     "test": "istanbul cover test/run.js",
-    "posttest": "istanbul report lcov text",
+    "posttest": "npm run report",
     "lint": "eslint lib/*.js test/*.js test/integration/*.js",
     "report": "istanbul report lcov text",
     "ci-lint": "is-node-modern 8 && npm run lint || is-node-not-modern 8",
-    "ci-test": "npm run test && npm run browser && npm run report",
     "predebug": "rimraf coverage test/tmp",
     "debug": "verbose=1 ./test/run.js",
-    "browser": "browserify -t browserify-istanbul test/run-browser.js | obake --coverage",
     "check": "istanbul check-coverage coverage/coverage*.json",
     "files": "pkgfiles --sort=name",
     "get-version": "node -e \"console.log(require('./package.json').version)\"",
@@ -31,7 +29,7 @@
   },
   "pre-commit": [
     "lint",
-    "ci-test",
+    "test",
     "check"
   ],
   "engines": {
@@ -44,8 +42,6 @@
   },
   "devDependencies": {
     "@types/node": "^12.0.10",
-    "browserify": "^13.1.1",
-    "browserify-istanbul": "^2.0.0",
     "coveralls": "^3.0.4",
     "cross-spawn": "^6.0.5",
     "eslint": "^6.0.1",
@@ -55,8 +51,6 @@
     "in-publish": "^2.0.0",
     "is-node-modern": "^1.0.0",
     "istanbul": "^0.4.5",
-    "obake": "^0.1.2",
-    "puppeteer": "^1.19.0",
     "pkgfiles": "^2.3.0",
     "pre-commit": "^1.1.3",
     "request": "^2.88.0",
