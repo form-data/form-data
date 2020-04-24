@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "strict": true,
+    "noEmit": false,
+    "declaration": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./lib"
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}

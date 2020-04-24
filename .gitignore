@@ -14,3 +14,5 @@ package-lock.json
 coverage/
 node_modules/
 test/tmp/
+
+lib
