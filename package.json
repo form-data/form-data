@@ -43,6 +43,7 @@
     "mime-types": "^2.1.27"
   },
   "devDependencies": {
+    "@types/combined-stream": "^1.0.2",
     "@types/node": "^13.13.2",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
