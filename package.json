@@ -35,7 +35,7 @@
     "check"
   ],
   "engines": {
-    "node": ">= 6"
+    "node": ">=12.0.0"
   },
   "dependencies": {
     "asynckit": "^0.4.0",
