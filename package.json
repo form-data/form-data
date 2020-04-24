@@ -42,6 +42,8 @@
   },
   "devDependencies": {
     "@types/node": "^13.13.2",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
     "browserify": "^16.5.1",
     "browserify-istanbul": "^3.0.1",
     "coveralls": "^3.0.14",
