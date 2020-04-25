@@ -7,7 +7,7 @@
     "type": "git",
     "url": "git://github.com/form-data/form-data.git"
   },
-  "main": "./lib/form_data",
+  "main": "./lib/index",
   "browser": "./lib/browser",
   "typings": "./lib/index.d.ts",
   "scripts": {

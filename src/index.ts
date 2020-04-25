@@ -1,1 +1,3 @@
-export { FormData } from './form-data';
+export * from './types';
+
+export { FormData, FormData as default } from './form-data';
