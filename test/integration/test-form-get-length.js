@@ -34,7 +34,7 @@ var fs = require('fs');
 
 (function testBuffer() {
   var FIELD = 'my_field';
-  var VALUE = new Buffer(23);
+  var VALUE = Buffer.alloc(23);
 
   var form = new FormData();
   form.append(FIELD, VALUE);
@@ -62,7 +62,7 @@ var fs = require('fs');
     },
     {
       name: 'my_buffer',
-      value: new Buffer('123')
+      value: Buffer.from('123')
     },
     {
       name: 'my_txt',

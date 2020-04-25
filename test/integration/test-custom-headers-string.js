@@ -50,7 +50,7 @@ server.listen(common.port, function() {
   for (var z = 0; z < 1000; z++) {
     bufferData.push(1);
   }
-  var buffer = new Buffer(bufferData);
+  var buffer = Buffer.from(bufferData);
 
   form.append('my_buffer', buffer, options);
 

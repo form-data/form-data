@@ -16,7 +16,7 @@ common.dir = {
 };
 
 common.defaultTypeValue = function () {
-  return new Buffer([1, 2, 3]);
+  return Buffer.from([1, 2, 3]);
 };
 
 common.assert = assert;
@@ -40,7 +40,7 @@ common.testFields = function (FIELDS, callback) {
     var incomingForm = new IncomingForm({uploadDir: common.dir.tmp});
 
     incomingForm.parse(req);
-    
+
     common.actions.checkForm(incomingForm, FIELDS, function (fieldsChecked) {
       // keep track of number of the processed fields
       callback(fieldsPassed - fieldsChecked);

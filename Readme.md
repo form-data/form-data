@@ -30,7 +30,7 @@ const fs = require('fs');
 
 const form = new FormData();
 form.append('my_field', 'my value');
-form.append('my_buffer', new Buffer(10));
+form.append('my_buffer', Buffer.alloc(10));
 form.append('my_file', fs.createReadStream('/foo/bar.jpg'));
 ```
 
@@ -44,7 +44,7 @@ const form = new FormData();
 
 http.request('http://nodejs.org/images/logo.png', (response) => {
   form.append('my_field', 'my value');
-  form.append('my_buffer', new Buffer(10));
+  form.append('my_buffer', Buffer.alloc(10));
   form.append('my_logo', response);
 });
 ```
@@ -58,7 +58,7 @@ const request = require('request');
 const form = new FormData();
 
 form.append('my_field', 'my value');
-form.append('my_buffer', new Buffer(10));
+form.append('my_buffer', Buffer.alloc(10));
 form.append('my_logo', request('http://nodejs.org/images/logo.png'));
 ```
 
@@ -203,7 +203,7 @@ const form = new FormData();
 form.append( 'my_string', 'my value' );
 form.append( 'my_integer', 1 );
 form.append( 'my_boolean', true );
-form.append( 'my_buffer', new Buffer(10) );
+form.append( 'my_buffer', Buffer.alloc(10) );
 form.append( 'my_array_as_json', JSON.stringify( ['bird','cute'] ) )
 ```
 

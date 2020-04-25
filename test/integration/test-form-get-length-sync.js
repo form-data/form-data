@@ -15,7 +15,7 @@ var fs = require('fs');
     },
     {
       name: 'my_buffer',
-      value: new Buffer('123')
+      value: Buffer.from('123')
     }
   ];
 
@@ -47,7 +47,7 @@ var fs = require('fs');
     },
     {
       name: 'my_buffer',
-      value: new Buffer('123')
+      value: Buffer.from('123')
     },
     {
       name: 'my_image',
