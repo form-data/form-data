@@ -49,7 +49,7 @@
     "@typescript-eslint/parser": "^2.29.0",
     "browserify": "^16.5.1",
     "browserify-istanbul": "^3.0.1",
-    "coveralls": "^3.0.14",
+    "coveralls": "^3.1.0",
     "cross-spawn": "^7.0.2",
     "eslint": "^6.8.0",
     "fake": "^0.2.2",
@@ -65,7 +65,7 @@
     "puppeteer": "^3.0.1",
     "request": "^2.88.2",
     "rimraf": "^3.0.2",
-    "tape": "^4.13.2",
+    "tape": "^5.0.0",
     "typescript": "^3.8.3"
   },
   "license": "MIT"
