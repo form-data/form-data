@@ -31,9 +31,11 @@
     "prepublish": "in-publish && npm run update-readme || not-in-publish",
     "postpublish": "npm run restore-readme"
   },
-  "pre-commit": [
-
-  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run ci-test && npm run check"
+    }
+  },
   "engines": {
     "node": ">=12.0.0"
   },
