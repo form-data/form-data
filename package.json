@@ -58,6 +58,7 @@
     "in-publish": "^2.0.1",
     "is-node-modern": "^1.0.0",
     "istanbul": "^0.4.5",
+    "nyc": "^15.0.1",
     "obake": "^0.1.2",
     "pkgfiles": "^2.3.2",
     "pre-commit": "^1.2.2",
