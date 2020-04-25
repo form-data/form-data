@@ -5,20 +5,14 @@ var far = require('far').create();
 var farPaths = require('far/lib/paths');
 var spawn = require('cross-spawn');
 var basePath = process.cwd();
-var istanbul = path.join(basePath, './node_modules/.bin/istanbul');
+var tape = path.join(basePath, './node_modules/.bin/tape');
 
-// augment Far to support istanbul
+// augment Far to support tape
 if (process.env.running_under_istanbul) {
   far.constructor.prototype._execute = function(file) {
     this._printStatus(file);
 
-    var node = spawn(istanbul, [
-      'cover',
-      '--report', 'none',
-      '--print', 'none',
-      '--include-all-sources',
-      '--include-pid',
-      '--root', basePath,
+    var node = spawn(tape, [
       file
     ]);
 
