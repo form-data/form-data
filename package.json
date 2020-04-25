@@ -61,7 +61,6 @@
     "nyc": "^15.0.1",
     "obake": "^0.1.2",
     "pkgfiles": "^2.3.2",
-    "pre-commit": "^1.2.2",
     "puppeteer": "^3.0.1",
     "request": "^2.88.2",
     "rimraf": "^3.0.2",
