@@ -1,0 +1,16 @@
+temp-dir: ./coverage
+report-dir: ./coverage
+
+extensions:
+  - .js
+
+reporter:
+  - json
+  - text
+  - lcov
+
+watermarks:
+  statements: [90, 95]
+  lines: [90, 95]
+  functions: [90, 95]
+  branches: [90, 95]
