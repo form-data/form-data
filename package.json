@@ -54,6 +54,7 @@
     "fake": "^0.2.2",
     "far": "^0.0.7",
     "formidable": "^1.2.2",
+    "husky": "^4.2.5",
     "in-publish": "^2.0.1",
     "is-node-modern": "^1.0.0",
     "istanbul": "^0.4.5",
