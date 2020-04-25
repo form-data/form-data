@@ -1,5 +1,5 @@
 var test = require('tape');
-var FormData = require('../lib/browser.js');
+var { FormData } = require('../lib/browser.js');
 var form = new FormData();
 
 test('being nice to browser-like environments', function(t)

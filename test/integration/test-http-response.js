@@ -2,7 +2,7 @@ var common = require('../common');
 var assert = common.assert;
 var http = require('http');
 var parseUrl = require('url').parse;
-var FormData = require(common.dir.lib + '/form_data');
+var { FormData } = require(common.dir.lib + '/form-data');
 
 // static server prepared for all tests
 var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';

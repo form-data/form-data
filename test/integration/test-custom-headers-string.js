@@ -7,7 +7,7 @@ var common = require('../common');
 var assert = common.assert;
 var http = require('http');
 
-var FormData = require(common.dir.lib + '/form_data');
+var { FormData } = require(common.dir.lib + '/form-data');
 
 var CRLF = '\r\n';
 

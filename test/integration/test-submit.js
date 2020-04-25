@@ -3,7 +3,7 @@ var assert = common.assert;
 var mime = require('mime-types');
 var request = require('request');
 var fs = require('fs');
-var FormData = require(common.dir.lib + '/form_data');
+var { FormData } = require(common.dir.lib + '/form-data');
 
 var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';
 

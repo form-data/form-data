@@ -8,7 +8,7 @@ var http = require('http');
 var path = require('path');
 var mime = require('mime-types');
 var request = require('request');
-var FormData = require(common.dir.lib + '/form_data');
+var { FormData } = require(common.dir.lib + '/form-data');
 var fs = require('fs');
 var IncomingForm = require('formidable').IncomingForm;
 

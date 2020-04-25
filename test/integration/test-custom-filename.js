@@ -10,7 +10,7 @@ var http         = require('http');
 var fs           = require('fs');
 var path         = require('path');
 
-var FormData     = require(common.dir.lib + '/form_data');
+var { FormData }     = require(common.dir.lib + '/form-data');
 var IncomingForm = require('formidable').IncomingForm;
 
 var knownFile = path.join(common.dir.fixture, 'unicycle.jpg');

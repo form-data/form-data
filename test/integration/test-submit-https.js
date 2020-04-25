@@ -1,7 +1,7 @@
 var https = require('https');
 var common = require('../common');
 var assert = common.assert;
-var FormData = require(common.dir.lib + '/form_data');
+var { FormData } = require(common.dir.lib + '/form-data');
 var server;
 
 /**

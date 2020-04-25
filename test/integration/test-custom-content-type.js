@@ -3,7 +3,7 @@ var assert = common.assert;
 var http = require('http');
 var mime = require('mime-types');
 var fs = require('fs');
-var FormData = require(common.dir.lib + '/form_data');
+var { FormData } = require(common.dir.lib + '/form-data');
 
 // wrap non simple values into function
 // just to deal with ReadStream "autostart"

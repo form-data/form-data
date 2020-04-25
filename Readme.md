@@ -25,7 +25,7 @@ In this example we are constructing a form with 3 fields that contain a string,
 a buffer and a file stream.
 
 ``` javascript
-var FormData = require('form-data');
+var { FormData } = require('form-data');
 var fs = require('fs');
 
 var form = new FormData();
@@ -37,7 +37,7 @@ form.append('my_file', fs.createReadStream('/foo/bar.jpg'));
 Also you can use http-response stream:
 
 ``` javascript
-var FormData = require('form-data');
+var { FormData } = require('form-data');
 var http = require('http');
 
 var form = new FormData();
@@ -52,7 +52,7 @@ http.request('http://nodejs.org/images/logo.png', function(response) {
 Or @mikeal's [request](https://github.com/request/request) stream:
 
 ``` javascript
-var FormData = require('form-data');
+var { FormData } = require('form-data');
 var request = require('request');
 
 var form = new FormData();
@@ -79,7 +79,7 @@ For more advanced request manipulations ```submit()``` method returns ```http.Cl
 You can provide custom options, such as `maxDataSize`:
 
 ``` javascript
-var FormData = require('form-data');
+var { FormData } = require('form-data');
 
 var form = new FormData({ maxDataSize: 20971520 });
 form.append('my_field', 'my value');
@@ -217,7 +217,7 @@ form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), {filename: 'bar.jpg
 ```
 
 #### _Headers_ getHeaders( [**Headers** _userHeaders_] )
-This method adds the correct `content-type` header to the provided array of `userHeaders`.  
+This method adds the correct `content-type` header to the provided array of `userHeaders`.
 
 #### _String_ getBoundary()
 Return the boundary of the formData. A boundary consists of 26 `-` followed by 24 numbers

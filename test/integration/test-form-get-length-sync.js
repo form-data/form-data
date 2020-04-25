@@ -1,6 +1,6 @@
 var common = require('../common');
 var assert = common.assert;
-var FormData = require(common.dir.lib + '/form_data');
+var { FormData } = require(common.dir.lib + '/form-data');
 var fs = require('fs');
 
 (function testGetLengthSync() {
@@ -28,6 +28,7 @@ var fs = require('fs');
   });
 
   expectedLength += form._overheadLength + form._lastBoundary().length;
+
   var calculatedLength = form.getLengthSync();
 
   assert.equal(expectedLength, calculatedLength);
