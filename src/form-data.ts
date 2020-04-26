@@ -27,10 +27,6 @@ export class FormData extends CombinedStream {
   public constructor(options?: Options) {
     super();
 
-    if (!(this instanceof FormData)) {
-      throw new TypeError('Failed to construct \'FormData\': Please use the \'new\' operator.');
-    }
-
     Object.assign(this, options);
   }
 
