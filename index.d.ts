@@ -36,6 +36,7 @@ declare class FormData extends stream.Readable {
     callback?: (error: Error | null, response: http.IncomingMessage) => void
   ): http.ClientRequest;
   getBuffer(): Buffer;
+  setBoundary(boundary: string): void;
   getBoundary(): string;
   getLength(callback: (err: Error | null, length: number) => void): void;
   getLengthSync(): number;
