@@ -1,0 +1,84 @@
+var common = require('../common');
+var assert = common.assert;
+var mime = require('mime-types');
+var fs = require('fs');
+var Stream = require('stream');
+var FormData = require(common.dir.lib + '/form_data');
+
+// wrap non simple values into function
+// just to deal with ReadStream "autostart"
+var FIELDS = {
+  'my_field': {
+    value: 'my_value'
+  },
+  'my_empty_field': {
+    value: '' // Will cover the (!value) code branch
+  },
+  'my_buffer': {
+    type: FormData.DEFAULT_CONTENT_TYPE,
+    value: common.defaultTypeValue
+  },
+  'my_file': {
+    type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
+    value: function() { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg').pipe(new Stream.PassThrough()); },
+    options: {
+      filename: 'unicycle.jpg',
+    }
+  }
+};
+
+var TEST_FIELDS = {
+  'my_field': {
+    value: 'my_value'
+  },
+  'my_empty_field': {
+    value: ''
+  },
+  'my_buffer': {
+    type: FormData.DEFAULT_CONTENT_TYPE,
+    value: common.defaultTypeValue()
+  },
+  'my_file': {
+    type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
+    value: fs.createReadStream(common.dir.fixture + '/unicycle.jpg')
+  }
+};
+
+// count total
+var fieldsPassed = Object.keys(FIELDS).length;
+
+// prepare form-receiving http server
+var server = common.testFields(TEST_FIELDS, function(fields){
+  fieldsPassed = fields;
+});
+
+server.listen(common.port, function() {
+
+  var form = new FormData();
+
+  common.actions.populateFields(form, FIELDS);
+
+  assert.strictEqual(form.getHeaders()['transfer-encoding'], 'chunked');
+  assert.strictEqual(form.isChunked(), true);
+
+  // custom params object passed to submit
+  form.submit({
+    port: common.port,
+    path: '/'
+  }, function(err, res) {
+
+    if (err) {
+      throw err;
+    }
+
+    assert.strictEqual(res.statusCode, 200);
+
+    res.resume();
+    server.close();
+  });
+
+});
+
+process.on('exit', function() {
+  assert.strictEqual(fieldsPassed, 0);
+});
