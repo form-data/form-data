@@ -2,14 +2,15 @@ sudo: false
 
 language: node_js
 node_js:
-  - "4"
   - "6"
   - "8"
-  - "9"
+  - "10"
+  - "12"
 
 os:
 - osx
 - linux
+- windows
 
 install:
   - travis_retry npm install
@@ -18,8 +19,8 @@ script:
   - uname -a
   - node --version
   - npm --version
-  - npm run ci-lint
-  - npm run ci-test
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then npm run ci-lint; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then npm run test; else npm run ci-test; fi
   - npm run check
 
 after_success:
