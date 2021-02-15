@@ -218,7 +218,7 @@ form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), {filename: 'bar.jpg
 ```
 
 #### _Headers_ getHeaders( [**Headers** _userHeaders_] )
-This method adds the correct `content-type` header to the provided array of `userHeaders`.  
+This method adds the correct `content-type` header to the provided array of `userHeaders`.
 
 #### _String_ getBoundary()
 Return the boundary of the formData. By default, the boundary consists of 26 `-` followed by 24 numbers
@@ -348,6 +348,8 @@ axios.post('http://example.com', form, {
 ## Notes
 
 - ```getLengthSync()``` method DOESN'T calculate length for streams, use ```knownLength``` options as workaround.
+- ```getLength(cb)``` will send an error as first parameter of callback if stream length cannot be calculated (e.g. send in custom streams w/o using ```knownLength```).
+- ```submit``` will not add `content-length` if form length is unknown or not calculable.
 - Starting version `2.x` FormData has dropped support for `node@0.10.x`.
 - Starting version `3.x` FormData has dropped support for `node@4.x`.
 
