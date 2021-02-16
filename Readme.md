@@ -32,6 +32,9 @@ var form = new FormData();
 form.append('my_field', 'my value');
 form.append('my_buffer', new Buffer(10));
 form.append('my_file', fs.createReadStream('/foo/bar.jpg'));
+var streamCtor = (next) => next(fs.createReadStream('/foo/bar.jpg'));
+streamCtor.path = '/foo/bar.jpg'
+form.append('my_deferred_file', streamCtor)
 ```
 
 Also you can use http-response stream:
@@ -215,6 +218,15 @@ form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), 'bar.jpg' );
 
 // provide an object.
 form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), {filename: 'bar.jpg', contentType: 'image/jpeg', knownLength: 19806} );
+```
+
+If you need to upload many files and want to defer the creation of a file descriptor until read time, you can pass in a function with the [`next` callback as the first argument](https://github.com/felixge/node-combined-stream#usage).  The function must have the `path` property of the fs.createReadStream, however.
+
+```js
+var streamCtor = (next) => next(fs.createReadStream('/foo/bar.jpg'));
+streamCtor.path = '/foo/bar.jpg'
+
+form.append('my_deferred_file', streamCtor)
 ```
 
 #### _Headers_ getHeaders( [**Headers** _userHeaders_] )
