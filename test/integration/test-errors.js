@@ -6,23 +6,6 @@ var path = require('path');
 var fs = require('fs');
 var http = require('http');
 
-// https://github.com/felixge/node-form-data/issues/38
-(function testAppendArray() {
-
-  var form = new FormData();
-
-  var callback = fake.callback('testAppendArray-onError-append');
-  fake.expectAnytime(callback, ['Arrays are not supported.']);
-
-  form.on('error', function(err) {
-    // workaround for expectAnytime handling objects
-    callback(err.message);
-  });
-
-  form.append('my_array', ['bird', 'cute']);
-})();
-
-
 (function testGetLengthSync() {
   var fields = [
     {
