@@ -42,6 +42,9 @@
     "combined-stream": "^1.0.8",
     "mime-types": "^2.1.12"
   },
+  "peerDependencies": {
+    "@types/node": "^12.0.10"
+  },
   "devDependencies": {
     "@types/node": "^12.0.10",
     "browserify": "^13.1.1",
