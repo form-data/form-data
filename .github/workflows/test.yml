@@ -20,5 +20,5 @@ jobs:
 
       - run: yarn
 
+      - run: npm run lint
       - run: npm test
-      - run: npm lint
