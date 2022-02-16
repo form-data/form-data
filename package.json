@@ -14,8 +14,7 @@
     "lint": "echo todo"
   },
   "pre-commit": [
-    "lint",
-    "check"
+    "lint"
   ],
   "engines": {
     "node": ">= 6"
