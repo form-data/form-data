@@ -17,4 +17,4 @@ it('get-boundary', () => {
     var formB = new FormData();
     assert.notEqual(formA.getBoundary(), formB.getBoundary());
   })();
-})
+});

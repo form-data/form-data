@@ -9,11 +9,11 @@ let httpServer;
 beforeAll(async () => {
   // start static server for all tests
   httpServer = await staticServer();
-})
+});
 
 afterAll(async () => {
   await new Promise((resolve) => httpServer.close(resolve));
-})
+});
 
 // todo rewrite tests to jest
 it('should run old tests', async () => {
@@ -22,6 +22,7 @@ it('should run old tests', async () => {
 
   for (const testFile of testFiles) {
     const testFilePath = join(testFilesDir, testFile);
+    // eslint-disable-next-line no-console
     console.log('running', testFile);
     await new Promise((resolve, reject) => {
       const cp = childProcess.fork(testFilePath);
@@ -31,7 +32,7 @@ it('should run old tests', async () => {
       cp.on('exit', (code) => {
         if (code === 0) resolve();
         else reject(new Error(`code was ${code}`));
-      })
+      });
     });
   }
-}, 60000)
+}, 60000);

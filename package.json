@@ -11,7 +11,7 @@
   "typings": "./index.d.ts",
   "scripts": {
     "test": "jest --coverage --runInBand",
-    "lint": "echo todo"
+    "lint": "eslint ."
   },
   "pre-commit": [
     "lint"
@@ -25,7 +25,9 @@
     "mime-types": "^2.1.12"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
     "@types/node": "^12.0.10",
+    "eslint": "^8.9.0",
     "fake": "^0.2.2",
     "formidable": "^1.0.17",
     "jest": "^27.5.1",

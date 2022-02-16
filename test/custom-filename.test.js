@@ -59,7 +59,7 @@ it('custom-filename', (done) => {
   
       res.writeHead(200);
       res.end('done');
-      });
+    });
   });
   
   
@@ -85,4 +85,4 @@ it('custom-filename', (done) => {
   
     common.actions.submit(form, server, done);
   });  
-})
+});

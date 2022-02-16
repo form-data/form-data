@@ -11,11 +11,11 @@ const staticServer = require('./static');
 let httpServer;
 beforeEach(async () => {
   httpServer = await staticServer();
-})
+});
 
 afterEach(async () => {
   await new Promise((resolve) => httpServer.close(resolve));
-})
+});
 
 it('submit-custom-header', (done) => {
   var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';
