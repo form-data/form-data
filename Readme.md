@@ -11,7 +11,6 @@ The API of this library is inspired by the [XMLHttpRequest-2 FormData Interface]
 [![Windows Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=windows:6.x-12.x)](https://travis-ci.org/form-data/form-data)
 
 [![Coverage Status](https://img.shields.io/coveralls/form-data/form-data/master.svg?label=code+coverage)](https://coveralls.io/github/form-data/form-data?branch=master)
-[![Dependency Status](https://img.shields.io/david/form-data/form-data.svg)](https://david-dm.org/form-data/form-data)
 
 ## Install
 
