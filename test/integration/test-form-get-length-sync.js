@@ -16,7 +16,7 @@ var Readable = require('stream').Readable;
     },
     {
       name: 'my_buffer',
-      value: new Buffer('123')
+      value: Buffer.from('123')
     }
   ];
 
@@ -47,7 +47,7 @@ var Readable = require('stream').Readable;
     },
     {
       name: 'my_buffer',
-      value: new Buffer('123')
+      value: Buffer.from('123')
     },
     {
       name: 'my_image',

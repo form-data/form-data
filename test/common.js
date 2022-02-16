@@ -16,7 +16,7 @@ common.dir = {
 };
 
 common.defaultTypeValue = function () {
-  return new Buffer([1, 2, 3]);
+  return Buffer.from([1, 2, 3]);
 };
 
 common.assert = assert;
