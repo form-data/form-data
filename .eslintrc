@@ -1,4 +1,8 @@
 {
+  "parserOptions": {
+    "requireConfigFile": false
+  },
+  "parser": "@babel/eslint-parser",
   "rules": {
     "indent": [2, 2, {"SwitchCase": 1}],
     "quotes": [2, "single"],
@@ -38,6 +42,8 @@
     "no-mixed-requires": 0
   },
   "env": {
-    "node": true
+    "node": true,
+    "jest": true,
+    "es6": true
   }
 }

@@ -1,12 +1,13 @@
 var fs = require('fs');
 var path = require('path');
 var assert = require('assert');
-var fake = require('fake');
 var mime = require('mime-types');
 var http = require('http');
 var IncomingForm = require('formidable').IncomingForm;
 
 var common = module.exports;
+
+// TODO allow removing --runInBand from jest (need to randomize server port)
 
 var rootDir = path.join(__dirname, '..');
 common.dir = {
@@ -16,11 +17,10 @@ common.dir = {
 };
 
 common.defaultTypeValue = function () {
-  return new Buffer([1, 2, 3]);
+  return Buffer.from([1, 2, 3]);
 };
 
 common.assert = assert;
-common.fake = fake;
 
 common.port = 8432;
 
@@ -71,7 +71,7 @@ common.actions.populateFields = function(form, fields)
 };
 
 // generic form submit
-common.actions.submit = function(form, server)
+common.actions.submit = function(form, server, done)
 {
   return form.submit('http://localhost:' + common.port + '/', function(err, res) {
 
@@ -85,6 +85,7 @@ common.actions.submit = function(form, server)
     res.resume();
 
     server.close();
+    done();
   });
 };
 

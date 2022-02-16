@@ -10,7 +10,7 @@ if (!fs.existsSync(common.dir.tmp)) {
   fs.mkdirSync(common.dir.tmp);
 }
 
-module.exports = function(callback) {
+module.exports = async () => await new Promise((resolve) => {
 
   // create http server
   var httpServer = http.createServer(function(req, res) {
@@ -26,5 +26,5 @@ module.exports = function(callback) {
     fs.createReadStream(target).pipe(res);
   });
 
-  httpServer.listen(common.staticPort, callback.bind(undefined, httpServer));
-};
+  httpServer.listen(common.staticPort, () => resolve(httpServer));
+});
