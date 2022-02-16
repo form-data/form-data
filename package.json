@@ -10,7 +10,7 @@
   "main": "./lib/form_data",
   "typings": "./index.d.ts",
   "scripts": {
-    "test": "jest --coverage --runInBand",
+    "test": "mkdirp test/tmp && jest --coverage --runInBand",
     "lint": "eslint ."
   },
   "pre-commit": [
@@ -31,6 +31,7 @@
     "fake": "^0.2.2",
     "formidable": "^1.0.17",
     "jest": "^27.5.1",
+    "mkdirp": "^1.0.4",
     "pre-commit": "^1.1.3",
     "request": "^2.88.0"
   },
