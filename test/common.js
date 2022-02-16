@@ -1,7 +1,6 @@
 var fs = require('fs');
 var path = require('path');
 var assert = require('assert');
-var fake = require('fake');
 var mime = require('mime-types');
 var http = require('http');
 var IncomingForm = require('formidable').IncomingForm;
@@ -20,7 +19,6 @@ common.defaultTypeValue = function () {
 };
 
 common.assert = assert;
-common.fake = fake;
 
 common.port = 8432;
 
@@ -71,7 +69,7 @@ common.actions.populateFields = function(form, fields)
 };
 
 // generic form submit
-common.actions.submit = function(form, server)
+common.actions.submit = function(form, server, done)
 {
   return form.submit('http://localhost:' + common.port + '/', function(err, res) {
 
@@ -85,6 +83,7 @@ common.actions.submit = function(form, server)
     res.resume();
 
     server.close();
+    done();
   });
 };
 

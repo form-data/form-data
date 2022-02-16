@@ -10,7 +10,7 @@
   "main": "./lib/form_data",
   "typings": "./index.d.ts",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --runInBand",
     "lint": "echo todo"
   },
   "pre-commit": [
@@ -31,6 +31,20 @@
     "jest": "^27.5.1",
     "pre-commit": "^1.1.3",
     "request": "^2.88.0"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "lib/**/*.{js,jsx}",
+      "!<rootDir>/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 89,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    }
   },
   "license": "MIT"
 }
