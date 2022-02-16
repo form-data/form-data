@@ -1,7 +1,8 @@
-const fs = require('fs/promises');
+const fs = require('fs').promises;
 const { join } = require('path');
-const staticServer = require('./static');
 const childProcess = require('child_process');
+
+const staticServer = require('./static');
 
 let httpServer;
 
