@@ -7,6 +7,8 @@ var IncomingForm = require('formidable').IncomingForm;
 
 var common = module.exports;
 
+// TODO allow removing --runInBand from jest (need to randomize server port)
+
 var rootDir = path.join(__dirname, '..');
 common.dir = {
   lib: path.join(rootDir, '/lib'),

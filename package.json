@@ -28,7 +28,6 @@
     "@babel/eslint-parser": "^7.17.0",
     "@types/node": "^12.0.10",
     "eslint": "^8.9.0",
-    "fake": "^0.2.2",
     "formidable": "^1.0.17",
     "jest": "^27.5.1",
     "mkdirp": "^1.0.4",
@@ -42,7 +41,7 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 89,
+        "branches": 90,
         "functions": 90,
         "lines": 90,
         "statements": 90
