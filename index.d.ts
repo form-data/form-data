@@ -7,7 +7,7 @@
 import * as stream from 'stream';
 import * as http from 'http';
 
-export = FormData;
+export default FormData;
 
 // Extracted because @types/node doesn't export interfaces.
 interface ReadableOptions {
