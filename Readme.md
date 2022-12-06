@@ -46,7 +46,7 @@ http.request('http://nodejs.org/images/logo.png', function(response) {
   form.append('my_field', 'my value');
   form.append('my_buffer', new Buffer(10));
   form.append('my_logo', response);
-});
+}).end();
 ```
 
 Or @mikeal's [request](https://github.com/request/request) stream:
