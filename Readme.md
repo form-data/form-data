@@ -66,8 +66,8 @@ Or @sindresorhus's [got](https://github.com/sindresorhus/got) stream:
 
 
 ``` javascript
-var FormData = require('form-data');
-var got = require('got');
+import got from 'got';
+import FormData from 'form-data';
 
 var form = new FormData();
 
