@@ -39,5 +39,10 @@
   },
   "env": {
     "node": true
-  }
+  },
+  "ignorePatterns": [
+    "node_modules/*",
+    "index.d.ts",
+    "coverage",
+  ]
 }
