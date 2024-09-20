@@ -14,7 +14,7 @@
     "pretest": "rimraf coverage test/tmp",
     "test": "istanbul cover test/run.js",
     "posttest": "istanbul report lcov text",
-    "lint": "eslint lib/*.js test/*.js test/integration/*.js",
+    "lint": "eslint --ext=js,mjs .",
     "report": "istanbul report lcov text",
     "ci-lint": "is-node-modern 8 && npm run lint || is-node-not-modern 8",
     "ci-test": "npm run test && npm run browser && npm run report",
