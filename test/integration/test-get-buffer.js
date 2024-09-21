@@ -1,3 +1,7 @@
+'use strict';
+
+var Buffer = require('safe-buffer').Buffer; // eslint-disable-line no-shadow
+
 var common = require('../common');
 var assert = common.assert;
 
