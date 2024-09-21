@@ -9,17 +9,7 @@ import * as http from 'http';
 
 export = FormData;
 
-// Extracted because @types/node doesn't export interfaces.
-interface ReadableOptions {
-  highWaterMark?: number;
-  encoding?: string;
-  objectMode?: boolean;
-  read?(this: stream.Readable, size: number): void;
-  destroy?(this: stream.Readable, error: Error | null, callback: (error: Error | null) => void): void;
-  autoDestroy?: boolean;
-}
-
-interface Options extends ReadableOptions {
+interface Options extends stream.ReadableOptions {
   writable?: boolean;
   readable?: boolean;
   dataSize?: number;
@@ -29,7 +19,7 @@ interface Options extends ReadableOptions {
 
 declare class FormData extends stream.Readable {
   constructor(options?: Options);
-  append(key: string, value: any, options?: FormData.AppendOptions | string): void;
+  append(key: string, value: unknown, options?: FormData.AppendOptions | string): void;
   getHeaders(userHeaders?: FormData.Headers): FormData.Headers;
   submit(
     params: string | FormData.SubmitOptions,
@@ -44,9 +34,7 @@ declare class FormData extends stream.Readable {
 }
 
 declare namespace FormData {
-  interface Headers {
-    [key: string]: any;
-  }
+  type Headers = Record<string, number | string | string[]>;
 
   interface AppendOptions {
     header?: string | Headers;
