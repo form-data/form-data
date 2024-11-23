@@ -34,10 +34,10 @@ var server = http.createServer(function(req, res) {
   // Therefore, check `req` to see if filename is properly escaped.
   // https://html.spec.whatwg.org/#multipart-form-data
   var body = '';
-  req.on('data', function(chunk){
+  req.on('data', function (chunk) {
     body += chunk;
   });
-  req.on('end', function(){
+  req.on('end', function () {
     assert(body.includes(escapedContentDispositionHeader), 'Expects encode "filename" field');
   });
 
