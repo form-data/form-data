@@ -7,3 +7,6 @@ sftp-config.json
 coverage/
 node_modules/
 test/
+
+yarn.lock
+README.md.bak
