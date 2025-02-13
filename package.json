@@ -43,10 +43,13 @@
   "dependencies": {
     "asynckit": "^0.4.0",
     "combined-stream": "^1.0.6",
+    "es-set-tostringtag": "^2.1.0",
     "mime-types": "^2.1.12",
     "safe-buffer": "^5.2.1"
   },
   "devDependencies": {
+    "@types/combined-stream": "^1.0.6",
+    "@types/mime-types": "^2.1.4",
     "@types/node": "^12.0.10",
     "browserify": "^13.1.1",
     "browserify-istanbul": "^2.0.0",
