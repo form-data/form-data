@@ -40,7 +40,7 @@ common.testFields = function (FIELDS, callback) {
     var incomingForm = new IncomingForm({uploadDir: common.dir.tmp});
 
     incomingForm.parse(req);
-    
+
     common.actions.checkForm(incomingForm, FIELDS, function (fieldsChecked) {
       // keep track of number of the processed fields
       callback(fieldsPassed - fieldsChecked);
@@ -55,18 +55,17 @@ common.testFields = function (FIELDS, callback) {
 common.actions = {};
 
 // generic form field population
-common.actions.populateFields = function(form, fields)
-{
+common.actions.populateFields = function (form, fields) {
   var field;
   for (var name in fields) {
-    if (!fields.hasOwnProperty(name)) { continue; }
-
-    field = fields[name];
-    // important to append ReadStreams within the same tick
-    if ((typeof field.value == 'function')) {
-      field.value = field.value();
+    if (Object.prototype.hasOwnProperty.call(fields, name)) {
+      field = fields[name];
+      // important to append ReadStreams within the same tick
+      if ((typeof field.value == 'function')) {
+        field.value = field.value();
+      }
+      form.append(name, field.value);
     }
-    form.append(name, field.value);
   }
 };
 

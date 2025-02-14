@@ -80,20 +80,18 @@ server.listen(common.port, function() {
 
   // add test subjects to the form
   for (name in testSubjects) {
-    if (!testSubjects.hasOwnProperty(name)) {
-      continue;
+    if (Object.prototype.hasOwnProperty.call(testSubjects, name)) {
+      options = {encoding: 'utf8'};
+
+      if (testSubjects[name].start) { options.start = testSubjects[name].start; }
+      if (testSubjects[name].end) { options.end = testSubjects[name].end; }
+
+      form.append(name, testSubjects[name].fsStream = fs.createReadStream(common.dir.fixture + '/' + testSubjects[name].file, options));
+
+      // calculate data size
+      testSubjects[name].readSize = 0;
+      testSubjects[name].fsStream.on('data', readSizeAccumulator.bind(testSubjects[name]));
     }
-
-    options = {encoding: 'utf8'};
-
-    if (testSubjects[name].start) { options.start = testSubjects[name].start; }
-    if (testSubjects[name].end) { options.end = testSubjects[name].end; }
-
-    form.append(name, testSubjects[name].fsStream = fs.createReadStream(common.dir.fixture + '/' + testSubjects[name].file, options));
-
-    // calculate data size
-    testSubjects[name].readSize = 0;
-    testSubjects[name].fsStream.on('data', readSizeAccumulator.bind(testSubjects[name]));
   }
 
   form.submit('http://localhost:' + common.port + '/', function(err, res) {
