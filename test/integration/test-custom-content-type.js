@@ -67,16 +67,15 @@ server.listen(common.port, function() {
 
   var form = new FormData();
 
-  var field;
   for (var name in FIELDS) {
-    if (!FIELDS.hasOwnProperty(name)) { continue; }
-
-    field = FIELDS[name];
-    // important to append ReadStreams within the same tick
-    if ((typeof field.value == 'function')) {
-      field.value = field.value();
+    if (Object.prototype.hasOwnProperty.call(FIELDS, name)) {
+      var field = FIELDS[name];
+      // important to append ReadStreams within the same tick
+      if ((typeof field.value == 'function')) {
+        field.value = field.value();
+      }
+      form.append(name, field.value, field.options);
     }
-    form.append(name, field.value, field.options);
   }
 
   // custom params object passed to submit
