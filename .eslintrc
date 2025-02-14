@@ -19,7 +19,7 @@
       }
     }],
     "no-redeclare": [2, { "builtinGlobals": true }],
-    "no-shadow": [2, { "builtinGlobals": true, "hoist": "all" }],
+    "no-shadow": [2, { "builtinGlobals": false, "hoist": "all" }],
     "no-use-before-define": [2, "nofunc"],
     "no-shadow-restricted-names": 2,
     "no-extra-semi": 2,
