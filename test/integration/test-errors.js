@@ -19,7 +19,7 @@ var http = require('http');
   });
 
   form.append('my_array', ['bird', 'cute']);
-})();
+}());
 
 (function testGetLengthSync() {
   var fields = [
@@ -59,7 +59,7 @@ var http = require('http');
 
   // getLengthSync DOESN'T calculate streams length
   assert.ok(expectedLength > calculatedLength);
-})();
+}());
 
 (function testStreamError() {
   var req;
@@ -82,4 +82,4 @@ var http = require('http');
   server.listen(common.port, function () {
     req = form.submit(addr);
   });
-})();
+}());

@@ -1,3 +1,5 @@
+'use strict';
+
 var test = require('tape');
 var FormData = require('../lib/browser.js');
 var form = new FormData();

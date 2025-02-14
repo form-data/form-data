@@ -1,9 +1,11 @@
-/*
-test return http request, added for issue #47:
-https://github.com/felixge/node-form-data/issues/47
+'use strict';
 
-Checking correct length header and request object
-*/
+/*
+ *test return http request, added for issue #47:
+ *https://github.com/felixge/node-form-data/issues/47
+ *
+ *Checking correct length header and request object
+ */
 
 var common = require('../common');
 var assert = common.assert;
@@ -36,7 +38,8 @@ var server = http.createServer(function (req, res) {
 });
 
 server.listen(common.port, function () {
-  var R, oWrite, progress = 0, form = new FormData();
+  var progress = 0;
+  var form = new FormData();
 
   var bufferData = [];
   for (var z = 0; z < dataSize; z++) {
@@ -49,7 +52,7 @@ server.listen(common.port, function () {
   // (available to req handler)
   expectedLength = form._lastBoundary().length + form._overheadLength + dataSize;
 
-  R = form.submit('http://localhost:' + common.port + '/', function (err, res) {
+  var R = form.submit('http://localhost:' + common.port + '/', function (err, res) {
     if (err) {
       throw err;
     }
@@ -66,7 +69,7 @@ server.listen(common.port, function () {
   });
 
   // augment into request
-  oWrite = R.write;
+  var oWrite = R.write;
   R.write = function (chunk) {
     return oWrite.call(this, chunk, function () {
       form.emit('progress', chunk);
@@ -78,5 +81,4 @@ server.listen(common.port, function () {
     progress += chunk.length;
     assert.ok(progress <= expectedLength);
   });
-
 });

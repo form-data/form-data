@@ -1,7 +1,7 @@
 /*
-test custom headers object.
-https://github.com/form-data/form-data/issues/133
-*/
+ *test custom headers object.
+ *https://github.com/form-data/form-data/issues/133
+ */
 
 var common = require('../common');
 var assert = common.assert;
@@ -34,8 +34,10 @@ server.listen(common.port, function () {
   var options = {
     header: testHeader,
 
-    // override content-length,
-    // much lower than actual buffer size (1000)
+    /*
+     * override content-length,
+     * much lower than actual buffer size (1000)
+     */
     knownLength: 1
   };
 

@@ -1,3 +1,5 @@
+'use strict';
+
 var http = require('http');
 var common = require('../common');
 var assert = common.assert;

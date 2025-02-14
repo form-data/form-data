@@ -1,8 +1,11 @@
+'use strict';
+
 var common = require('../common');
 var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
 var fs = require('fs');
 var Readable = require('stream').Readable;
+var util = require('util');
 
 (function testGetLengthSync() {
   var fields = [
@@ -25,14 +28,14 @@ var Readable = require('stream').Readable;
 
   fields.forEach(function (field) {
     form.append(field.name, field.value);
-    expectedLength += ('' + field.value).length;
+    expectedLength += String(field.value).length;
   });
 
   expectedLength += form._overheadLength + form._lastBoundary().length;
   var calculatedLength = form.getLengthSync();
 
   assert.equal(expectedLength, calculatedLength);
-})();
+}());
 
 (function testGetLengthSyncWithKnownLength() {
   var fields = [
@@ -64,7 +67,7 @@ var Readable = require('stream').Readable;
       var stat = fs.statSync(field.value.path);
       expectedLength += stat.size;
     } else {
-      expectedLength += ('' + field.value).length;
+      expectedLength += String(field.value).length;
     }
   });
   expectedLength += form._overheadLength + form._lastBoundary().length;
@@ -72,17 +75,14 @@ var Readable = require('stream').Readable;
   var calculatedLength = form.getLengthSync();
 
   assert.equal(expectedLength, calculatedLength);
-})();
+}());
 
 (function testReadableStreamData() {
   var form = new FormData();
 
-  var util = require('util');
-  util.inherits(CustomReadable, Readable);
-
   /**
    * Custion readable constructor
-   * @param {Object} opt options
+   * @param {object} opt options
    * @constructor
    */
   function CustomReadable(opt) {
@@ -91,16 +91,17 @@ var Readable = require('stream').Readable;
     this._index = 1;
   }
 
+  util.inherits(CustomReadable, Readable);
+
   CustomReadable.prototype._read = function () {
     var i = this._index++;
     if (i > this._max) {
       this.push(null);
     } else {
-      this.push('' + i);
+      this.push(String(i));
     }
   };
   form.append('my_txt', new CustomReadable());
 
-  assert.throws(function () { form.getLengthSync(); }, /Cannot calculate proper length in synchronous way/);
-
-})();
+  assert['throws'](function () { form.getLengthSync(); }, /Cannot calculate proper length in synchronous way/);
+}());

@@ -1,3 +1,5 @@
+'use strict';
+
 var common = require('../common');
 var assert = common.assert;
 var http = require('http');
@@ -19,25 +21,22 @@ var server = http.createServer(function (req, res) {
       res.writeHead(200);
       res.end('done');
 
-      times--;
+      times -= 1;
 
-      if (times == 0) {
+      if (times === 0) {
         server.close();
       }
     });
 });
 
 server.listen(common.port, function () {
-  var i;
-
-  for (i = 0; i < times; i++) {
+  for (var i = 0; i < times; i++) {
     var form = new FormData();
 
     form.append('my_field', 'my_value');
 
     form.submit('http://localhost:' + common.port + '/');
   }
-
 });
 
 process.on('exit', function () {

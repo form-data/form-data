@@ -1,3 +1,5 @@
+'use strict';
+
 var common = require('../common');
 var assert = common.assert;
 
@@ -9,7 +11,7 @@ var FormData = require(common.dir.lib + '/form_data');
   form.setBoundary(userBoundary);
 
   assert.equal(form.getBoundary(), userBoundary);
-})();
+}());
 
 (function testUniqueBoundaryPerFormAfterSet() {
   var userBoundary = '---something';
@@ -20,4 +22,4 @@ var FormData = require(common.dir.lib + '/form_data');
 
   assert.equal(formA.getBoundary(), userBoundary);
   assert.notEqual(formA.getBoundary(), formB.getBoundary());
-})();
+}());

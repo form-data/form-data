@@ -1,7 +1,9 @@
+'use strict';
+
 /*
-test ranged fs.createReadStream
-re: https://github.com/felixge/node-form-data/issues/71
-*/
+ *test ranged fs.createReadStream
+ *re: https://github.com/felixge/node-form-data/issues/71
+ */
 
 var common = require('../common');
 var assert = common.assert;
@@ -13,21 +15,21 @@ var FormData = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
 
 var testSubjects = {
-  'a_file': {
+  a_file: {
     file: 'veggies.txt',
     start: 8,
     end: 18
-  }, 'b_file': {
+  }, b_file: {
     file: 'veggies.txt',
     start: 6
-  }, 'c_file': {
+  }, c_file: {
     file: 'veggies.txt',
     end: 16
-  }, 'd_file': {
+  }, d_file: {
     file: 'veggies.txt',
     start: 0,
     end: 16
-  }, 'e_file': {
+  }, e_file: {
     file: 'veggies.txt',
     start: 0,
     end: 0
@@ -40,7 +42,7 @@ var testSubjects = {
  * @param {string} data - chunk of read data
  */
 function readSizeAccumulator(data) {
-  this.readSize += data.length;
+  this.readSize += data.length; // eslint-disable-line no-invalid-this
 }
 
 var server = http.createServer(function (req, res) {
@@ -79,7 +81,7 @@ server.listen(common.port, function () {
   var name, options;
 
   // add test subjects to the form
-  for (name in testSubjects) {
+  for (name in testSubjects) { // eslint-disable-line no-restricted-syntax
     if (hasOwn(testSubjects, name)) {
       options = { encoding: 'utf8' };
 

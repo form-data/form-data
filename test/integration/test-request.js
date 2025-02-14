@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Show & Test for `mikeal/request` library
  * as bonus shows progress monitor implementation
@@ -20,10 +22,10 @@ var numItems = 5;
 request.prototype.form = function (form) {
   var self = this;
   if (form) {
-    if (!/^application\/x-www-form-urlencoded\b/.test(self.getHeader('content-type'))) {
+    if (!(/^application\/x-www-form-urlencoded\b/).test(self.getHeader('content-type'))) {
       self.setHeader('content-type', 'application/x-www-form-urlencoded');
     }
-    self.body = (typeof form === 'string')
+    self.body = typeof form === 'string'
       ? self._qs.rfc3986(form.toString('utf8'))
       : self._qs.stringify(form).toString('utf8');
     return self;
@@ -31,7 +33,7 @@ request.prototype.form = function (form) {
   // create form-data object
   self._form = new FormData();
   self._form.on('error', function (err) {
-    err.message = 'form-data: ' + err.message;
+    err.message = 'form-data: ' + err.message; // eslint-disable-line no-param-reassign
     self.emit('error', err);
     self.abort();
   });
@@ -45,7 +47,7 @@ var server = http.createServer(function (req, res) {
 
   form
     .on('file', function (name, file) {
-      numItems--;
+      numItems -= 1;
       assert.strictEqual(file.name, path.basename(fileName));
       assert.strictEqual(file.type, mime.lookup(file.name));
     })

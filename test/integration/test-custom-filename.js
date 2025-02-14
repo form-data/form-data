@@ -1,7 +1,9 @@
+'use strict';
+
 /*
-test custom filename and content-type:
-re: https://github.com/felixge/node-form-data/issues/29
-*/
+ *test custom filename and content-type:
+ *re: https://github.com/felixge/node-form-data/issues/29
+ */
 
 var common = require('../common');
 var assert = common.assert;
@@ -29,31 +31,31 @@ var server = http.createServer(function (req, res) {
     assert(!err);
 
     assert('custom_everything' in files);
-    assert.strictEqual(files['custom_everything'].name, options.filename, 'Expects custom filename');
-    assert.strictEqual(files['custom_everything'].type, options.contentType, 'Expects custom content-type');
+    assert.strictEqual(files.custom_everything.name, options.filename, 'Expects custom filename');
+    assert.strictEqual(files.custom_everything.type, options.contentType, 'Expects custom content-type');
 
     assert('custom_filename' in files);
-    assert.strictEqual(files['custom_filename'].name, options.filename, 'Expects custom filename');
-    assert.strictEqual(files['custom_filename'].type, mime.lookup(knownFile), 'Expects original content-type');
+    assert.strictEqual(files.custom_filename.name, options.filename, 'Expects custom filename');
+    assert.strictEqual(files.custom_filename.type, mime.lookup(knownFile), 'Expects original content-type');
 
     assert('custom_filepath' in files);
-    assert.strictEqual(files['custom_filepath'].name, relativeFile.replace(/\\/g, '/'), 'Expects custom filepath');
-    assert.strictEqual(files['custom_filepath'].type, mime.lookup(knownFile), 'Expects original content-type');
+    assert.strictEqual(files.custom_filepath.name, relativeFile.replace(/\\/g, '/'), 'Expects custom filepath');
+    assert.strictEqual(files.custom_filepath.type, mime.lookup(knownFile), 'Expects original content-type');
 
     assert('unknown_with_filename' in files);
-    assert.strictEqual(files['unknown_with_filename'].name, options.filename, 'Expects custom filename');
-    assert.strictEqual(files['unknown_with_filename'].type, mime.lookup(options.filename), 'Expects filename-derived content-type');
+    assert.strictEqual(files.unknown_with_filename.name, options.filename, 'Expects custom filename');
+    assert.strictEqual(files.unknown_with_filename.type, mime.lookup(options.filename), 'Expects filename-derived content-type');
 
     assert('unknown_with_filename_as_object' in files);
-    assert.strictEqual(files['unknown_with_filename_as_object'].name, options.filename, 'Expects custom filename');
-    assert.strictEqual(files['unknown_with_filename_as_object'].type, mime.lookup(options.filename), 'Expects filename-derived content-type');
+    assert.strictEqual(files.unknown_with_filename_as_object.name, options.filename, 'Expects custom filename');
+    assert.strictEqual(files.unknown_with_filename_as_object.type, mime.lookup(options.filename), 'Expects filename-derived content-type');
 
     assert('unknown_with_name_prop' in files);
-    assert.strictEqual(files['unknown_with_name_prop'].name, options.filename, 'Expects custom filename');
-    assert.strictEqual(files['unknown_with_name_prop'].type, mime.lookup(options.filename), 'Expects filename-derived content-type');
+    assert.strictEqual(files.unknown_with_name_prop.name, options.filename, 'Expects custom filename');
+    assert.strictEqual(files.unknown_with_name_prop.type, mime.lookup(options.filename), 'Expects filename-derived content-type');
 
     assert('unknown_everything' in files);
-    assert.strictEqual(files['unknown_everything'].type, FormData.DEFAULT_CONTENT_TYPE, 'Expects default content-type');
+    assert.strictEqual(files.unknown_everything.type, FormData.DEFAULT_CONTENT_TYPE, 'Expects default content-type');
 
     res.writeHead(200);
     res.end('done');

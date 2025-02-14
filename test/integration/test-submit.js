@@ -1,3 +1,5 @@
+'use strict';
+
 var common = require('../common');
 var assert = common.assert;
 var mime = require('mime-types');
@@ -7,21 +9,23 @@ var FormData = require(common.dir.lib + '/form_data');
 
 var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';
 
-// wrap non simple values into function
-// just to deal with ReadStream "autostart"
+/*
+ * wrap non simple values into function
+ * just to deal with ReadStream "autostart"
+ */
 var FIELDS = {
-  'my_field': {
+  my_field: {
     value: 'my_value'
   },
-  'my_buffer': {
+  my_buffer: {
     type: FormData.DEFAULT_CONTENT_TYPE,
     value: common.defaultTypeValue
   },
-  'my_file': {
+  my_file: {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
     value: function () { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
   },
-  'remote_file': {
+  remote_file: {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
     value: function () { return request(remoteFile); }
   }

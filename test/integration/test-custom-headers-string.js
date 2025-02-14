@@ -1,7 +1,7 @@
 /*
-test custom headers, added in pull request:
-https://github.com/felixge/node-form-data/pull/17
-*/
+ *test custom headers, added in pull request:
+ *https://github.com/felixge/node-form-data/pull/17
+ */
 
 var common = require('../common');
 var assert = common.assert;
@@ -35,12 +35,12 @@ server.listen(common.port, function () {
 
   var options = {
     header:
-      CRLF + '--' + form.getBoundary() + CRLF +
-      testHeader +
-      CRLF + CRLF,
+      CRLF + '--' + form.getBoundary() + CRLF + testHeader + CRLF + CRLF,
 
-    // override content-length,
-    // much lower than actual buffer size (1000)
+    /*
+     * override content-length,
+     * much lower than actual buffer size (1000)
+     */
     knownLength: 1
   };
 

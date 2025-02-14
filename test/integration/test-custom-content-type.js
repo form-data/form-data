@@ -1,3 +1,5 @@
+'use strict';
+
 var common = require('../common');
 var assert = common.assert;
 var http = require('http');
@@ -7,28 +9,30 @@ var hasOwn = require('hasown');
 
 var FormData = require(common.dir.lib + '/form_data');
 
-// wrap non simple values into function
-// just to deal with ReadStream "autostart"
+/*
+ * wrap non simple values into function
+ * just to deal with ReadStream "autostart"
+ */
 var FIELDS = {
-  'no_type': {
+  no_type: {
     value: 'my_value'
   },
-  'custom_type': {
+  custom_type: {
     value: 'my_value',
     expectedType: 'image/png',
     options: {
       contentType: 'image/png'
     }
   },
-  'default_type': {
+  default_type: {
     expectedType: FormData.DEFAULT_CONTENT_TYPE,
     value: common.defaultTypeValue
   },
-  'implicit_type': {
+  implicit_type: {
     expectedType: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
     value: function () { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
   },
-  'overridden_type': {
+  overridden_type: {
     expectedType: 'image/png',
     options: {
       contentType: 'image/png'
@@ -53,10 +57,10 @@ var server = http.createServer(function (req, res) {
     for (var i = 0; i < fieldNames.length; i++) {
       assert.ok(fields[i].indexOf('name="' + fieldNames[i] + '"') > -1);
 
-      if (!FIELDS[fieldNames[i]].expectedType) {
-        assert.equal(fields[i].indexOf('Content-Type'), -1, 'Expecting ' + fieldNames[i] + ' not to have Content-Type');
-      } else {
+      if (FIELDS[fieldNames[i]].expectedType) {
         assert.ok(fields[i].indexOf('Content-Type: ' + FIELDS[fieldNames[i]].expectedType) > -1, 'Expecting ' + fieldNames[i] + ' to have Content-Type ' + FIELDS[fieldNames[i]].expectedType);
+      } else {
+        assert.equal(fields[i].indexOf('Content-Type'), -1, 'Expecting ' + fieldNames[i] + ' not to have Content-Type');
       }
     }
 
@@ -68,11 +72,11 @@ var server = http.createServer(function (req, res) {
 server.listen(common.port, function () {
   var form = new FormData();
 
-  for (var name in FIELDS) {
+  for (var name in FIELDS) { // eslint-disable-line no-restricted-syntax
     if (hasOwn(FIELDS, name)) {
       var field = FIELDS[name];
       // important to append ReadStreams within the same tick
-      if ((typeof field.value == 'function')) {
+      if (typeof field.value === 'function') {
         field.value = field.value();
       }
       form.append(name, field.value, field.options);

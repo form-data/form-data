@@ -1,7 +1,11 @@
 {
+  "root": true,
+
+  "extends": "@ljharb",
+
   "rules": {
     "indent": [2, 2, {"SwitchCase": 2}],
-    "curly": [2, "multi-line"],
+    // "curly": [2, "multi-line"],
     "handle-callback-err": [2, "^err"],
     "valid-jsdoc": [2, {
       "requireReturn": false,
@@ -27,36 +31,15 @@
     "no-new": 0,
     "eqeqeq": 0,
 
-    "object-curly-spacing": [2, "always"],
-    "linebreak-style": [2, "unix"],
-    "no-mixed-requires": 0,
-    "no-console": 2,
-    "space-before-function-paren": [2, { "anonymous": "always", "named": "never", "asyncArrow": "always" }],
-    "space-before-blocks": [2, { "functions": "always", "keywords": "always", "classes": "always" }],
-    "space-in-parens": [2, "never"],
-    "space-infix-ops": [2],
-    "space-unary-ops": [2, { "words": true, "nonwords": false }],
-    "spaced-comment": [2, "always", { "markers": ["!"] }],
-    "no-irregular-whitespace": 2,
-    "no-mixed-spaces-and-tabs": [2, false],
-    "semi-spacing": [2, { "before": false, "after": true }],
-    "no-multi-spaces": [2, { "ignoreEOLComments": false }],
-    "no-regex-spaces": [2],
-    "no-spaced-func": [2],
-    "no-trailing-spaces": [2, {
-      "skipBlankLines": false,
-      "ignoreComments": false
-    }],
-    "no-whitespace-before-property": [2],
-    // "semi-style": [2, "last"],
-    "key-spacing": [2, {
-        "beforeColon": false,
-        "afterColon": true,
-        "mode": "strict"
-    }],
-    "quotes": [2, "single", "avoid-escape"],
-    "semi": [2, "always"],
-    "eol-last": [2, "always"],
+    "no-underscore-dangle": 0,
+    "camelcase": 0,
+    "func-style": 0,
+    "max-lines": 0,
+    "id-length": 1,
+    "multiline-comment-style": 0,
+
+    "no-plusplus": 1,
+    "no-caller": 1,
   },
 
   "env": {

@@ -42,7 +42,7 @@ common.testFields = function (FIELDS, callback) {
 
     common.actions.checkForm(incomingForm, FIELDS, function (fieldsChecked) {
       // keep track of number of the processed fields
-      callback(fieldsPassed - fieldsChecked);
+      callback(fieldsPassed - fieldsChecked); // eslint-disable-line callback-return
       // finish it
       common.actions.formOnEnd(res);
     });
@@ -56,11 +56,11 @@ common.actions = {};
 // generic form field population
 common.actions.populateFields = function (form, fields) {
   var field;
-  for (var name in fields) {
+  for (var name in fields) { // eslint-disable-line no-restricted-syntax
     if (hasOwn(fields, name)) {
       field = fields[name];
       // important to append ReadStreams within the same tick
-      if ((typeof field.value == 'function')) {
+      if (typeof field.value == 'function') {
         field.value = field.value();
       }
       form.append(name, field.value);
@@ -109,7 +109,7 @@ common.actions.basicFormOnField = function (name, value) {
 common.actions.formOnField = function (FIELDS, name, value) {
   assert.ok(name in FIELDS);
   var field = FIELDS[name];
-  assert.strictEqual(value, field.value + '');
+  assert.strictEqual(value, String(field.value));
 };
 
 common.actions.formOnFile = function (FIELDS, name, file) {

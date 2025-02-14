@@ -1,6 +1,9 @@
 #!/usr/bin/env node
+
+'use strict';
+
 var path = require('path');
-var static = require('./static');
+var staticS = require('./static');
 var far = require('far').create();
 var farPaths = require('far/lib/paths');
 var spawn = require('cross-spawn');
@@ -14,11 +17,14 @@ if (process.env.running_under_istanbul) {
 
     var node = spawn(istanbul, [
       'cover',
-      '--report', 'none',
-      '--print', 'none',
+      '--report',
+      'none',
+      '--print',
+      'none',
       '--include-all-sources',
       '--include-pid',
-      '--root', basePath,
+      '--root',
+      basePath,
       file
     ]);
 
@@ -32,7 +38,7 @@ if (process.env.running_under_istanbul) {
      * @param {string} chunk - partial output
      */
     function onOutput(chunk) {
-      if (this._verbose > 1) {
+      if (this._verbose > 1) { // eslint-disable-line no-invalid-this
         process.stderr.write(chunk);
       } else {
         output += chunk;
@@ -56,7 +62,7 @@ farPaths.expandSync = function (pathList) {
   var expanded = {};
 
   pathList.forEach(function (p) {
-    p = path.resolve(process.cwd(), p);
+    p = path.resolve(process.cwd(), p); // eslint-disable-line no-param-reassign
 
     if (!farPaths.isDirectory(p)) {
       expanded[p] = true;
@@ -83,6 +89,6 @@ far.add(__dirname);
 far.include(/test-.*\.js$/);
 
 // start static server for all tests
-static(function () {
+staticS(function () {
   far.execute();
 });

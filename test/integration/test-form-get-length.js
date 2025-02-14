@@ -4,6 +4,7 @@ var FormData = require(common.dir.lib + '/form_data');
 var fake = require('fake').create();
 var fs = require('fs');
 var Readable = require('stream').Readable;
+var util = require('util');
 
 (function testEmptyForm() {
   var form = new FormData();
@@ -14,7 +15,7 @@ var Readable = require('stream').Readable;
 
   // Make sure our response is async
   assert.strictEqual(calls.length, 0);
-})();
+}());
 
 (function testUtf8String() {
   var FIELD = 'my_field';
@@ -24,14 +25,11 @@ var Readable = require('stream').Readable;
   form.append(FIELD, VALUE);
   var callback = fake.callback('testUtf8String-getLength');
 
-  var expectedLength =
-    form._overheadLength +
-    Buffer.byteLength(VALUE) +
-    form._lastBoundary().length;
+  var expectedLength = form._overheadLength + Buffer.byteLength(VALUE) + form._lastBoundary().length;
 
   fake.expectAnytime(callback, [null, expectedLength]);
   form.getLength(callback);
-})();
+}());
 
 (function testBuffer() {
   var FIELD = 'my_field';
@@ -41,14 +39,11 @@ var Readable = require('stream').Readable;
   form.append(FIELD, VALUE);
   var callback = fake.callback('testBuffer-getLength');
 
-  var expectedLength =
-    form._overheadLength +
-    VALUE.length +
-    form._lastBoundary().length;
+  var expectedLength = form._overheadLength + VALUE.length + form._lastBoundary().length;
 
   fake.expectAnytime(callback, [null, expectedLength]);
   form.getLength(callback);
-})();
+}());
 
 (function testStringFileBufferFile() {
   var fields = [
@@ -88,18 +83,15 @@ var Readable = require('stream').Readable;
   var callback = fake.callback('testStringFileBufferFile-getLength');
   fake.expectAnytime(callback, [null, expectedLength]);
   form.getLength(callback);
-})();
+}());
 
 (function testReadableStreamData() {
   var form = new FormData();
   // var expectedLength = 0;
 
-  var util = require('util');
-  util.inherits(CustomReadable, Readable);
-
   /**
    * Custion readable constructor
-   * @param {Object} opt options
+   * @param {object} opt options
    * @constructor
    */
   function CustomReadable(opt) {
@@ -108,12 +100,14 @@ var Readable = require('stream').Readable;
     this._index = 1;
   }
 
+  util.inherits(CustomReadable, Readable);
+
   CustomReadable.prototype._read = function () {
     var i = this._index++;
     if (i > this._max) {
       this.push(null);
     } else {
-      this.push('' + i);
+      this.push(String(i));
     }
   };
   form.append('my_txt', new CustomReadable());
@@ -121,8 +115,7 @@ var Readable = require('stream').Readable;
   // expectedLength += form._overheadLength + form._lastBoundary().length;
 
   // there is no way to determine the length of this readable stream.
-  var callback = fake.callback(arguments.callee.name + '-getLength');
+  var callback = fake.callback(arguments.callee.name + '-getLength'); // eslint-disable-line no-restricted-properties
   fake.expectAnytime(callback, ['Unknown stream', undefined]);
-  form.getLength(function (err, len) { callback(err,len); });
-
-})();
+  form.getLength(function (err, len) { callback(err, len); });
+}());

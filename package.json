@@ -49,6 +49,7 @@
     "mime-types": "^2.1.12"
   },
   "devDependencies": {
+    "@ljharb/eslint-config": "^21.1.1",
     "@types/combined-stream": "^1.0.6",
     "@types/mime-types": "^2.1.4",
     "@types/node": "^12.20.55",

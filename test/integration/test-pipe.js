@@ -1,3 +1,5 @@
+'use strict';
+
 var common = require('../common');
 var assert = common.assert;
 var http = require('http');
@@ -10,21 +12,23 @@ var hasOwn = require('hasown');
 
 var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';
 
-// wrap non simple values into function
-// just to deal with ReadStream "autostart"
+/*
+ * wrap non simple values into function
+ * just to deal with ReadStream "autostart"
+ */
 var FIELDS = {
-  'my_field': {
+  my_field: {
     value: 'my_value'
   },
-  'my_buffer': {
+  my_buffer: {
     type: FormData.DEFAULT_CONTENT_TYPE,
     value: common.defaultTypeValue
   },
-  'my_file': {
+  my_file: {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
     value: function () { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
   },
-  'remote_file': {
+  remote_file: {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
     value: function () { return request(remoteFile); }
   }
@@ -47,11 +51,11 @@ var server = http.createServer(function (req, res) {
 server.listen(common.port, function () {
   var form = new FormData();
 
-  for (var name in FIELDS) {
+  for (var name in FIELDS) { // eslint-disable-line no-restricted-syntax
     if (hasOwn(FIELDS, name)) {
       var field = FIELDS[name];
       // important to append ReadStreams within the same tick
-      if ((typeof field.value == 'function')) {
+      if (typeof field.value === 'function') {
         field.value = field.value();
       }
       form.append(name, field.value);

@@ -1,3 +1,5 @@
+'use strict';
+
 var common = require('../common');
 var assert = common.assert;
 var http = require('http');
@@ -21,12 +23,14 @@ function submitForm() {
 
     assert.strictEqual(res.statusCode, 200);
 
-    // Needed for node-0.10.x because Streams2
-    // more info: http://nodejs.org/api/stream.html#stream_compatibility_with_older_node_versions
+    /*
+     * Needed for node-0.10.x because Streams2
+     * more info: http://nodejs.org/api/stream.html#stream_compatibility_with_older_node_versions
+     */
     res.resume();
 
-    times--;
-    if (times == 0) {
+    times -= 1;
+    if (times === 0) {
       server.close();
     }
   });
@@ -45,9 +49,7 @@ server = http.createServer(function (req, res) {
 });
 
 server.listen(common.port, function () {
-  var i;
-
-  for (i = 0; i < times; i++) {
+  for (var i = 0; i < times; i++) {
     submitForm();
   }
 });

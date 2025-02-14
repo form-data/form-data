@@ -1,8 +1,11 @@
+'use strict';
+
 var common = require('../common');
 var assert = common.assert;
 var http = require('http');
 var FormData = require(common.dir.lib + '/form_data');
 var Readable = require('stream').Readable;
+var util = require('util');
 
 var server = http.createServer(function (req, res) {
   assert.strictEqual(req.headers['Content-Length'], undefined);
@@ -13,19 +16,17 @@ var server = http.createServer(function (req, res) {
 server.listen(common.port, function () {
   var form = new FormData();
 
-  var util = require('util');
-  util.inherits(CustomReadable, Readable);
-
   /**
    * Custion readable constructor
-   * @param {Object} opt options
+   * @param {object} opt options
    * @constructor
-  */
+   */
   function CustomReadable(opt) {
     Readable.call(this, opt);
     this._max = 2;
     this._index = 1;
   }
+  util.inherits(CustomReadable, Readable);
 
   CustomReadable.prototype._read = function () {
     var i = this._index++;
@@ -33,7 +34,7 @@ server.listen(common.port, function () {
     if (i > this._max) {
       this.push(null);
     } else {
-      this.push('' + i);
+      this.push(String(i));
     }
   };
   form.append('readable', new CustomReadable());
