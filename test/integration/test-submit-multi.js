@@ -14,7 +14,7 @@ function submitForm() {
 
   form.append('my_field', 'my_value');
 
-  form.submit('http://localhost:' + common.port + '/', function(err, res) {
+  form.submit('http://localhost:' + common.port + '/', function (err, res) {
     if (err) {
       throw err;
     }
@@ -32,11 +32,10 @@ function submitForm() {
   });
 }
 
-server = http.createServer(function(req, res) {
-
+server = http.createServer(function (req, res) {
   // no need to have tmp dir here, since no files being uploaded
   // but formidable would fail in 0.6 otherwise
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
+  var form = new IncomingForm({ uploadDir: common.dir.tmp });
 
   form.parse(req);
 
@@ -45,7 +44,7 @@ server = http.createServer(function(req, res) {
     .on('end', common.actions.formOnEnd.bind(null, res));
 });
 
-server.listen(common.port, function() {
+server.listen(common.port, function () {
   var i;
 
   for (i = 0; i < times; i++) {
@@ -53,6 +52,6 @@ server.listen(common.port, function() {
   }
 });
 
-process.on('exit', function() {
+process.on('exit', function () {
   assert.strictEqual(times, 0);
 });

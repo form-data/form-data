@@ -22,23 +22,21 @@ var FIELDS = {
   },
   'my_file': {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function() { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
+    value: function () { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
   },
   'remote_file': {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function() { return request(remoteFile); }
+    value: function () { return request(remoteFile); }
   }
 };
 var fieldsPassed = Object.keys(FIELDS).length;
 
-var server = http.createServer(function(req, res) {
-
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
+var server = http.createServer(function (req, res) {
+  var form = new IncomingForm({ uploadDir: common.dir.tmp });
 
   form.parse(req);
 
-  common.actions.checkForm(form, FIELDS, function(fieldsChecked)
-  {
+  common.actions.checkForm(form, FIELDS, function (fieldsChecked) {
     // keep track of number of the processed fields
     fieldsPassed = fieldsPassed - fieldsChecked;
     // finish it
@@ -46,8 +44,7 @@ var server = http.createServer(function(req, res) {
   });
 });
 
-server.listen(common.port, function() {
-
+server.listen(common.port, function () {
   var form = new FormData();
 
   for (var name in FIELDS) {
@@ -70,8 +67,7 @@ server.listen(common.port, function() {
 
   form.pipe(req);
 
-  req.on('response', function(res) {
-
+  req.on('response', function (res) {
     // unstuck new streams
     res.resume();
 
@@ -79,6 +75,6 @@ server.listen(common.port, function() {
   });
 });
 
-process.on('exit', function() {
+process.on('exit', function () {
   assert.strictEqual(fieldsPassed, 0);
 });

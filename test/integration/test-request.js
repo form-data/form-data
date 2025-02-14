@@ -13,7 +13,7 @@ var fs = require('fs');
 var IncomingForm = require('formidable').IncomingForm;
 
 var fileName = common.dir.fixture + '/unicycle.jpg';
-var myFile = function() { return fs.createReadStream(fileName); };
+var myFile = function () { return fs.createReadStream(fileName); };
 var numItems = 5;
 
 // Make request to use our FormData
@@ -30,7 +30,7 @@ request.prototype.form = function (form) {
   }
   // create form-data object
   self._form = new FormData();
-  self._form.on('error', function(err) {
+  self._form.on('error', function (err) {
     err.message = 'form-data: ' + err.message;
     self.emit('error', err);
     self.abort();
@@ -38,14 +38,13 @@ request.prototype.form = function (form) {
   return self._form;
 };
 
-var server = http.createServer(function(req, res) {
-
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
+var server = http.createServer(function (req, res) {
+  var form = new IncomingForm({ uploadDir: common.dir.tmp });
 
   form.parse(req);
 
   form
-    .on('file', function(name, file) {
+    .on('file', function (name, file) {
       numItems--;
       assert.strictEqual(file.name, path.basename(fileName));
       assert.strictEqual(file.type, mime.lookup(file.name));
@@ -53,12 +52,11 @@ var server = http.createServer(function(req, res) {
     .on('end', common.actions.formOnEnd.bind(null, res));
 });
 
-server.listen(common.port, function() {
-
+server.listen(common.port, function () {
   var uploadSize = 0;
   var uploaded = 0;
 
-  var r = request.post('http://localhost:' + common.port + '/', function(err, res) {
+  var r = request.post('http://localhost:' + common.port + '/', function (err, res) {
     assert.ifError(err);
     assert.strictEqual(res.statusCode, 200);
     server.close();
@@ -71,23 +69,23 @@ server.listen(common.port, function() {
   }
 
   // get upload size
-  form.getLength(function(err, size) {
+  form.getLength(function (err, size) {
     assert.equal(err, null);
     uploadSize = size;
     assert.ok(uploadSize > 0);
   });
 
   // calculate uploaded size chunk by chunk
-  form.on('data', function(data) {
+  form.on('data', function (data) {
     uploaded += data.length;
   });
 
   // done uploading compare sizes
-  form.on('end', function() {
+  form.on('end', function () {
     assert.equal(uploaded, uploadSize);
   });
 });
 
-process.on('exit', function() {
+process.on('exit', function () {
   assert.strictEqual(numItems, 0);
 });

@@ -26,19 +26,19 @@ var FIELDS = {
   },
   'implicit_type': {
     expectedType: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function() { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
+    value: function () { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
   },
   'overridden_type': {
     expectedType: 'image/png',
     options: {
       contentType: 'image/png'
     },
-    value: function() { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
+    value: function () { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
   }
 };
 var fieldsPassed = false;
 
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function (req, res) {
   var body = '';
   var boundry = req.headers['content-type'].split('boundary=').pop();
 
@@ -65,8 +65,7 @@ var server = http.createServer(function(req, res) {
   });
 });
 
-server.listen(common.port, function() {
-
+server.listen(common.port, function () {
   var form = new FormData();
 
   for (var name in FIELDS) {
@@ -84,6 +83,6 @@ server.listen(common.port, function() {
   common.actions.submit(form, server);
 });
 
-process.on('exit', function() {
+process.on('exit', function () {
   assert.ok(fieldsPassed);
 });

@@ -3,14 +3,14 @@ test custom filename and content-type:
 re: https://github.com/felixge/node-form-data/issues/29
 */
 
-var common       = require('../common');
-var assert       = common.assert;
-var mime         = require('mime-types');
-var http         = require('http');
-var fs           = require('fs');
-var path         = require('path');
+var common = require('../common');
+var assert = common.assert;
+var mime = require('mime-types');
+var http = require('http');
+var fs = require('fs');
+var path = require('path');
 
-var FormData     = require(common.dir.lib + '/form_data');
+var FormData = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
 
 var knownFile = path.join(common.dir.fixture, 'unicycle.jpg');
@@ -22,9 +22,8 @@ var options = {
   contentType: 'image/gif'
 };
 
-var server = http.createServer(function(req, res) {
-
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
+var server = http.createServer(function (req, res) {
+  var form = new IncomingForm({ uploadDir: common.dir.tmp });
 
   form.parse(req, function (err, fields, files) {
     assert(!err);
@@ -61,8 +60,7 @@ var server = http.createServer(function(req, res) {
   });
 });
 
-
-server.listen(common.port, function() {
+server.listen(common.port, function () {
   var form = new FormData();
 
   // Explicit contentType and filename.
@@ -72,9 +70,9 @@ server.listen(common.port, function() {
   // Filename only with unknown file
   form.append('unknown_with_filename', fs.createReadStream(unknownFile), options.filename);
   // Filename only with unknown file
-  form.append('unknown_with_filename_as_object', fs.createReadStream(unknownFile), {filename: options.filename});
+  form.append('unknown_with_filename_as_object', fs.createReadStream(unknownFile), { filename: options.filename });
   // Filename with relative path
-  form.append('custom_filepath', fs.createReadStream(knownFile), {filepath: relativeFile});
+  form.append('custom_filepath', fs.createReadStream(knownFile), { filepath: relativeFile });
   // No options or implicit file type from extension on name property.
   var customNameStream = fs.createReadStream(unknownFile);
   customNameStream.name = options.filename;

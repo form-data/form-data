@@ -15,9 +15,8 @@ var testHeader = 'X-Test-Fake: 123';
 
 var expectedLength;
 
-
-var server = http.createServer(function(req, res) {
-  assert.ok( typeof req.headers['content-length'] !== 'undefined' );
+var server = http.createServer(function (req, res) {
+  assert.ok(typeof req.headers['content-length'] !== 'undefined');
   assert.equal(req.headers['content-length'], expectedLength);
 
   req.on('data', function (data) {
@@ -31,8 +30,7 @@ var server = http.createServer(function(req, res) {
   res.end('done');
 });
 
-
-server.listen(common.port, function() {
+server.listen(common.port, function () {
   var form = new FormData();
 
   var options = {

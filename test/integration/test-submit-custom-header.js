@@ -21,24 +21,23 @@ var FIELDS = {
   },
   'my_file': {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function() { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
+    value: function () { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
   },
   'remote_file': {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function() { return request(remoteFile); }
+    value: function () { return request(remoteFile); }
   }
 };
 var fieldsPassed = Object.keys(FIELDS).length;
 
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function (req, res) {
   assert.ok(req.headers['x-test-header'], 'test-header-value');
 
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
+  var form = new IncomingForm({ uploadDir: common.dir.tmp });
 
   form.parse(req);
 
-  common.actions.checkForm(form, FIELDS, function(fieldsChecked)
-  {
+  common.actions.checkForm(form, FIELDS, function (fieldsChecked) {
     // keep track of number of the processed fields
     fieldsPassed = fieldsPassed - fieldsChecked;
     // finish it
@@ -46,8 +45,7 @@ var server = http.createServer(function(req, res) {
   });
 });
 
-server.listen(common.port, function() {
-
+server.listen(common.port, function () {
   var form = new FormData();
 
   common.actions.populateFields(form, FIELDS);
@@ -59,7 +57,7 @@ server.listen(common.port, function() {
     headers: {
       'x-test-header': 'test-header-value'
     }
-  }, function(error, result) {
+  }, function (error, result) {
     if (error) {
       throw error;
     }
@@ -73,6 +71,6 @@ server.listen(common.port, function() {
 
 });
 
-process.on('exit', function() {
+process.on('exit', function () {
   assert.strictEqual(fieldsPassed, 0);
 });

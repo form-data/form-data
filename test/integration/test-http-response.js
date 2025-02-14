@@ -32,8 +32,7 @@ var FIELDS = {
 };
 
 // request static file
-http.request(options, function(response) {
-
+http.request(options, function (response) {
   var form = new FormData();
 
   // add http response to the form fields
@@ -41,21 +40,19 @@ http.request(options, function(response) {
 
   common.actions.populateFields(form, FIELDS);
 
-  server.listen(common.port, function() {
+  server.listen(common.port, function () {
     common.actions.submit(form, server);
   });
-
 }).end();
 
 // count total
 var fieldsPassed = Object.keys(FIELDS).length;
 
 // prepare form-receiving http server
-server = common.testFields(FIELDS, function(fields){
+server = common.testFields(FIELDS, function (fields) {
   fieldsPassed = fields;
 });
 
-
-process.on('exit', function() {
+process.on('exit', function () {
   assert.strictEqual(fieldsPassed, 0);
 });

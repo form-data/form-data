@@ -50,7 +50,6 @@ var Readable = require('stream').Readable;
   form.getLength(callback);
 })();
 
-
 (function testStringFileBufferFile() {
   var fields = [
     {
@@ -74,7 +73,7 @@ var Readable = require('stream').Readable;
   var form = new FormData();
   var expectedLength = 0;
 
-  fields.forEach(function(field) {
+  fields.forEach(function (field) {
     form.append(field.name, field.value);
     if (field.value.path) {
       var stat = fs.statSync(field.value.path);
@@ -100,7 +99,7 @@ var Readable = require('stream').Readable;
 
   /**
    * Custion readable constructor
-   * @param       {Object} opt options
+   * @param {Object} opt options
    * @constructor
    */
   function CustomReadable(opt) {
@@ -109,7 +108,7 @@ var Readable = require('stream').Readable;
     this._index = 1;
   }
 
-  CustomReadable.prototype._read = function() {
+  CustomReadable.prototype._read = function () {
     var i = this._index++;
     if (i > this._max) {
       this.push(null);
@@ -124,6 +123,6 @@ var Readable = require('stream').Readable;
   // there is no way to determine the length of this readable stream.
   var callback = fake.callback(arguments.callee.name + '-getLength');
   fake.expectAnytime(callback, ['Unknown stream', undefined]);
-  form.getLength(function(err, len) { callback(err,len); });
+  form.getLength(function (err, len) { callback(err,len); });
 
 })();

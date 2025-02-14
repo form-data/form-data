@@ -8,7 +8,6 @@ var server;
  * Test submission to HTTPS endpoint
  */
 function submitForm() {
-
   var form = new FormData();
 
   form.append('field', 'value');
@@ -21,8 +20,7 @@ function submitForm() {
     // for self-signed certs on localhost
     secureOptions: require('constants').SSL_OP_NO_TLSv1_2,
     ca: common.httpsServerCert
-  }, function(err, res) {
-
+  }, function (err, res) {
     if (err) {
       throw err;
     }
@@ -41,13 +39,12 @@ function submitForm() {
 server = https.createServer({
   key: common.httpsServerKey,
   cert: common.httpsServerCert
-}, function(req, res) {
-
+}, function (req, res) {
   // old and simple
-  req.on('data', function() {});
+  req.on('data', function () {});
 
-  req.on('end', function() {
-    res.writeHead(200, {'x-success': 'OK'});
+  req.on('end', function () {
+    res.writeHead(200, { 'x-success': 'OK' });
     res.end('Great Success');
   });
 });

@@ -19,11 +19,11 @@ var FIELDS = {
   },
   'my_file': {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function() { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
+    value: function () { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
   },
   'remote_file': {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function() { return request(remoteFile); }
+    value: function () { return request(remoteFile); }
   }
 };
 
@@ -31,13 +31,11 @@ var FIELDS = {
 var fieldsPassed = Object.keys(FIELDS).length;
 
 // prepare form-receiving http server
-var server = common.testFields( FIELDS, function(fields){
+var server = common.testFields(FIELDS, function (fields) {
   fieldsPassed = fields;
 });
 
-
-server.listen(common.port, function() {
-
+server.listen(common.port, function () {
   var form = new FormData();
 
   common.actions.populateFields(form, FIELDS);
@@ -45,6 +43,6 @@ server.listen(common.port, function() {
   common.actions.submit(form, server);
 });
 
-process.on('exit', function() {
+process.on('exit', function () {
   assert.strictEqual(fieldsPassed, 0);
 });

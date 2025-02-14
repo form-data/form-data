@@ -23,7 +23,7 @@ var Readable = require('stream').Readable;
   var form = new FormData();
   var expectedLength = 0;
 
-  fields.forEach(function(field) {
+  fields.forEach(function (field) {
     form.append(field.name, field.value);
     expectedLength += ('' + field.value).length;
   });
@@ -33,7 +33,6 @@ var Readable = require('stream').Readable;
 
   assert.equal(expectedLength, calculatedLength);
 })();
-
 
 (function testGetLengthSyncWithKnownLength() {
   var fields = [
@@ -59,7 +58,7 @@ var Readable = require('stream').Readable;
   var form = new FormData();
   var expectedLength = 0;
 
-  fields.forEach(function(field) {
+  fields.forEach(function (field) {
     form.append(field.name, field.value, field.options);
     if (field.value.path) {
       var stat = fs.statSync(field.value.path);
@@ -83,7 +82,7 @@ var Readable = require('stream').Readable;
 
   /**
    * Custion readable constructor
-   * @param       {Object} opt options
+   * @param {Object} opt options
    * @constructor
    */
   function CustomReadable(opt) {
@@ -92,7 +91,7 @@ var Readable = require('stream').Readable;
     this._index = 1;
   }
 
-  CustomReadable.prototype._read = function() {
+  CustomReadable.prototype._read = function () {
     var i = this._index++;
     if (i > this._max) {
       this.push(null);
@@ -102,6 +101,6 @@ var Readable = require('stream').Readable;
   };
   form.append('my_txt', new CustomReadable());
 
-  assert.throws(function() { form.getLengthSync(); }, /Cannot calculate proper length in synchronous way/);
+  assert.throws(function () { form.getLengthSync(); }, /Cannot calculate proper length in synchronous way/);
 
 })();

@@ -37,52 +37,51 @@ var testSubjects = {
 /**
  * Accumulates read data size
  *
- * @param   {string} data - chunk of read data
+ * @param {string} data - chunk of read data
  */
 function readSizeAccumulator(data) {
   this.readSize += data.length;
 }
 
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function (req, res) {
   var requestBodyLength = 0;
 
   // calculate actual length of the request body
-  req.on('data', function(data) {
+  req.on('data', function (data) {
     requestBodyLength += data.length;
   });
 
-  req.on('end', function() {
+  req.on('end', function () {
     // make sure total Content-Length is properly calculated
     assert.equal(req.headers['content-length'], requestBodyLength);
     // successfully accepted request and it's good
     res.writeHead(200);
   });
 
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
+  var form = new IncomingForm({ uploadDir: common.dir.tmp });
   form.parse(req);
 
   form
-    .on('file', function(name, file) {
+    .on('file', function (name, file) {
       // make sure chunks are the same size
       assert.equal(file.size, testSubjects[name].readSize);
       // clean up tested subject
       delete testSubjects[name];
     })
-    .on('end', function() {
+    .on('end', function () {
       // done here
       res.end();
     });
 });
 
-
-server.listen(common.port, function() {
+server.listen(common.port, function () {
   var form = new FormData();
   var name, options;
 
   // add test subjects to the form
   for (name in testSubjects) {
     if (hasOwn(testSubjects, name)) {
-      options = {encoding: 'utf8'};
+      options = { encoding: 'utf8' };
 
       if (testSubjects[name].start) { options.start = testSubjects[name].start; }
       if (testSubjects[name].end) { options.end = testSubjects[name].end; }
@@ -95,7 +94,7 @@ server.listen(common.port, function() {
     }
   }
 
-  form.submit('http://localhost:' + common.port + '/', function(err, res) {
+  form.submit('http://localhost:' + common.port + '/', function (err, res) {
     if (err) {
       throw err;
     }
@@ -103,7 +102,7 @@ server.listen(common.port, function() {
     assert.strictEqual(res.statusCode, 200);
 
     // wait for server to finish
-    res.on('end', function() {
+    res.on('end', function () {
       // check that all subjects were tested
       assert.strictEqual(Object.keys(testSubjects).length, 0);
       server.close();
