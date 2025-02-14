@@ -14,3 +14,8 @@ package-lock.json
 coverage/
 node_modules/
 test/tmp/
+
+# Only apps should have lockfiles
+npm-shrinkwrap.json
+package-lock.json
+yarn.lock
