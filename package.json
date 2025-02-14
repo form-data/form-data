@@ -66,7 +66,7 @@
     "phantomjs-prebuilt": "^2.1.16",
     "pkgfiles": "^2.3.2",
     "pre-commit": "^1.2.2",
-    "request": "^2.88.2",
+    "request": "~2.87.0",
     "rimraf": "^2.7.1",
     "tape": "^5.9.0",
     "typescript": "^3.9.10"
