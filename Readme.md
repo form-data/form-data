@@ -62,6 +62,20 @@ form.append('my_buffer', new Buffer(10));
 form.append('my_logo', request('http://nodejs.org/images/logo.png'));
 ```
 
+Or @sindresorhus's [got](https://github.com/sindresorhus/got) stream:
+
+
+``` javascript
+import got from 'got';
+import FormData from 'form-data';
+
+var form = new FormData();
+
+form.append('my_field', 'my value');
+form.append('my_buffer', new Buffer(10));
+form.append('my_logo', got.stream('http://nodejs.org/images/logo.png'));
+```
+
 In order to submit this form to a web application, call ```submit(url, [callback])``` method:
 
 ``` javascript
