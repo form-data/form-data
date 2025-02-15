@@ -3,12 +3,13 @@ test ranged fs.createReadStream
 re: https://github.com/felixge/node-form-data/issues/71
 */
 
-var common       = require('../common');
-var assert       = common.assert;
-var http         = require('http');
-var fs           = require('fs');
+var common = require('../common');
+var assert = common.assert;
+var http = require('http');
+var fs = require('fs');
+var hasOwn = require('hasown');
 
-var FormData     = require(common.dir.lib + '/form_data');
+var FormData = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
 
 var testSubjects = {
@@ -80,7 +81,7 @@ server.listen(common.port, function() {
 
   // add test subjects to the form
   for (name in testSubjects) {
-    if (Object.prototype.hasOwnProperty.call(testSubjects, name)) {
+    if (hasOwn(testSubjects, name)) {
       options = {encoding: 'utf8'};
 
       if (testSubjects[name].start) { options.start = testSubjects[name].start; }
