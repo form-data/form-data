@@ -16,6 +16,10 @@ var IncomingForm = require('formidable').IncomingForm;
 var knownFile = path.join(common.dir.fixture, 'unicycle.jpg');
 var unknownFile = path.join(common.dir.fixture, 'unknown_file_type');
 var relativeFile = path.relative(path.join(knownFile, '..', '..'), knownFile);
+var textFile = path.join(common.dir.fixture, 'veggies.txt');
+
+var invalidCharFilename = 'a.sh";\r\ndummy="a.txt';
+var escapedContentDispositionHeader = 'Content-Disposition: form-data; name="invalid_char_filename"; filename="a.sh%22;%0D%0Adummy=%22a.txt';
 
 var options = {
   filename: 'test.png',
@@ -25,6 +29,17 @@ var options = {
 var server = http.createServer(function(req, res) {
 
   var form = new IncomingForm({uploadDir: common.dir.tmp});
+
+  // Data(`filename` field) after form.parse() automatically decodes some characters.
+  // Therefore, check `req` to see if filename is properly escaped.
+  // https://html.spec.whatwg.org/#multipart-form-data
+  var body = '';
+  req.on('data', function (chunk) {
+    body += chunk;
+  });
+  req.on('end', function () {
+    assert(body.includes(escapedContentDispositionHeader), 'Expects encode "filename" field');
+  });
 
   form.parse(req, function (err, fields, files) {
     assert(!err);
@@ -81,6 +96,8 @@ server.listen(common.port, function() {
   form.append('unknown_with_name_prop', customNameStream);
   // No options or implicit file type from extension.
   form.append('unknown_everything', fs.createReadStream(unknownFile));
+  // File name that needs to be escaped (Double-Quote, CR, LF).
+  form.append('invalid_char_filename', fs.createReadStream(textFile), invalidCharFilename);
 
   common.actions.submit(form, server);
 });
