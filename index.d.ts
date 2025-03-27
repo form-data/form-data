@@ -7,8 +7,6 @@
 import * as stream from 'stream';
 import * as http from 'http';
 
-export = FormData;
-
 // Extracted because @types/node doesn't export interfaces.
 interface ReadableOptions {
   highWaterMark?: number;
@@ -27,7 +25,7 @@ interface Options extends ReadableOptions {
   pauseStreams?: boolean;
 }
 
-declare class FormData extends stream.Readable {
+export default class FormData extends stream.Readable {
   constructor(options?: Options);
   append(key: string, value: any, options?: FormData.AppendOptions | string): void;
   getHeaders(userHeaders?: FormData.Headers): FormData.Headers;
