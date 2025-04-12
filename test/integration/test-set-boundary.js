@@ -24,12 +24,14 @@ var FormData = require(common.dir.lib + '/form_data');
   assert.notEqual(formA.getBoundary(), formB.getBoundary());
 }());
 
-(function testsetBoundaryWithNonString_preExistingBehavior() {
+(function testSetBoundaryWithNonString() {
   var form = new FormData();
 
-  var nonStringValues = [123, { value: 123 }, ['---something']];
-  nonStringValues.forEach(function (value) {
-    form.setBoundary(value);
-    assert.equal(form.getBoundary(), value);
+  var invalidValues = [123, null, undefined, { value: 123 }, ['---something']];
+
+  invalidValues.forEach(function (value) {
+    assert.throws(function () {
+      form.setBoundary(value);
+    }, TypeError);
   });
 }());
