@@ -33,11 +33,6 @@
     "prepublishOnly": "npm run update-readme",
     "postpublish": "npm run restore-readme"
   },
-  "pre-commit": [
-    "lint",
-    "ci-test",
-    "check"
-  ],
   "engines": {
     "node": ">= 6"
   },
@@ -63,7 +58,6 @@
     "istanbul": "^0.4.5",
     "obake": "^0.1.2",
     "pkgfiles": "^2.3.2",
-    "pre-commit": "^1.2.2",
     "request": "~2.87.0",
     "rimraf": "^2.7.1",
     "tape": "^5.9.0"
