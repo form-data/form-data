@@ -50,9 +50,6 @@
   },
   "devDependencies": {
     "@ljharb/eslint-config": "^21.1.1",
-    "@types/combined-stream": "^1.0.6",
-    "@types/mime-types": "^2.1.4",
-    "@types/node": "^12.20.55",
     "browserify": "^13.3.0",
     "browserify-istanbul": "^2.0.0",
     "coveralls": "^3.1.1",
@@ -67,11 +64,9 @@
     "obake": "^0.1.2",
     "pkgfiles": "^2.3.2",
     "pre-commit": "^1.2.2",
-    "puppeteer": "^1.20.0",
     "request": "~2.87.0",
     "rimraf": "^2.7.1",
-    "tape": "^5.9.0",
-    "typescript": "^3.9.10"
+    "tape": "^5.9.0"
   },
   "license": "MIT"
 }
