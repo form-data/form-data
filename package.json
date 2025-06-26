@@ -41,7 +41,7 @@
     "combined-stream": "^1.0.8",
     "es-set-tostringtag": "^2.1.0",
     "hasown": "^2.0.2",
-    "mime-types": "^2.1.12"
+    "mime-types": "^3.0.1"
   },
   "devDependencies": {
     "@ljharb/eslint-config": "^21.1.1",
