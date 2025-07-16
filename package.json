@@ -44,7 +44,7 @@
     "mime-types": "^2.1.12"
   },
   "devDependencies": {
-    "@ljharb/eslint-config": "^21.1.1",
+    "@ljharb/eslint-config": "^21.2.0",
     "browserify": "^13.3.0",
     "browserify-istanbul": "^2.0.0",
     "coveralls": "^3.1.1",
