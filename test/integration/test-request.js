@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Show & Test for `mikeal/request` library
  * as bonus shows progress monitor implementation
@@ -13,24 +15,24 @@ var fs = require('fs');
 var IncomingForm = require('formidable').IncomingForm;
 
 var fileName = common.dir.fixture + '/unicycle.jpg';
-var myFile = function() { return fs.createReadStream(fileName); };
+var myFile = function () { return fs.createReadStream(fileName); };
 var numItems = 5;
 
 // Make request to use our FormData
 request.prototype.form = function (form) {
   var self = this;
   if (form) {
-    if (!/^application\/x-www-form-urlencoded\b/.test(self.getHeader('content-type'))) {
+    if (!(/^application\/x-www-form-urlencoded\b/).test(self.getHeader('content-type'))) {
       self.setHeader('content-type', 'application/x-www-form-urlencoded');
     }
-    self.body = (typeof form === 'string')
+    self.body = typeof form === 'string'
       ? self._qs.rfc3986(form.toString('utf8'))
       : self._qs.stringify(form).toString('utf8');
     return self;
   }
   // create form-data object
   self._form = new FormData();
-  self._form.on('error', function(err) {
+  self._form.on('error', function (err) {
     err.message = 'form-data: ' + err.message;
     self.emit('error', err);
     self.abort();
@@ -38,27 +40,27 @@ request.prototype.form = function (form) {
   return self._form;
 };
 
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function (req, res) {
 
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
+  var form = new IncomingForm({ uploadDir: common.dir.tmp });
 
   form.parse(req);
 
   form
-    .on('file', function(name, file) {
-      numItems--;
+    .on('file', function (name, file) {
+      numItems -= 1;
       assert.strictEqual(file.name, path.basename(fileName));
       assert.strictEqual(file.type, mime.lookup(file.name));
     })
     .on('end', common.actions.formOnEnd.bind(null, res));
 });
 
-server.listen(common.port, function() {
+server.listen(common.port, function () {
 
   var uploadSize = 0;
   var uploaded = 0;
 
-  var r = request.post('http://localhost:' + common.port + '/', function(err, res) {
+  var r = request.post('http://localhost:' + common.port + '/', function (err, res) {
     assert.ifError(err);
     assert.strictEqual(res.statusCode, 200);
     server.close();
@@ -71,23 +73,23 @@ server.listen(common.port, function() {
   }
 
   // get upload size
-  form.getLength(function(err, size) {
+  form.getLength(function (err, size) {
     assert.equal(err, null);
     uploadSize = size;
     assert.ok(uploadSize > 0);
   });
 
   // calculate uploaded size chunk by chunk
-  form.on('data', function(data) {
+  form.on('data', function (data) {
     uploaded += data.length;
   });
 
   // done uploading compare sizes
-  form.on('end', function() {
+  form.on('end', function () {
     assert.equal(uploaded, uploadSize);
   });
 });
 
-process.on('exit', function() {
+process.on('exit', function () {
   assert.strictEqual(numItems, 0);
 });

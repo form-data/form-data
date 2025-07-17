@@ -46,13 +46,14 @@
     "safe-buffer": "^5.2.1"
   },
   "devDependencies": {
+    "@ljharb/eslint-config": "^21.2.0",
     "auto-changelog": "^2.5.0",
     "browserify": "^13.3.0",
     "browserify-istanbul": "^2.0.0",
     "coveralls": "^3.1.1",
     "cross-spawn": "^4.0.2",
     "encoding": "^0.1.13",
-    "eslint": "^6.8.0",
+    "eslint": "=8.8.0",
     "fake": "^0.2.2",
     "far": "^0.0.7",
     "formidable": "^1.2.6",

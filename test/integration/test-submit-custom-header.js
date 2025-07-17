@@ -1,3 +1,5 @@
+'use strict';
+
 var common = require('../common');
 var assert = common.assert;
 var http = require('http');
@@ -9,36 +11,37 @@ var IncomingForm = require('formidable').IncomingForm;
 
 var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';
 
-// wrap non simple values into function
-// just to deal with ReadStream "autostart"
+/*
+ * wrap non simple values into function
+ * just to deal with ReadStream "autostart"
+ */
 var FIELDS = {
-  'my_field': {
-    value: 'my_value'
+  my_field: {
+    value: 'my_value',
   },
-  'my_buffer': {
+  my_buffer: {
     type: FormData.DEFAULT_CONTENT_TYPE,
-    value: common.defaultTypeValue
+    value: common.defaultTypeValue,
   },
-  'my_file': {
+  my_file: {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function() { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
+    value: function () { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); },
   },
-  'remote_file': {
+  remote_file: {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function() { return request(remoteFile); }
-  }
+    value: function () { return request(remoteFile); },
+  },
 };
 var fieldsPassed = Object.keys(FIELDS).length;
 
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function (req, res) {
   assert.ok(req.headers['x-test-header'], 'test-header-value');
 
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
+  var form = new IncomingForm({ uploadDir: common.dir.tmp });
 
   form.parse(req);
 
-  common.actions.checkForm(form, FIELDS, function(fieldsChecked)
-  {
+  common.actions.checkForm(form, FIELDS, function (fieldsChecked) {
     // keep track of number of the processed fields
     fieldsPassed = fieldsPassed - fieldsChecked;
     // finish it
@@ -46,7 +49,7 @@ var server = http.createServer(function(req, res) {
   });
 });
 
-server.listen(common.port, function() {
+server.listen(common.port, function () {
 
   var form = new FormData();
 
@@ -57,9 +60,9 @@ server.listen(common.port, function() {
     port: common.port,
     path: '/',
     headers: {
-      'x-test-header': 'test-header-value'
-    }
-  }, function(error, result) {
+      'x-test-header': 'test-header-value',
+    },
+  }, function (error, result) {
     if (error) {
       throw error;
     }
@@ -73,6 +76,6 @@ server.listen(common.port, function() {
 
 });
 
-process.on('exit', function() {
+process.on('exit', function () {
   assert.strictEqual(fieldsPassed, 0);
 });

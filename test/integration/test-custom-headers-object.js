@@ -1,7 +1,9 @@
+'use strict';
+
 /*
-test custom headers object.
-https://github.com/form-data/form-data/issues/133
-*/
+ * test custom headers object.
+ * https://github.com/form-data/form-data/issues/133
+ */
 
 var common = require('../common');
 var assert = common.assert;
@@ -13,9 +15,8 @@ var testHeader = { 'X-Test-Fake': 123 };
 
 var expectedLength;
 
-
-var server = http.createServer(function(req, res) {
-  assert.ok( typeof req.headers['content-length'] !== 'undefined' );
+var server = http.createServer(function (req, res) {
+  assert.ok(typeof req.headers['content-length'] !== 'undefined');
   assert.equal(req.headers['content-length'], expectedLength);
 
   req.on('data', function (data) {
@@ -29,16 +30,17 @@ var server = http.createServer(function(req, res) {
   res.end('done');
 });
 
-
-server.listen(common.port, function() {
+server.listen(common.port, function () {
   var form = new FormData();
 
   var options = {
     header: testHeader,
 
-    // override content-length,
-    // much lower than actual buffer size (1000)
-    knownLength: 1
+    /*
+     * override content-length,
+     * much lower than actual buffer size (1000)
+     */
+    knownLength: 1,
   };
 
   var bufferData = [];

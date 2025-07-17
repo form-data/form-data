@@ -1,9 +1,11 @@
-/*
-test return http request, added for issue #47:
-https://github.com/felixge/node-form-data/issues/47
+'use strict';
 
-Checking correct length header and request object
-*/
+/*
+ * test return http request, added for issue #47:
+ * https://github.com/felixge/node-form-data/issues/47
+ *
+ * Checking correct length header and request object
+ */
 
 var common = require('../common');
 var assert = common.assert;
@@ -15,17 +17,17 @@ var expectedLength;
 
 var dataSize = 1000000;
 
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function (req, res) {
   var uploaded = 0;
 
-  assert.ok( typeof req.headers['content-length'] !== 'undefined' );
+  assert.ok(typeof req.headers['content-length'] !== 'undefined');
   assert.equal(req.headers['content-length'], expectedLength);
 
   // check for uploaded body
-  req.on('data', function(data) {
+  req.on('data', function (data) {
     uploaded += data.length;
   });
-  req.on('end', function() {
+  req.on('end', function () {
     // compare uploaded total to the expected length
     assert.equal(uploaded, expectedLength);
 
@@ -35,9 +37,10 @@ var server = http.createServer(function(req, res) {
 
 });
 
-
-server.listen(common.port, function() {
-  var R, oWrite, progress = 0, form = new FormData();
+server.listen(common.port, function () {
+  var R, oWrite,
+    progress = 0,
+    form = new FormData();
 
   var bufferData = [];
   for (var z = 0; z < dataSize; z++) {
@@ -50,7 +53,7 @@ server.listen(common.port, function() {
   // (available to req handler)
   expectedLength = form._lastBoundary().length + form._overheadLength + dataSize;
 
-  R = form.submit('http://localhost:' + common.port + '/', function(err, res) {
+  R = form.submit('http://localhost:' + common.port + '/', function (err, res) {
     if (err) {
       throw err;
     }
@@ -68,14 +71,14 @@ server.listen(common.port, function() {
 
   // augment into request
   oWrite = R.write;
-  R.write = function(chunk) {
-    return oWrite.call(this, chunk, function() {
+  R.write = function (chunk) {
+    return oWrite.call(this, chunk, function () {
       form.emit('progress', chunk);
     });
   };
 
   // track progress
-  form.on('progress', function(chunk) {
+  form.on('progress', function (chunk) {
     progress += chunk.length;
     assert.ok(progress <= expectedLength);
   });

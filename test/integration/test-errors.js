@@ -1,3 +1,5 @@
+'use strict';
+
 var common = require('../common');
 var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
@@ -14,31 +16,30 @@ var http = require('http');
   var callback = fake.callback('testAppendArray-onError-append');
   fake.expectAnytime(callback, ['Arrays are not supported.']);
 
-  form.on('error', function(err) {
+  form.on('error', function (err) {
     // workaround for expectAnytime handling objects
     callback(err.message);
   });
 
   form.append('my_array', ['bird', 'cute']);
-})();
-
+}());
 
 (function testGetLengthSync() {
   var fields = [
     {
       name: 'my_string',
-      value: 'Test 123'
+      value: 'Test 123',
     },
     {
       name: 'my_image',
-      value: fs.createReadStream(common.dir.fixture + '/unicycle.jpg')
-    }
+      value: fs.createReadStream(common.dir.fixture + '/unicycle.jpg'),
+    },
   ];
 
   var form = new FormData();
   var expectedLength = 0;
 
-  fields.forEach(function(field) {
+  fields.forEach(function (field) {
     form.append(field.name, field.value);
     if (field.value.path) {
       var stat = fs.statSync(field.value.path);
@@ -49,11 +50,10 @@ var http = require('http');
   });
   expectedLength += form._overheadLength + form._lastBoundary().length;
 
-
   var callback = fake.callback('testGetLengthSync-onError-getLengthSync');
   fake.expectAnytime(callback, ['Cannot calculate proper length in synchronous way.']);
 
-  form.on('error', function(err) {
+  form.on('error', function (err) {
     // workaroud for expectAnytime handling objects
     callback(err.message);
   });
@@ -62,7 +62,7 @@ var http = require('http');
 
   // getLengthSync DOESN'T calculate streams length
   assert.ok(expectedLength > calculatedLength);
-})();
+}());
 
 (function testStreamError() {
   var req;
@@ -75,14 +75,14 @@ var http = require('http');
 
   form.append('fake-stream', src);
 
-  form.on('error', function(err) {
+  form.on('error', function (err) {
     assert.equal(err.code, 'ENOENT');
     assert.equal(err.path, fakePath);
-    req.on('error', function() {});
+    req.on('error', function () {});
     server.close();
   });
 
-  server.listen(common.port, function() {
+  server.listen(common.port, function () {
     req = form.submit(addr);
   });
-})();
+}());
