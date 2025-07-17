@@ -1,36 +1,38 @@
+'use strict';
+
 /*
-test ranged fs.createReadStream
-re: https://github.com/felixge/node-form-data/issues/71
-*/
+ * test ranged fs.createReadStream
+ * re: https://github.com/felixge/node-form-data/issues/71
+ */
 
-var common       = require('../common');
-var assert       = common.assert;
-var http         = require('http');
-var fs           = require('fs');
+var common = require('../common');
+var assert = common.assert;
+var http = require('http');
+var fs = require('fs');
 
-var FormData     = require(common.dir.lib + '/form_data');
+var FormData = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
 
 var testSubjects = {
-  'a_file': {
+  a_file: {
     file: 'veggies.txt',
     start: 8,
-    end: 18
-  }, 'b_file': {
+    end: 18,
+  }, b_file: {
     file: 'veggies.txt',
-    start: 6
-  }, 'c_file': {
+    start: 6,
+  }, c_file: {
     file: 'veggies.txt',
-    end: 16
-  }, 'd_file': {
-    file: 'veggies.txt',
-    start: 0,
-    end: 16
-  }, 'e_file': {
+    end: 16,
+  }, d_file: {
     file: 'veggies.txt',
     start: 0,
-    end: 0
-  }
+    end: 16,
+  }, e_file: {
+    file: 'veggies.txt',
+    start: 0,
+    end: 0,
+  },
 };
 
 /**
@@ -42,46 +44,45 @@ function readSizeAccumulator(data) {
   this.readSize += data.length;
 }
 
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function (req, res) {
   var requestBodyLength = 0;
 
   // calculate actual length of the request body
-  req.on('data', function(data) {
+  req.on('data', function (data) {
     requestBodyLength += data.length;
   });
 
-  req.on('end', function() {
+  req.on('end', function () {
     // make sure total Content-Length is properly calculated
     assert.equal(req.headers['content-length'], requestBodyLength);
     // successfully accepted request and it's good
     res.writeHead(200);
   });
 
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
+  var form = new IncomingForm({ uploadDir: common.dir.tmp });
   form.parse(req);
 
   form
-    .on('file', function(name, file) {
+    .on('file', function (name, file) {
       // make sure chunks are the same size
       assert.equal(file.size, testSubjects[name].readSize);
       // clean up tested subject
       delete testSubjects[name];
     })
-    .on('end', function() {
+    .on('end', function () {
       // done here
       res.end();
     });
 });
 
-
-server.listen(common.port, function() {
+server.listen(common.port, function () {
   var form = new FormData();
   var name, options;
 
   // add test subjects to the form
-  for (name in testSubjects) {
+  for (name in testSubjects) { // eslint-disable-line no-restricted-syntax
     if (Object.prototype.hasOwnProperty.call(testSubjects, name)) {
-      options = {encoding: 'utf8'};
+      options = { encoding: 'utf8' };
 
       if (testSubjects[name].start) { options.start = testSubjects[name].start; }
       if (testSubjects[name].end) { options.end = testSubjects[name].end; }
@@ -94,7 +95,7 @@ server.listen(common.port, function() {
     }
   }
 
-  form.submit('http://localhost:' + common.port + '/', function(err, res) {
+  form.submit('http://localhost:' + common.port + '/', function (err, res) {
     if (err) {
       throw err;
     }
@@ -102,7 +103,7 @@ server.listen(common.port, function() {
     assert.strictEqual(res.statusCode, 200);
 
     // wait for server to finish
-    res.on('end', function() {
+    res.on('end', function () {
       // check that all subjects were tested
       assert.strictEqual(Object.keys(testSubjects).length, 0);
       server.close();

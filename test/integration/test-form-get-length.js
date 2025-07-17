@@ -1,3 +1,5 @@
+'use strict';
+
 var common = require('../common');
 var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
@@ -13,7 +15,7 @@ var fs = require('fs');
 
   // Make sure our response is async
   assert.strictEqual(calls.length, 0);
-})();
+}());
 
 (function testUtf8String() {
   var FIELD = 'my_field';
@@ -23,14 +25,11 @@ var fs = require('fs');
   form.append(FIELD, VALUE);
   var callback = fake.callback('testUtf8String-getLength');
 
-  var expectedLength =
-    form._overheadLength +
-    Buffer.byteLength(VALUE) +
-    form._lastBoundary().length;
+  var expectedLength = form._overheadLength + Buffer.byteLength(VALUE) + form._lastBoundary().length;
 
   fake.expectAnytime(callback, [null, expectedLength]);
   form.getLength(callback);
-})();
+}());
 
 (function testBuffer() {
   var FIELD = 'my_field';
@@ -40,40 +39,36 @@ var fs = require('fs');
   form.append(FIELD, VALUE);
   var callback = fake.callback('testBuffer-getLength');
 
-  var expectedLength =
-    form._overheadLength +
-    VALUE.length +
-    form._lastBoundary().length;
+  var expectedLength = form._overheadLength + VALUE.length + form._lastBoundary().length;
 
   fake.expectAnytime(callback, [null, expectedLength]);
   form.getLength(callback);
-})();
-
+}());
 
 (function testStringFileBufferFile() {
   var fields = [
     {
       name: 'my_field',
-      value: 'Test 123'
+      value: 'Test 123',
     },
     {
       name: 'my_image',
-      value: fs.createReadStream(common.dir.fixture + '/unicycle.jpg')
+      value: fs.createReadStream(common.dir.fixture + '/unicycle.jpg'),
     },
     {
       name: 'my_buffer',
-      value: new Buffer('123')
+      value: new Buffer('123'),
     },
     {
       name: 'my_txt',
-      value: fs.createReadStream(common.dir.fixture + '/veggies.txt')
-    }
+      value: fs.createReadStream(common.dir.fixture + '/veggies.txt'),
+    },
   ];
 
   var form = new FormData();
   var expectedLength = 0;
 
-  fields.forEach(function(field) {
+  fields.forEach(function (field) {
     form.append(field.name, field.value);
     if (field.value.path) {
       var stat = fs.statSync(field.value.path);
@@ -88,4 +83,4 @@ var fs = require('fs');
   var callback = fake.callback('testStringFileBufferFile-getLength');
   fake.expectAnytime(callback, [null, expectedLength]);
   form.getLength(callback);
-})();
+}());

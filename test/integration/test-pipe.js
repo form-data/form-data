@@ -1,3 +1,5 @@
+'use strict';
+
 var common = require('../common');
 var assert = common.assert;
 var http = require('http');
@@ -9,35 +11,36 @@ var IncomingForm = require('formidable').IncomingForm;
 
 var remoteFile = 'http://localhost:' + common.staticPort + '/unicycle.jpg';
 
-// wrap non simple values into function
-// just to deal with ReadStream "autostart"
+/*
+ * wrap non simple values into function
+ * just to deal with ReadStream "autostart"
+ */
 var FIELDS = {
-  'my_field': {
-    value: 'my_value'
+  my_field: {
+    value: 'my_value',
   },
-  'my_buffer': {
+  my_buffer: {
     type: FormData.DEFAULT_CONTENT_TYPE,
-    value: common.defaultTypeValue
+    value: common.defaultTypeValue,
   },
-  'my_file': {
+  my_file: {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function() { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); }
+    value: function () { return fs.createReadStream(common.dir.fixture + '/unicycle.jpg'); },
   },
-  'remote_file': {
+  remote_file: {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function() { return request(remoteFile); }
-  }
+    value: function () { return request(remoteFile); },
+  },
 };
 var fieldsPassed = Object.keys(FIELDS).length;
 
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function (req, res) {
 
-  var form = new IncomingForm({uploadDir: common.dir.tmp});
+  var form = new IncomingForm({ uploadDir: common.dir.tmp });
 
   form.parse(req);
 
-  common.actions.checkForm(form, FIELDS, function(fieldsChecked)
-  {
+  common.actions.checkForm(form, FIELDS, function (fieldsChecked) {
     // keep track of number of the processed fields
     fieldsPassed = fieldsPassed - fieldsChecked;
     // finish it
@@ -45,15 +48,15 @@ var server = http.createServer(function(req, res) {
   });
 });
 
-server.listen(common.port, function() {
+server.listen(common.port, function () {
 
   var form = new FormData();
 
-  for (var name in FIELDS) {
+  for (var name in FIELDS) { // eslint-disable-line no-restricted-syntax
     if (Object.prototype.hasOwnProperty.call(FIELDS, name)) {
       var field = FIELDS[name];
       // important to append ReadStreams within the same tick
-      if ((typeof field.value == 'function')) {
+      if (typeof field.value === 'function') {
         field.value = field.value();
       }
       form.append(name, field.value);
@@ -64,12 +67,12 @@ server.listen(common.port, function() {
     method: 'post',
     port: common.port,
     path: '/upload',
-    headers: form.getHeaders()
+    headers: form.getHeaders(),
   });
 
   form.pipe(req);
 
-  req.on('response', function(res) {
+  req.on('response', function (res) {
 
     // unstuck new streams
     res.resume();
@@ -78,6 +81,6 @@ server.listen(common.port, function() {
   });
 });
 
-process.on('exit', function() {
+process.on('exit', function () {
   assert.strictEqual(fieldsPassed, 0);
 });

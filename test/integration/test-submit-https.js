@@ -1,4 +1,7 @@
+'use strict';
+
 var https = require('https');
+var constants = require('constants');
 var common = require('../common');
 var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
@@ -19,9 +22,9 @@ function submitForm() {
     port: common.httpsPort,
     pathname: '/',
     // for self-signed certs on localhost
-    secureOptions: require('constants').SSL_OP_NO_TLSv1_2,
-    ca: common.httpsServerCert
-  }, function(err, res) {
+    secureOptions: constants.SSL_OP_NO_TLSv1_2,
+    ca: common.httpsServerCert,
+  }, function (err, res) {
 
     if (err) {
       throw err;
@@ -40,14 +43,14 @@ function submitForm() {
 // create https server
 server = https.createServer({
   key: common.httpsServerKey,
-  cert: common.httpsServerCert
-}, function(req, res) {
+  cert: common.httpsServerCert,
+}, function (req, res) {
 
   // old and simple
-  req.on('data', function() {});
+  req.on('data', function () {});
 
-  req.on('end', function() {
-    res.writeHead(200, {'x-success': 'OK'});
+  req.on('end', function () {
+    res.writeHead(200, { 'x-success': 'OK' });
     res.end('Great Success');
   });
 });
