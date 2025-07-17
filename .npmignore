@@ -9,4 +9,4 @@ node_modules/
 test/
 
 yarn.lock
-README.md.bak
+*.bak
