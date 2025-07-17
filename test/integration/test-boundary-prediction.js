@@ -2,13 +2,13 @@ var common = require('../common');
 var assert = common.assert;
 var FormData = require(common.dir.lib + '/form_data');
 var satisfies = require('semver').satisfies;
-var predictV8Randomness = satisfies(process.version, '^17 - ^23') && require('predict-v8-randomness');
+var predictV8Randomness = satisfies(process.version, '^17 - ^23') && require('predict-v8-randomness'); // eslint-disable-line global-require
 
 var initialSequence = [
   Math.random(),
   Math.random(),
   Math.random(),
-  Math.random(),
+  Math.random()
 ];
 var predictor = predictV8Randomness && new predictV8Randomness.Predictor(initialSequence);
 
@@ -22,19 +22,12 @@ if (predictor) {
 
     var boundaryIntro = '----------------------------';
 
-    var payload =
-      'zzz\r\n' +
-      boundaryIntro +
-      predictedBoundary +
-      '\r\nContent-Disposition: form-data; name="is_admin"\r\n\r\ntrue\r\n' +
-      boundaryIntro +
-      predictedBoundary +
-      '--\r\n';
+    var payload = 'zzz\r\n' + boundaryIntro + predictedBoundary + '\r\nContent-Disposition: form-data; name="is_admin"\r\n\r\ntrue\r\n' + boundaryIntro + predictedBoundary + '--\r\n';
 
     var FIELDS = {
       my_field: {
-        value: payload,
-      },
+        value: payload
+      }
     };
 
     // count total
