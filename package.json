@@ -67,6 +67,7 @@
     "puppeteer": "^1.20.0",
     "request": "~2.87.0",
     "rimraf": "^2.7.1",
+    "semver": "^6.3.1",
     "tape": "^5.9.0"
   },
   "license": "MIT",
