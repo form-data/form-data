@@ -30,7 +30,9 @@
     "restore-readme": "mv README.md.bak README.md",
     "prepublish": "not-in-publish || npm run prepublishOnly",
     "prepublishOnly": "npm run update-readme",
-    "postpublish": "npm run restore-readme"
+    "postpublish": "npm run restore-readme",
+    "version": "auto-changelog && git add CHANGELOG.md",
+    "postversion": "auto-changelog && git add CHANGELOG.md && git commit --no-edit --amend && git tag -f \"v$(node -e \"console.log(require('./package.json').version)\")\""
   },
   "engines": {
     "node": ">= 0.12"
@@ -43,6 +45,7 @@
     "safe-buffer": "^5.2.1"
   },
   "devDependencies": {
+    "auto-changelog": "^2.5.0",
     "browserify": "^13.3.0",
     "browserify-istanbul": "^2.0.0",
     "coveralls": "^3.1.1",
@@ -60,5 +63,13 @@
     "rimraf": "^2.7.1",
     "tape": "^5.9.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "auto-changelog": {
+    "output": "CHANGELOG.md",
+    "template": "keepachangelog",
+    "unreleased": false,
+    "commitLimit": false,
+    "backfillLimit": false,
+    "hideCredit": true
+  }
 }
