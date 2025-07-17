@@ -4,6 +4,7 @@ var assert = require('assert');
 var fake = require('fake');
 var mime = require('mime-types');
 var http = require('http');
+var hasOwn = require('hasown');
 var IncomingForm = require('formidable').IncomingForm;
 
 var common = module.exports;
@@ -58,7 +59,7 @@ common.actions = {};
 common.actions.populateFields = function (form, fields) {
   var field;
   for (var name in fields) {
-    if (Object.prototype.hasOwnProperty.call(fields, name)) {
+    if (hasOwn(fields, name)) {
       field = fields[name];
       // important to append ReadStreams within the same tick
       if ((typeof field.value == 'function')) {
