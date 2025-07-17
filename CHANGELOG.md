@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v4.0.4](https://github.com/form-data/form-data/compare/v4.0.3...v4.0.4) - 2025-07-16
+
+### Commits
+
+- [meta] add `auto-changelog` [`811f682`](https://github.com/form-data/form-data/commit/811f68282fab0315209d0e2d1c44b6c32ea0d479)
+- [Tests] handle predict-v8-randomness failures in node &lt; 17 and node &gt; 23 [`1d11a76`](https://github.com/form-data/form-data/commit/1d11a76434d101f22fdb26b8aef8615f28b98402)
+- [Fix] Switch to using `crypto` random for boundary values [`3d17230`](https://github.com/form-data/form-data/commit/3d1723080e6577a66f17f163ecd345a21d8d0fd0)
+- [Tests] fix linting errors [`5e34080`](https://github.com/form-data/form-data/commit/5e340800b5f8914213e4e0378c084aae71cfd73a)
+- [meta] actually ensure the readme backup isn’t published [`316c82b`](https://github.com/form-data/form-data/commit/316c82ba93fd4985af757b771b9a1f26d3b709ef)
+- [Dev Deps] update `@ljharb/eslint-config` [`58c25d7`](https://github.com/form-data/form-data/commit/58c25d76406a5b0dfdf54045cf252563f2bbda8d)
+- [meta] fix readme capitalization [`2300ca1`](https://github.com/form-data/form-data/commit/2300ca19595b0ee96431e868fe2a40db79e41c61)
+
 ## [v4.0.3](https://github.com/form-data/form-data/compare/v4.0.2...v4.0.3) - 2025-06-05
 
 ### Fixed
