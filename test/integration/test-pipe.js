@@ -6,6 +6,7 @@ var http = require('http');
 var mime = require('mime-types');
 var request = require('request');
 var fs = require('fs');
+var hasOwn = require('hasown');
 var FormData = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
 
@@ -53,7 +54,7 @@ server.listen(common.port, function () {
   var form = new FormData();
 
   for (var name in FIELDS) { // eslint-disable-line no-restricted-syntax
-    if (Object.prototype.hasOwnProperty.call(FIELDS, name)) {
+    if (hasOwn(FIELDS, name)) {
       var field = FIELDS[name];
       // important to append ReadStreams within the same tick
       if (typeof field.value === 'function') {
