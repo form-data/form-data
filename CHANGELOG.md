@@ -158,7 +158,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - feat: add setBoundary method [`55d90ce`](https://github.com/form-data/form-data/commit/55d90ce4a4c22b0ea0647991d85cb946dfb7395b)
 
-## [v3.0.0](https://github.com/form-data/form-data/compare/v2.5.4...v3.0.0) - 2019-11-05
+## [v3.0.0](https://github.com/form-data/form-data/compare/v2.5.5...v3.0.0) - 2019-11-05
 
 ### Merged
 
@@ -181,6 +181,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: getHeaders method signatures [`f4ca7f8`](https://github.com/form-data/form-data/commit/f4ca7f8e31f7e07df22c1aeb8e0a32a7055a64ca)
 - Pass options to constructor if not used with new [`4bde68e`](https://github.com/form-data/form-data/commit/4bde68e12de1ba90fefad2e7e643f6375b902763)
 - Make userHeaders optional [`2b4e478`](https://github.com/form-data/form-data/commit/2b4e4787031490942f2d1ee55c56b85a250875a7)
+
+## [v2.5.5](https://github.com/form-data/form-data/compare/v2.5.4...v2.5.5) - 2025-07-18
+
+### Commits
+
+- [meta] actually ensure the readme backup isn’t published [`10626c0`](https://github.com/form-data/form-data/commit/10626c0a9b78c7d3fcaa51772265015ee0afc25c)
+- [Fix] use proper dependency [`026abe5`](https://github.com/form-data/form-data/commit/026abe5c5c0489d8a2ccb59d5cfd14fb63078377)
 
 ## [v2.5.4](https://github.com/form-data/form-data/compare/v2.5.3...v2.5.4) - 2025-07-17
 
