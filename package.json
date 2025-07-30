@@ -78,5 +78,6 @@
     "commitLimit": false,
     "backfillLimit": false,
     "hideCredit": true
-  }
+  },
+  "sideEffects": false
 }
