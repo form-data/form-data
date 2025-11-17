@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v4.0.5](https://github.com/form-data/form-data/compare/v4.0.4...v4.0.5) - 2025-11-17
+
+### Commits
+
+- [Tests] Switch to newer v8 prediction library; enable node 24 testing [`16e0076`](https://github.com/form-data/form-data/commit/16e00765342106876f98a1c9703314006c9e937a)
+- [Dev Deps] update `@ljharb/eslint-config`, `eslint` [`5822467`](https://github.com/form-data/form-data/commit/5822467f0ec21f6ad613c1c90856375e498793c7)
+- [Fix] set Symbol.toStringTag in the proper place [`76d0dee`](https://github.com/form-data/form-data/commit/76d0dee43933b5e167f7f09e5d9cbbd1cf911aa7)
+
 ## [v4.0.4](https://github.com/form-data/form-data/compare/v4.0.3...v4.0.4) - 2025-07-16
 
 ### Commits
@@ -86,7 +94,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - fix (npmignore): ignore temporary build files [`335ad19`](https://github.com/form-data/form-data/commit/335ad19c6e17dc2d7298ffe0e9b37ba63600e94b)
 - fix: move util.isArray to Array.isArray [`440d3be`](https://github.com/form-data/form-data/commit/440d3bed752ac2f9213b4c2229dbccefe140e5fa)
 
-## [v4.0.0](https://github.com/form-data/form-data/compare/v3.0.3...v4.0.0) - 2021-02-15
+## [v4.0.0](https://github.com/form-data/form-data/compare/v3.0.4...v4.0.0) - 2021-02-15
 
 ### Merged
 
@@ -96,6 +104,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix typo [`e705c0a`](https://github.com/form-data/form-data/commit/e705c0a1fdaf90d21501f56460b93e43a18bd435)
 - Update README for custom stream behavior [`6dd8624`](https://github.com/form-data/form-data/commit/6dd8624b2999e32768d62752c9aae5845a803b0d)
+
+## [v3.0.4](https://github.com/form-data/form-data/compare/v3.0.3...v3.0.4) - 2025-07-16
+
+### Fixed
+
+- [Fix] `append`: avoid a crash on nullish values [`#577`](https://github.com/form-data/form-data/issues/577)
+
+### Commits
+
+- [eslint] update linting config [`f5e7eb0`](https://github.com/form-data/form-data/commit/f5e7eb024bc3fc7e2074ff80f143a4f4cbc1dbda)
+- [meta] add `auto-changelog` [`d2eb290`](https://github.com/form-data/form-data/commit/d2eb290a3e47ed5bcad7020d027daa15b3cf5ef5)
+- [Tests] handle predict-v8-randomness failures in node &lt; 17 and node &gt; 23 [`e8c574c`](https://github.com/form-data/form-data/commit/e8c574cb07ff3a0de2ecc0912d783ef22e190c1f)
+- [Fix] Switch to using `crypto` random for boundary values [`c6ced61`](https://github.com/form-data/form-data/commit/c6ced61d4fae8f617ee2fd692133ed87baa5d0fd)
+- [Refactor] use `hasown` [`1a78b5d`](https://github.com/form-data/form-data/commit/1a78b5dd05e508d67e97764d812ac7c6d92ea88d)
+- [Fix] validate boundary type in `setBoundary()` method [`70bbaa0`](https://github.com/form-data/form-data/commit/70bbaa0b395ca0fb975c309de8d7286979254cc4)
+- [Tests] add tests to check the behavior of `getBoundary` with non-strings [`b22a64e`](https://github.com/form-data/form-data/commit/b22a64ef94ba4f3f6ff7d1ac72a54cca128567df)
+- [meta] actually ensure the readme backup isn’t published [`0150851`](https://github.com/form-data/form-data/commit/01508513ffb26fd662ae7027834b325af8efb9ea)
+- [meta] remove local commit hooks [`fc42bb9`](https://github.com/form-data/form-data/commit/fc42bb9315b641bfa6dae51cb4e188a86bb04769)
+- [Dev Deps] remove unused deps [`a14d09e`](https://github.com/form-data/form-data/commit/a14d09ea8ed7e0a2e1705269ce6fb54bb7ee6bdb)
+- [meta] fix scripts to use prepublishOnly [`11d9f73`](https://github.com/form-data/form-data/commit/11d9f7338f18a59b431832a3562b49baece0a432)
+- [meta] fix readme capitalization [`fc38b48`](https://github.com/form-data/form-data/commit/fc38b4834a117a1856f3d877eb2f5b7496a24932)
 
 ## [v3.0.3](https://github.com/form-data/form-data/compare/v3.0.2...v3.0.3) - 2025-02-14
 
@@ -137,7 +166,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - feat: add setBoundary method [`55d90ce`](https://github.com/form-data/form-data/commit/55d90ce4a4c22b0ea0647991d85cb946dfb7395b)
 
-## [v3.0.0](https://github.com/form-data/form-data/compare/v2.5.3...v3.0.0) - 2019-11-05
+## [v3.0.0](https://github.com/form-data/form-data/compare/v2.5.5...v3.0.0) - 2019-11-05
 
 ### Merged
 
@@ -160,6 +189,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: getHeaders method signatures [`f4ca7f8`](https://github.com/form-data/form-data/commit/f4ca7f8e31f7e07df22c1aeb8e0a32a7055a64ca)
 - Pass options to constructor if not used with new [`4bde68e`](https://github.com/form-data/form-data/commit/4bde68e12de1ba90fefad2e7e643f6375b902763)
 - Make userHeaders optional [`2b4e478`](https://github.com/form-data/form-data/commit/2b4e4787031490942f2d1ee55c56b85a250875a7)
+
+## [v2.5.5](https://github.com/form-data/form-data/compare/v2.5.4...v2.5.5) - 2025-07-18
+
+### Commits
+
+- [meta] actually ensure the readme backup isn’t published [`10626c0`](https://github.com/form-data/form-data/commit/10626c0a9b78c7d3fcaa51772265015ee0afc25c)
+- [Fix] use proper dependency [`026abe5`](https://github.com/form-data/form-data/commit/026abe5c5c0489d8a2ccb59d5cfd14fb63078377)
+
+## [v2.5.4](https://github.com/form-data/form-data/compare/v2.5.3...v2.5.4) - 2025-07-17
+
+### Fixed
+
+- [Fix] `append`: avoid a crash on nullish values [`#577`](https://github.com/form-data/form-data/issues/577)
+
+### Commits
+
+- [eslint] update linting config [`8bf2492`](https://github.com/form-data/form-data/commit/8bf2492e0555d41ff58fa04c91593af998f87a3c)
+- [meta] add `auto-changelog` [`b5101ad`](https://github.com/form-data/form-data/commit/b5101ad3d5f73cfd0143aae3735b92826fd731ea)
+- [Tests] handle predict-v8-randomness failures in node &lt; 17 and node &gt; 23 [`0e93122`](https://github.com/form-data/form-data/commit/0e93122358414942393d9c2dc434ae69e58be7c8)
+- [Fix] Switch to using `crypto` random for boundary values [`b88316c`](https://github.com/form-data/form-data/commit/b88316c94bb004323669cd3639dc8bb8262539eb)
+- [Fix] validate boundary type in `setBoundary()` method [`131ae5e`](https://github.com/form-data/form-data/commit/131ae5efa30b9c608add4faef3befb38aa2e1bf1)
+- [Tests] Switch to newer v8 prediction library; enable node 24 testing [`c97cfbe`](https://github.com/form-data/form-data/commit/c97cfbed9eb6d2d4b5d53090f69ded4bf9fd8a21)
+- [Refactor] use `hasown` [`97ac9c2`](https://github.com/form-data/form-data/commit/97ac9c208be0b83faeee04bb3faef1ed3474ee4c)
+- [meta] remove local commit hooks [`be99d4e`](https://github.com/form-data/form-data/commit/be99d4eea5ce47139c23c1f0914596194019d7fb)
+- [Dev Deps] remove unused deps [`ddbc89b`](https://github.com/form-data/form-data/commit/ddbc89b6d6d64f730bcb27cb33b7544068466a05)
+- [meta] fix scripts to use prepublishOnly [`e351a97`](https://github.com/form-data/form-data/commit/e351a97e9f6c57c74ffd01625e83b09de805d08a)
+- [Dev Deps] remove unused script [`8f23366`](https://github.com/form-data/form-data/commit/8f233664842da5bd605ce85541defc713d1d1e0a)
+- [Dev Deps] add missing peer dep [`02ff026`](https://github.com/form-data/form-data/commit/02ff026fda71f9943cfdd5754727c628adb8d135)
+- [meta] fix readme capitalization [`2fd5f61`](https://github.com/form-data/form-data/commit/2fd5f61ebfb526cd015fb8e7b8b8c1add4a38872)
 
 ## [v2.5.3](https://github.com/form-data/form-data/compare/v2.5.2...v2.5.3) - 2025-02-14
 
