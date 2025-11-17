@@ -42,7 +42,7 @@ var testSubjects = {
  * @param {string} data - chunk of read data
  */
 function readSizeAccumulator(data) {
-  this.readSize += data.length; // eslint-disable-line no-invalid-this
+  this.readSize += data.length;
 }
 
 var server = http.createServer(function (req, res) {

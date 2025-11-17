@@ -38,7 +38,7 @@ if (process.env.running_under_istanbul) {
      * @param {string} chunk - partial output
      */
     function onOutput(chunk) {
-      if (this._verbose > 1) { // eslint-disable-line no-invalid-this
+      if (this._verbose > 1) {
         process.stderr.write(chunk);
       } else {
         output += chunk;

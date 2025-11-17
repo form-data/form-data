@@ -47,13 +47,13 @@
     "mime-types": "^2.1.12"
   },
   "devDependencies": {
-    "@ljharb/eslint-config": "^21.2.0",
+    "@ljharb/eslint-config": "^21.4.0",
     "auto-changelog": "^2.5.0",
     "browserify": "^13.3.0",
     "browserify-istanbul": "^2.0.0",
     "coveralls": "^3.1.1",
     "cross-spawn": "^6.0.6",
-    "eslint": "=8.8.0",
+    "eslint": "^8.57.1",
     "fake": "^0.2.2",
     "far": "^0.0.7",
     "formidable": "^1.2.6",
