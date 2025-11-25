@@ -42,7 +42,7 @@ var http = require('http');
 
 var form = new FormData();
 
-http.request('http://nodejs.org/images/logo.png', function(response) {
+http.request('http://nodejs.org/images/logo.png', function (response) {
   form.append('my_field', 'my value');
   form.append('my_buffer', new Buffer(10));
   form.append('my_logo', response);
@@ -65,7 +65,7 @@ form.append('my_logo', request('http://nodejs.org/images/logo.png'));
 In order to submit this form to a web application, call ```submit(url, [callback])``` method:
 
 ``` javascript
-form.submit('http://example.org/', function(err, res) {
+form.submit('http://example.org/', function (err, res) {
   // res – response object (http.IncomingMessage)  //
   res.resume();
 });
@@ -104,7 +104,7 @@ var request = http.request({
 
 form.pipe(request);
 
-request.on('response', function(res) {
+request.on('response', function (res) {
   console.log(res.statusCode);
 });
 ```
@@ -112,7 +112,7 @@ request.on('response', function(res) {
 Or if you would prefer the `'Content-Length'` header to be set for you:
 
 ``` javascript
-form.submit('example.org/upload', function(err, res) {
+form.submit('example.org/upload', function (err, res) {
   console.log(res.statusCode);
 });
 ```
@@ -130,7 +130,7 @@ var options = {
 
 form.append('my_buffer', buffer, options);
 
-form.submit('http://example.com/', function(err, res) {
+form.submit('http://example.com/', function (err, res) {
   if (err) throw err;
   console.log('Done');
 });
@@ -139,7 +139,7 @@ form.submit('http://example.com/', function(err, res) {
 Form-Data can recognize and fetch all the required information from common types of streams (```fs.readStream```, ```http.response``` and ```mikeal's request```), for some other types of streams you'd need to provide "file"-related information manually:
 
 ``` javascript
-someModule.stream(function(err, stdout, stderr) {
+someModule.stream(function (err, stdout, stderr) {
   if (err) throw err;
 
   var form = new FormData();
@@ -151,7 +151,7 @@ someModule.stream(function(err, stdout, stderr) {
     knownLength: 19806
   });
 
-  form.submit('http://example.com/', function(err, res) {
+  form.submit('http://example.com/', function (err, res) {
     if (err) throw err;
     console.log('Done');
   });
@@ -167,7 +167,7 @@ form.submit({
   host: 'example.com',
   path: '/probably.php?extra=params',
   auth: 'username:password'
-}, function(err, res) {
+}, function (err, res) {
   console.log(res.statusCode);
 });
 ```
@@ -178,8 +178,8 @@ In case you need to also send custom HTTP headers with the POST request, you can
 form.submit({
   host: 'example.com',
   path: '/surelynot.php',
-  headers: {'x-test-header': 'test-header-value'}
-}, function(err, res) {
+  headers: { 'x-test-header': 'test-header-value' }
+}, function (err, res) {
   console.log(res.statusCode);
 });
 ```
@@ -201,20 +201,20 @@ form.submit({
 Append data to the form. You can submit about any format (string, integer, boolean, buffer, etc.). However, Arrays are not supported and need to be turned into strings by the user.
 ```javascript
 var form = new FormData();
-form.append( 'my_string', 'my value' );
-form.append( 'my_integer', 1 );
-form.append( 'my_boolean', true );
-form.append( 'my_buffer', new Buffer(10) );
-form.append( 'my_array_as_json', JSON.stringify( ['bird','cute'] ) )
+form.append('my_string', 'my value');
+form.append('my_integer', 1);
+form.append('my_boolean', true);
+form.append('my_buffer', new Buffer(10));
+form.append('my_array_as_json', JSON.stringify(['bird', 'cute']));
 ```
 
 You may provide a string for options, or an object.
 ```javascript
 // Set filename by providing a string for options
-form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), 'bar.jpg' );
+form.append('my_file', fs.createReadStream('/foo/bar.jpg'), 'bar.jpg');
 
 // provide an object.
-form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), {filename: 'bar.jpg', contentType: 'image/jpeg', knownLength: 19806} );
+form.append('my_file', fs.createReadStream('/foo/bar.jpg'), { filename: 'bar.jpg', contentType: 'image/jpeg', knownLength: 19806 });
 ```
 
 #### _Headers_ getHeaders( [**Headers** _userHeaders_] )
@@ -236,13 +236,10 @@ _Note: The boundary must be unique and may not appear in the data._
 Return the full formdata request package, as a Buffer. You can insert this Buffer in e.g. Axios to send multipart data.
 ```javascript
 var form = new FormData();
-form.append( 'my_buffer', Buffer.from([0x4a,0x42,0x20,0x52,0x6f,0x63,0x6b,0x73]) );
-form.append( 'my_file', fs.readFileSync('/foo/bar.jpg') );
+form.append('my_buffer', Buffer.from([0x4a,0x42,0x20,0x52,0x6f,0x63,0x6b,0x73]));
+form.append('my_file', fs.readFileSync('/foo/bar.jpg'));
 
-axios.post( 'https://example.com/path/to/api',
-            form.getBuffer(),
-            form.getHeaders()
-          )
+axios.post('https://example.com/path/to/api', form.getBuffer(), form.getHeaders());
 ```
 **Note:** Because the output is of type Buffer, you can only append types that are accepted by Buffer: *string, Buffer, ArrayBuffer, Array, or Array-like Object*. A ReadStream for example will result in an error.
 
@@ -251,10 +248,10 @@ Same as `getLength` but synchronous.
 
 _Note: getLengthSync __doesn't__ calculate streams length._
 
-#### _Integer_ getLength( **function** _callback_ )
+#### _Integer_ getLength(**function** _callback_ )
 Returns the `Content-Length` async. The callback is used to handle errors and continue once the length has been calculated
 ```javascript
-this.getLength(function(err, length) {
+this.getLength(function (err, length) {
   if (err) {
     this._error(err);
     return;
@@ -270,13 +267,13 @@ this.getLength(function(err, length) {
 #### _Boolean_ hasKnownLength()
 Checks if the length of added values is known.
 
-#### _Request_ submit( _params_, **function** _callback_ )
+#### _Request_ submit(_params_, **function** _callback_ )
 Submit the form to a web application.
 ```javascript
 var form = new FormData();
-form.append( 'my_string', 'Hello World' );
+form.append('my_string', 'Hello World');
 
-form.submit( 'http://example.com/', function(err, res) {
+form.submit('http://example.com/', function (err, res) {
   // res – response object (http.IncomingMessage)  //
   res.resume();
 } );
@@ -297,7 +294,7 @@ var formData = {
   my_file: fs.createReadStream(__dirname + '/unicycle.jpg'),
 };
 
-request.post({url:'http://service.com/upload', formData: formData}, function(err, httpResponse, body) {
+request.post({url:'http://service.com/upload', formData: formData}, function (err, httpResponse, body) {
   if (err) {
     return console.error('upload failed:', err);
   }
@@ -317,9 +314,9 @@ var form = new FormData();
 form.append('a', 1);
 
 fetch('http://example.com', { method: 'POST', body: form })
-    .then(function(res) {
+    .then(function (res) {
         return res.json();
-    }).then(function(json) {
+    }).then(function (json) {
         console.log(json);
     });
 ```
@@ -341,8 +338,8 @@ axios.post('http://example.com', form, {
     ...formHeaders,
   },
 })
-.then(response => response)
-.catch(error => error)
+  .then(response => response)
+  .catch(error => error)
 ```
 
 ## Notes

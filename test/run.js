@@ -1,6 +1,9 @@
 #!/usr/bin/env node
+
+'use strict';
+
 var path = require('path');
-var static = require('./static');
+var staticS = require('./static');
 var far = require('far').create();
 var farPaths = require('far/lib/paths');
 var spawn = require('cross-spawn');
@@ -9,16 +12,19 @@ var istanbul = path.join(basePath, './node_modules/.bin/istanbul');
 
 // augment Far to support istanbul
 if (process.env.running_under_istanbul) {
-  far.constructor.prototype._execute = function(file) {
+  far.constructor.prototype._execute = function (file) {
     this._printStatus(file);
 
     var node = spawn(istanbul, [
       'cover',
-      '--report', 'none',
-      '--print', 'none',
+      '--report',
+      'none',
+      '--print',
+      'none',
       '--include-all-sources',
       '--include-pid',
-      '--root', basePath,
+      '--root',
+      basePath,
       file
     ]);
 
@@ -42,7 +48,7 @@ if (process.env.running_under_istanbul) {
     node.stdout.on('data', onOutput.bind(this));
     node.stderr.on('data', onOutput.bind(this));
 
-    node.on('exit', function(code) {
+    node.on('exit', function (code) {
       this._index++;
       this._printTestResult(file, code, output);
       this._executeNext();
@@ -52,11 +58,11 @@ if (process.env.running_under_istanbul) {
 
 // augment far to work on windows
 
-farPaths.expandSync = function(pathList) {
+farPaths.expandSync = function (pathList) {
   var expanded = {};
 
-  pathList.forEach(function(p) {
-    p = path.resolve(process.cwd(), p);
+  pathList.forEach(function (p) {
+    p = path.resolve(process.cwd(), p); // eslint-disable-line no-param-reassign
 
     if (!farPaths.isDirectory(p)) {
       expanded[p] = true;
@@ -65,7 +71,7 @@ farPaths.expandSync = function(pathList) {
 
     farPaths
       .findRecursiveSync(p)
-      .forEach(function(pp) {
+      .forEach(function (pp) {
         expanded[pp] = true;
       });
   });
@@ -83,6 +89,6 @@ far.add(__dirname);
 far.include(/test-.*\.js$/);
 
 // start static server for all tests
-static(function() {
+staticS(function () {
   far.execute();
 });
