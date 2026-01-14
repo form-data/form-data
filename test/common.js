@@ -7,9 +7,26 @@ var http = require('http');
 var IncomingForm = require('formidable').IncomingForm;
 var hasOwn = require('hasown');
 
+var PassThrough = require('stream').PassThrough;
+
 var common = module.exports;
 
 var rootDir = path.join(__dirname, '..');
+
+// Helper to get a remote file as a stream using native http
+// Replaces request(url) pattern for testing
+// Sets .path property so form-data can extract filename
+common.getRemoteStream = function (url) {
+  var pass = new PassThrough();
+  // Set path property for filename extraction (mimics request behavior)
+  pass.path = url;
+  http.get(url, function (res) {
+    res.pipe(pass);
+  }).on('error', function (err) {
+    pass.destroy(err);
+  });
+  return pass;
+};
 common.dir = {
   lib: path.join(rootDir, '/lib'),
   fixture: path.join(rootDir, '/test/fixture'),

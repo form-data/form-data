@@ -4,7 +4,6 @@ var common = require('../common');
 var assert = common.assert;
 var http = require('http');
 var mime = require('mime-types');
-var request = require('request');
 var fs = require('fs');
 var FormData = require(common.dir.lib + '/form_data');
 var IncomingForm = require('formidable').IncomingForm;
@@ -30,7 +29,7 @@ var FIELDS = {
   },
   remote_file: {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function () { return request(remoteFile); }
+    value: function () { return common.getRemoteStream(remoteFile); }
   }
 };
 var fieldsPassed = Object.keys(FIELDS).length;

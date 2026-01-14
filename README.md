@@ -284,26 +284,6 @@ Returns the form data as a string. Don't use this if you are sending files or bu
 
 ### Integration with other libraries
 
-#### Request
-
-Form submission using  [request](https://github.com/request/request):
-
-```javascript
-var formData = {
-  my_field: 'my_value',
-  my_file: fs.createReadStream(__dirname + '/unicycle.jpg'),
-};
-
-request.post({url:'http://service.com/upload', formData: formData}, function (err, httpResponse, body) {
-  if (err) {
-    return console.error('upload failed:', err);
-  }
-  console.log('Upload successful!  Server responded with:', body);
-});
-```
-
-For more details see [request readme](https://github.com/request/request#multipartform-data-multipart-form-uploads).
-
 #### node-fetch
 
 You can also submit a form using [node-fetch](https://github.com/bitinn/node-fetch):

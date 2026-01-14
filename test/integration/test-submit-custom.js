@@ -3,7 +3,6 @@
 var common = require('../common');
 var assert = common.assert;
 var mime = require('mime-types');
-var request = require('request');
 var fs = require('fs');
 var FormData = require(common.dir.lib + '/form_data');
 
@@ -27,7 +26,7 @@ var FIELDS = {
   },
   remote_file: {
     type: mime.lookup(common.dir.fixture + '/unicycle.jpg'),
-    value: function () { return request(remoteFile); }
+    value: function () { return common.getRemoteStream(remoteFile); }
   }
 };
 
