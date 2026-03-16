@@ -43,3 +43,47 @@ var FormData = require(common.dir.lib + '/form_data');
   assert.equal(buffer.length, expected.length);
   assert.equal(buffer.toString('hex'), expected.toString('hex'));
 }());
+
+// RFC 5987: Test filename* encoding for special characters (issue #572)
+(function testRfc5987Encoding() {
+  var form = new FormData();
+
+  // Test with parentheses - characters that must be encoded per RFC 5987
+  form.append('file', Buffer.from('test content'), 'test(1).txt');
+
+  var buffer = form.getBuffer();
+  var content = buffer.toString();
+
+  // Should include both filename and filename* parameters
+  assert(content.includes('filename="test(1).txt"'), 'Should include basic filename');
+  assert(content.includes("filename*=utf-8''test%281%29.txt"), 'Should include RFC 5987 encoded filename*');
+}());
+
+// RFC 5987: Normal filenames should not include filename*
+(function testNoRfc5987ForNormal() {
+  var form = new FormData();
+
+  // Test with normal filename - no special characters
+  form.append('file', Buffer.from('test content'), 'normal.txt');
+
+  var buffer = form.getBuffer();
+  var content = buffer.toString();
+
+  // Should only include basic filename, not filename*
+  assert(content.includes('filename="normal.txt"'), 'Should include basic filename');
+  assert(!content.includes('filename*'), 'Should NOT include filename* for simple names');
+}());
+
+// RFC 5987: Test with spaces and unicode
+(function testRfc5987Spaces() {
+  var form = new FormData();
+
+  form.append('file', Buffer.from('test'), 'my document.pdf');
+
+  var buffer = form.getBuffer();
+  var content = buffer.toString();
+
+  // Space is not in attr-char, so should trigger encoding
+  assert(content.includes('filename="my document.pdf"'), 'Should include basic filename');
+  assert(content.includes("filename*=utf-8''my%20document.pdf"), 'Should encode space');
+}());
