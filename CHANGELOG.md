@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v4.0.5](https://github.com/form-data/form-data/compare/v4.0.4...v4.0.5) - 2025-11-17
+
+### Commits
+
+- [Tests] Switch to newer v8 prediction library; enable node 24 testing [`16e0076`](https://github.com/form-data/form-data/commit/16e00765342106876f98a1c9703314006c9e937a)
+- [Dev Deps] update `@ljharb/eslint-config`, `eslint` [`5822467`](https://github.com/form-data/form-data/commit/5822467f0ec21f6ad613c1c90856375e498793c7)
+- [Fix] set Symbol.toStringTag in the proper place [`76d0dee`](https://github.com/form-data/form-data/commit/76d0dee43933b5e167f7f09e5d9cbbd1cf911aa7)
+
 ## [v4.0.4](https://github.com/form-data/form-data/compare/v4.0.3...v4.0.4) - 2025-07-16
 
 ### Commits
@@ -158,7 +166,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - feat: add setBoundary method [`55d90ce`](https://github.com/form-data/form-data/commit/55d90ce4a4c22b0ea0647991d85cb946dfb7395b)
 
-## [v3.0.0](https://github.com/form-data/form-data/compare/v2.5.5...v3.0.0) - 2019-11-05
+## [v3.0.0](https://github.com/form-data/form-data/compare/v2.5.6...v3.0.0) - 2019-11-05
 
 ### Merged
 
@@ -181,6 +189,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: getHeaders method signatures [`f4ca7f8`](https://github.com/form-data/form-data/commit/f4ca7f8e31f7e07df22c1aeb8e0a32a7055a64ca)
 - Pass options to constructor if not used with new [`4bde68e`](https://github.com/form-data/form-data/commit/4bde68e12de1ba90fefad2e7e643f6375b902763)
 - Make userHeaders optional [`2b4e478`](https://github.com/form-data/form-data/commit/2b4e4787031490942f2d1ee55c56b85a250875a7)
+
+## [v2.5.6](https://github.com/form-data/form-data/compare/v2.5.5...v2.5.6) - 2026-06-12
+
+### Commits
+
+- [Fix] escape CR, LF, and `"` in field names and filenames [`b620316`](https://github.com/form-data/form-data/commit/b62031603c2d7c329b2a369b49466790f0ba6314)
+- [Dev Deps] update `@ljharb/eslint-config`, `auto-changelog`, `eslint`, `tape` [`12be578`](https://github.com/form-data/form-data/commit/12be578e936fd77eee75e2e656955f5343c4b80f)
+- [Dev Deps] update `js-randomness-predictor` [`46cfd23`](https://github.com/form-data/form-data/commit/46cfd23bd40be14cfa0391e1c5357c4d74098f23)
+- [Tests] use `safe-buffer` so the header-injection test runs on node &lt; 4 [`633044a`](https://github.com/form-data/form-data/commit/633044a57a7b19f41cec2271ffd24afa2f6280af)
+- [Deps] update `hasown` [`e3b96ee`](https://github.com/form-data/form-data/commit/e3b96eef1661bca8ea4297de057b78bf2734e900)
 
 ## [v2.5.5](https://github.com/form-data/form-data/compare/v2.5.4...v2.5.5) - 2025-07-18
 
