@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v4.0.6](https://github.com/form-data/form-data/compare/v4.0.5...v4.0.6) - 2026-06-12
+
+### Commits
+
+- [Fix] escape CR, LF, and `"` in field names and filenames [`8dff42c`](https://github.com/form-data/form-data/commit/8dff42c6da654ed4e7ad4acb7f8ccd3831217c99)
+- [Dev Deps] update `@ljharb/eslint-config`, `auto-changelog`, `tape` [`f31d21e`](https://github.com/form-data/form-data/commit/f31d21ef10bf46e46344c3ee4f99acbef6be43e1)
+- [Deps] update `hasown`, `mime-types` [`92ae0eb`](https://github.com/form-data/form-data/commit/92ae0eb5da94d6f01925d5f4fcffb2a1e50ed7cd)
+- [Dev Deps] update `js-randomness-predictor` [`67b0f65`](https://github.com/form-data/form-data/commit/67b0f65c2e0b065a511d42227d35e4d367644e97)
+
 ## [v4.0.5](https://github.com/form-data/form-data/compare/v4.0.4...v4.0.5) - 2025-11-17
 
 ### Commits
@@ -94,7 +103,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - fix (npmignore): ignore temporary build files [`335ad19`](https://github.com/form-data/form-data/commit/335ad19c6e17dc2d7298ffe0e9b37ba63600e94b)
 - fix: move util.isArray to Array.isArray [`440d3be`](https://github.com/form-data/form-data/commit/440d3bed752ac2f9213b4c2229dbccefe140e5fa)
 
-## [v4.0.0](https://github.com/form-data/form-data/compare/v3.0.4...v4.0.0) - 2021-02-15
+## [v4.0.0](https://github.com/form-data/form-data/compare/v3.0.5...v4.0.0) - 2021-02-15
 
 ### Merged
 
@@ -104,6 +113,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix typo [`e705c0a`](https://github.com/form-data/form-data/commit/e705c0a1fdaf90d21501f56460b93e43a18bd435)
 - Update README for custom stream behavior [`6dd8624`](https://github.com/form-data/form-data/commit/6dd8624b2999e32768d62752c9aae5845a803b0d)
+
+## [v3.0.5](https://github.com/form-data/form-data/compare/v3.0.4...v3.0.5) - 2026-06-12
+
+### Commits
+
+- [Fix] escape CR, LF, and `"` in field names and filenames [`8777e67`](https://github.com/form-data/form-data/commit/8777e67fbd0282d3dcba81f974fbdd91062c5b23)
+- [Dev Deps] update `@ljharb/eslint-config`, `auto-changelog`, `eslint`, `tape` [`27c61a5`](https://github.com/form-data/form-data/commit/27c61a5deed84798be105c96605cb8bd00502dcd)
+- [Deps] update `hasown` [`6a8a1c6`](https://github.com/form-data/form-data/commit/6a8a1c6d04da36e15c80b16ecc4c0265082b3213)
 
 ## [v3.0.4](https://github.com/form-data/form-data/compare/v3.0.3...v3.0.4) - 2025-07-16
 
@@ -166,7 +183,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - feat: add setBoundary method [`55d90ce`](https://github.com/form-data/form-data/commit/55d90ce4a4c22b0ea0647991d85cb946dfb7395b)
 
-## [v3.0.0](https://github.com/form-data/form-data/compare/v2.5.5...v3.0.0) - 2019-11-05
+## [v3.0.0](https://github.com/form-data/form-data/compare/v2.5.6...v3.0.0) - 2019-11-05
 
 ### Merged
 
@@ -189,6 +206,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed: getHeaders method signatures [`f4ca7f8`](https://github.com/form-data/form-data/commit/f4ca7f8e31f7e07df22c1aeb8e0a32a7055a64ca)
 - Pass options to constructor if not used with new [`4bde68e`](https://github.com/form-data/form-data/commit/4bde68e12de1ba90fefad2e7e643f6375b902763)
 - Make userHeaders optional [`2b4e478`](https://github.com/form-data/form-data/commit/2b4e4787031490942f2d1ee55c56b85a250875a7)
+
+## [v2.5.6](https://github.com/form-data/form-data/compare/v2.5.5...v2.5.6) - 2026-06-12
+
+### Commits
+
+- [Fix] escape CR, LF, and `"` in field names and filenames [`b620316`](https://github.com/form-data/form-data/commit/b62031603c2d7c329b2a369b49466790f0ba6314)
+- [Dev Deps] update `@ljharb/eslint-config`, `auto-changelog`, `eslint`, `tape` [`12be578`](https://github.com/form-data/form-data/commit/12be578e936fd77eee75e2e656955f5343c4b80f)
+- [Dev Deps] update `js-randomness-predictor` [`46cfd23`](https://github.com/form-data/form-data/commit/46cfd23bd40be14cfa0391e1c5357c4d74098f23)
+- [Tests] use `safe-buffer` so the header-injection test runs on node &lt; 4 [`633044a`](https://github.com/form-data/form-data/commit/633044a57a7b19f41cec2271ffd24afa2f6280af)
+- [Deps] update `hasown` [`e3b96ee`](https://github.com/form-data/form-data/commit/e3b96eef1661bca8ea4297de057b78bf2734e900)
 
 ## [v2.5.5](https://github.com/form-data/form-data/compare/v2.5.4...v2.5.5) - 2025-07-18
 
