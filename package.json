@@ -60,7 +60,7 @@
     "formidable": "^1.2.6",
     "in-publish": "^2.0.1",
     "istanbul": "^0.4.5",
-    "js-randomness-predictor": "^1.5.5",
+    "js-randomness-predictor": "^3.6.0",
     "obake": "^0.1.2",
     "phantomjs-prebuilt": "^2.1.16",
     "pkgfiles": "^2.3.2",
