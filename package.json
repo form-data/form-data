@@ -47,8 +47,8 @@
     "mime-types": "^2.1.12"
   },
   "devDependencies": {
-    "@ljharb/eslint-config": "^21.4.0",
-    "auto-changelog": "^2.5.0",
+    "@ljharb/eslint-config": "^22.2.3",
+    "auto-changelog": "^2.6.0",
     "browserify": "^13.3.0",
     "browserify-istanbul": "^2.0.0",
     "coveralls": "^3.1.1",
@@ -68,7 +68,7 @@
     "request": "~2.87.0",
     "rimraf": "^2.7.1",
     "semver": "^6.3.1",
-    "tape": "^5.9.0"
+    "tape": "^5.10.1"
   },
   "license": "MIT",
   "auto-changelog": {
