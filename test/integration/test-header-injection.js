@@ -51,3 +51,30 @@ var FormData = require(common.dir.lib + '/form_data');
 
   assert.notEqual(output.indexOf('name="items[0]"'), -1, 'a field name without control characters must be unchanged');
 }());
+
+(function testContentTypeCRLFInjection() {
+  var form = new FormData();
+  var boundary = form.getBoundary();
+
+  form.append('file', Buffer.from('x'), {
+    filename: 'photo.png',
+    contentType: 'image/png\r\n\r\nsmuggled\r\n--' + boundary + '\r\nContent-Disposition: form-data; name="is_admin"\r\n\r\ntrue\r\n--' + boundary + '\r\nContent-Disposition: form-data; name="fake'
+  });
+
+  var output = form.getBuffer().toString();
+  var headerLines = output.split('\r\n').filter(function (line) {
+    return line.indexOf('Content-Disposition') === 0;
+  });
+
+  assert.equal(headerLines.length, 1, 'a CRLF-laden content-type must stay on its own header line, smuggling no extra parts');
+  assert.notEqual(output.indexOf('image/png%0D%0A'), -1, 'CR/LF in a content-type must be escaped');
+}());
+
+(function testOrdinaryContentTypePreserved() {
+  var form = new FormData();
+  form.append('file', Buffer.from('x'), { filename: 'a.txt', contentType: 'text/plain; charset="utf-8"' });
+
+  var output = form.getBuffer().toString();
+
+  assert.notEqual(output.indexOf('Content-Type: text/plain; charset="utf-8"'), -1, 'a content-type without control characters must be unchanged');
+}());
