@@ -105,3 +105,26 @@ var util = require('util');
 
   assert['throws'](function () { form.getLengthSync(); }, /Cannot calculate proper length in synchronous way/);
 }());
+
+(function testZeroKnownLength() {
+  var emptyFile = common.dir.fixture + '/empty.txt';
+  var value = 'Test 123';
+
+  var form = new FormData();
+  form.append('my_field', value);
+  form.append('my_empty', fs.createReadStream(emptyFile), { knownLength: 0 });
+
+  // an explicit knownLength of 0 is a known length, just like any other number
+  assert.strictEqual(fs.statSync(emptyFile).size, 0);
+  assert.strictEqual(form.hasKnownLength(), true);
+
+  var expectedLength = value.length + form._overheadLength + form._lastBoundary().length;
+  assert.strictEqual(form.getLengthSync(), expectedLength);
+
+  // without knownLength, the length of a stream is still unknown
+  var unknownForm = new FormData();
+  unknownForm.append('my_empty', fs.createReadStream(emptyFile));
+
+  assert.strictEqual(unknownForm.hasKnownLength(), false);
+  assert['throws'](function () { unknownForm.getLengthSync(); }, /Cannot calculate proper length in synchronous way/);
+}());

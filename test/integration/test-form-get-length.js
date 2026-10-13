@@ -119,3 +119,34 @@ var util = require('util');
   fake.expectAnytime(callback, ['Unknown stream', undefined]);
   form.getLength(function (err, len) { callback(err, len); });
 }());
+
+(function testZeroKnownLength() {
+  var emptyFile = common.dir.fixture + '/empty.txt';
+  var value = 'Test 123';
+
+  var form = new FormData();
+  form.append('my_field', value);
+  form.append('my_empty', fs.createReadStream(emptyFile), { knownLength: 0 });
+
+  var expectedLength = value.length + form._overheadLength + form._lastBoundary().length;
+
+  var checkLength = fake.callback('testZeroKnownLength-getLength');
+  fake.expectAnytime(checkLength, [null, expectedLength]);
+
+  form.getLength(function (err, len) {
+    checkLength(err, len);
+
+    // the sync and async lengths agree
+    assert.strictEqual(len, form.getLengthSync());
+
+    // and so does the size of the serialized body
+    var bodyLength = 0;
+    form.on('data', function (chunk) {
+      bodyLength += chunk.length;
+    });
+    form.on('end', function () {
+      assert.strictEqual(bodyLength, len);
+    });
+    form.resume();
+  });
+}());
